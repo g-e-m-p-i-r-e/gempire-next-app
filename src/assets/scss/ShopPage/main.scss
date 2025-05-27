@@ -1,0 +1,29 @@
+.shop-page-con {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+
+	.no-shop-con {
+		.img-con {
+
+			margin-bottom: 24px;
+		}
+		.title {
+			text-align: center;
+			font-size: 24px;
+			font-weight: 500;
+			margin-bottom: 12px;
+		}
+		.descr {
+			text-align: center;
+			font-size: 15px;
+			font-weight: 200;
+			line-height: 24px;
+
+			.strong {
+				font-weight: 800;
+			}
+		}
+	}
+}

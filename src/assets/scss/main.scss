@@ -1,0 +1,169 @@
+/* stylelint-disable selector-id-pattern */
+@import "./vendor/bootstrap.css";
+
+@font-face {
+	font-family: "Inter Tight";
+	src: url("../fonts/Inter_Tight/InterTight-Light.ttf") format("woff");
+	font-weight: 200;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Inter Tight";
+	src: url("../fonts/Inter_Tight/InterTight-Regular.ttf") format("woff");
+	font-weight: 400;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Inter Tight";
+	src: url("../fonts/Inter_Tight/InterTight-Medium.ttf") format("woff");
+	font-weight: 600;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Inter Tight";
+	src: url("../fonts/Inter_Tight/InterTight-SemiBold.ttf") format("woff");
+	font-weight: 700;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Inter Tight";
+	src: url("../fonts/Inter_Tight/InterTight-Bold.ttf") format("woff");
+	font-weight: 900;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Space Grotesk";
+	src: url("../fonts/Space_Grotesk/SpaceGrotesk-Light.ttf") format("woff");
+	font-weight: 400;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Space Grotesk";
+	src: url("../fonts/Space_Grotesk/SpaceGrotesk-Medium.ttf") format("woff");
+	font-weight: 600;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Space Grotesk";
+	src: url("../fonts/Space_Grotesk/SpaceGrotesk-SemiBold.ttf") format("woff");
+	font-weight: 700;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: "Space Grotesk";
+	src: url("../fonts/Space_Grotesk/SpaceGrotesk-Bold.ttf") format("woff");
+	font-weight: 900;
+	font-display: fallback;
+}
+
+html {
+	overflow: hidden;
+	height: 100%;
+}
+
+body:not(.modal-open) {
+	padding-right: 0 !important;
+}
+
+body {
+	position: relative;
+	overscroll-behavior-y: contain;
+	overflow: auto;
+	height: 100%;
+	font-family: "Inter Tight", sans-serif;
+	font-weight: 600;
+	line-height: 1;
+	color: #ffffff;
+	background-color: #040208;
+
+	.app-with-bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		pointer-events: none;
+		background: linear-gradient(93deg, rgba(124, 67, 255, 0.2) 0%, rgba(124, 67, 255, 0.08) 94.97%), #000;
+
+		&:before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 35%;
+			opacity: 1;
+			background: linear-gradient(0deg, rgba(24, 13, 49, 0) 0%, #180d31 100%);
+			z-index: 0;
+		}
+		&:after {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+
+			background-image: url("../img/common/dotsBgMobile.png");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+
+			@media (min-width: 768px) {
+				background-image: url("../img/common/dotsBg.png");
+			}
+		}
+	}
+}
+
+#__next,
+#next-app,
+.main-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+p {
+	margin-bottom: 0;
+}
+
+img {
+	max-width: 100%;
+	aspect-ratio: attr(width) / attr(height);
+	height: auto;
+	pointer-events: none;
+}
+
+.f-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.icon-con,
+.img-con {
+	line-height: 0;
+}
+
+.app-loader-con {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+
+	.loader-responsive-con {
+		max-width: 400px;
+	}
+}

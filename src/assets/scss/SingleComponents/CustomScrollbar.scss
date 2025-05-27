@@ -1,0 +1,26 @@
+.simplebar {
+	.simplebar-track {
+		background: linear-gradient(92deg, #231d32 0%, #251157 100%);
+		box-shadow:
+			0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset,
+			0px 24px 48px 0px rgba(199, 211, 234, 0.05) inset;
+		backdrop-filter: blur(6px);
+		border-radius: 10px;
+		overflow: hidden;
+
+		&.simplebar-vertical {
+			width: 5px;
+		}
+
+		.simplebar-scrollbar {
+			&.simplebar-visible {
+				border-radius: 44px;
+				background: linear-gradient(180deg, #713efd 0%, #4400b1 100%), rgba(124, 67, 255, 0.2);
+				backdrop-filter: blur(14px);
+				&:before {
+					display: none;
+				}
+			}
+		}
+	}
+}

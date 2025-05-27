@@ -1,0 +1,80 @@
+.ranks-page-con {
+	.users-info-con {
+		border-radius: 10px;
+		border: 1px solid #fff;
+		background: var(--white, #fff);
+		box-shadow: 0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset;
+		backdrop-filter: blur(6px);
+		padding: 16px;
+		width: 100%;
+		margin: 0 auto 24px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		@media (min-width: 768px) {
+			width: 70%;
+		}
+
+		.side-con {
+			display: flex;
+			align-items: center;
+			margin-right: 16px;
+			&:last-child {
+				margin-right: 0;
+			}
+
+			.avatar-con {
+				border-radius: 10px;
+				border: 1px solid #fff;
+				box-shadow:
+					3px 3px 4px 0px rgba(0, 0, 0, 0.25),
+					3px 3px 4px 0px rgba(255, 255, 255, 0.16) inset;
+				backdrop-filter: blur(18.5px);
+				overflow: hidden;
+				width: 38px;
+				min-width: 38px;
+				margin-right: 12px;
+			}
+
+			.main-info-con {
+				.address {
+					color: #5d507d;
+					font-size: 16px;
+					font-weight: 700;
+					margin-bottom: 4px;
+				}
+				.balances-con {
+					display: flex;
+					align-items: center;
+					color: #5d507d;
+					font-size: 12px;
+					font-weight: 400;
+				}
+			}
+
+			.rank-item {
+				display: flex;
+				align-items: center;
+
+				.count {
+					color: #5d507d;
+					font-size: 16px;
+					font-weight: 600;
+				}
+				.grow-sign {
+					margin: 0 2px;
+				}
+				.descr {
+					color: #5d507d;
+					font-size: 12px;
+					font-weight: 600;
+				}
+			}
+
+			.dot-con {
+				margin: 0 6px;
+			}
+		}
+	}
+}

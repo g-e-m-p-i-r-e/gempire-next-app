@@ -1,0 +1,104 @@
+.registration-avatar-modal {
+	.registration-avatar-con {
+		position: relative;
+		padding: 24px;
+		border-radius: 24px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: radial-gradient(115.35% 89.57% at 50% 4.49%, #31243b 0%, #1b1a1d 100%), linear-gradient(93deg, rgba(124, 67, 255, 0.2) 0%, rgba(124, 67, 255, 0.08) 94.97%), radial-gradient(114.77% 138.97% at 3.5% 0%, rgba(102, 82, 255, 0.16) 0%, rgba(102, 82, 255, 0) 100%), rgba(255, 255, 255, 0.06);
+		width: 100%;
+		@media (min-width: 768px) {
+			width: fit-content;
+		}
+
+		.cross {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			width: 24px;
+			height: 24px;
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.2);
+			border-radius: 50%;
+		}
+
+		.title {
+			font-family: "Inter Tight", sans-serif;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 24px;
+			margin-bottom: 32px;
+		}
+
+		.avatars-btn-wrap {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 28px;
+
+			.avatars-btn-con {
+				border-radius: 12px;
+				border: 1px solid rgb(155, 155, 155);
+				background: radial-gradient(115.35% 89.57% at 50% 4.49%, rgba(49, 36, 59, 0.25) 0%, rgba(27, 26, 29, 0.25) 100%);
+				box-shadow:
+					0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset,
+					0px 24px 48px 0px rgba(199, 211, 234, 0.05) inset;
+				backdrop-filter: blur(1px);
+				margin-right: 5px;
+				overflow: hidden;
+				cursor: pointer;
+
+				&:last-child {
+					margin-right: 0;
+				}
+
+				&:hover {
+					background: radial-gradient(115.35% 89.57% at 50% 4.49%, rgba(100, 77, 126, 0.25) 0%, rgba(62, 57, 65, 0.25) 100%);
+				}
+
+				&.active {
+					background: linear-gradient(180deg, #713efd 0%, #4400b1 100%), radial-gradient(115.35% 89.57% at 50% 4.49%, rgba(49, 36, 59, 0.25) 0%, rgba(27, 26, 29, 0.25) 100%);
+				}
+			}
+		}
+
+		.btns-con {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			.btn-item {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 52px;
+				width: 100%;
+				border-radius: 31px;
+				border: 1px solid #7c43fe;
+				background: linear-gradient(180deg, #713efd 0%, #4400b1 100%);
+				margin-bottom: 8px;
+				cursor: pointer;
+				transition: 0.2s;
+			}
+			.btn-upload {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 52px;
+				width: 100%;
+				border-radius: 31px;
+				border: 1px solid rgba(138, 136, 136, 0.7);
+				opacity: 0.8;
+				cursor: pointer;
+				transition: 0.2s;
+				&:hover {
+					opacity: 1;
+				}
+
+				input {
+					display: none;
+				}
+			}
+		}
+	}
+}
