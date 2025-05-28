@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../redux";
 
-const UserWallet = (props) => {
-	const userWallet = useAppSelector((state) => state.main.user.wallet);
+import "../../assets/scss/ProfilePage/CopyInput.scss";
 
+const CopyInput = ({ title, value }) => {
 	const [isCopied, setIsCopied] = useState(false);
 
 	const copyLink = () => {
 		try {
-			navigator.clipboard.writeText(userWallet);
+			navigator.clipboard.writeText(value);
 			setIsCopied(true);
 		} catch (e) {
 			console.error(e);
@@ -30,10 +29,10 @@ const UserWallet = (props) => {
 	}, [isCopied]);
 
 	return (
-		<div className="wallet-con">
-			<div className="main-wallet-info-con">
-				<div className="descr">Digital wallet ID</div>
-				<div className="wallet">{userWallet}</div>
+		<div className="copy-input-con">
+			<div className="main-copy-info-con">
+				<div className="descr">{title}</div>
+				<div className="copy-value">{value}</div>
 			</div>
 			<div className={`btn-copy ${isCopied ? "copied" : ""}`} onClick={() => !isCopied && copyLink()}>
 				{isCopied ? "Copied" : "Copy"}
@@ -42,4 +41,4 @@ const UserWallet = (props) => {
 	);
 };
 
-export default UserWallet;
+export default CopyInput;

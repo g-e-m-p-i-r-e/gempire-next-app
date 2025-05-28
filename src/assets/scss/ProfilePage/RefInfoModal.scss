@@ -1,0 +1,50 @@
+.ref-info-modal-modal {
+	.ref-info-con {
+		position: relative;
+		padding: 24px;
+		border-radius: 24px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: radial-gradient(115.35% 89.57% at 50% 4.49%, #31243b 0%, #1b1a1d 100%), linear-gradient(93deg, rgba(124, 67, 255, 0.2) 0%, rgba(124, 67, 255, 0.08) 94.97%), radial-gradient(114.77% 138.97% at 3.5% 0%, rgba(102, 82, 255, 0.16) 0%, rgba(102, 82, 255, 0) 100%), rgba(255, 255, 255, 0.06);
+
+		@media (min-width: 768px) {
+			width: 500px;
+		}
+
+		.cross {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			width: 24px;
+			height: 24px;
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.2);
+			border-radius: 50%;
+		}
+
+		.title {
+			font-family: "Inter Tight", sans-serif;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 24px;
+			margin-bottom: 32px;
+		}
+		.descr {
+			font-family: "Inter Tight", sans-serif;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 24px;
+			margin-bottom: 32px;
+
+			.strong {
+				font-weight: 700;
+			}
+
+			.diff {
+				color: #af8cff;
+				font-weight: 700;
+			}
+		}
+	}
+}

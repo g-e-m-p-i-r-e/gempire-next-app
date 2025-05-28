@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { setUser } from "../../redux/slices/main";
 import { useAppDispatch, useAppSelector } from "../../redux";
 
+import "../../assets/scss/ProfilePage/UsernameBlock.scss";
+
 const EngRegex = /^[a-zA-Z0-9_]+$/;
 
-const UsernameBlock = (props) => {
+const UsernameBlock = () => {
 	const dispatch = useAppDispatch();
 	const inputRef = useRef();
 
