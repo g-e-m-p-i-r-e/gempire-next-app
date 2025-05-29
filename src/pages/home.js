@@ -111,15 +111,6 @@ const Home = () => {
 			if (quest._id === questId) {
 				return { ...quest, status };
 			}
-
-			if (status === "DONE") {
-				dispatch(
-					addCompletedQuest({
-						questId,
-						completedAt: Date.now(),
-					})
-				);
-			}
 			return quest;
 		});
 
@@ -130,6 +121,14 @@ const Home = () => {
 			return quest;
 		});
 
+		if (status === "DONE") {
+			dispatch(
+				addCompletedQuest({
+					questId,
+					completedAt: Date.now(),
+				})
+			);
+		}
 		setDailyQuests(updatedDailyQuests);
 		setWeeklyQuests(updatedWeeklyQuests);
 	};
@@ -148,7 +147,7 @@ const Home = () => {
 						<div className="page-content-wrap">
 							<div className="side-con">
 								<QuestsList isLoading={isQuestsLoading} blockTitle={"Daily Mission Cards"} quests={dailyQuests} onQuestStatusChange={onQuestStatusChange} />
-								<QuestsList isLoading={isQuestsLoading} blockTitle={"Weekly Mission Cards"} quests={weeklyQuests} />
+								<QuestsList isLoading={isQuestsLoading} blockTitle={"Weekly Mission Cards"} quests={weeklyQuests} onQuestStatusChange={onQuestStatusChange} />
 							</div>
 							<div className="side-con">
 								<ActivitiesList isLoading={isActivityLoading} blockTitle={"Recent activities of all players"} activities={activities} />
