@@ -32,7 +32,7 @@ const FaqRoute = {
 	},
 };
 const LoginRoute = {
-	path: "/faq",
+	path: "/login",
 	helmet: {
 		title: "GEMPIRE | Login",
 		description: "Build your own Gempire",
