@@ -8,7 +8,7 @@ import getAccessToken from "../../helpers/getAccessToken";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
 
-import LoaderResponsive from "../SingleComponents/LoaderResponsive";
+import PawsLottie from "../SingleComponents/LoaderLottie";
 
 const PageLayout = ({ Component, ...props }) => {
 	const dispatch = useAppDispatch();
@@ -59,7 +59,9 @@ const PageLayout = ({ Component, ...props }) => {
 		<>
 			{isLoading && (
 				<div className="app-loader-con">
-					<LoaderResponsive />
+					<div className="lottie-wrap">
+						<PawsLottie />
+					</div>
 				</div>
 			)}
 			{!isLoading && <Component {...props} />}

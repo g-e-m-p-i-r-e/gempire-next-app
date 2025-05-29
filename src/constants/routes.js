@@ -1,26 +1,77 @@
-import { APP_ROUTES } from "./appRoutes";
-
-// Routes
-
 const MainRoute = {
-	path: APP_ROUTES.HOME,
+	path: "/",
 	helmet: {
-		title: "Home",
-		description: "",
+		title: "GEMPIRE | Home",
+		description: "Build your own Gempire",
 		keywords: "",
-		noIndex: true,
-		noFollow: true,
+		noIndex: false,
+		noFollow: false,
 		hasQuery: false,
 	},
 };
-const PlayRoute = {
-	path: APP_ROUTES.PLAY,
+const HomeRoute = {
+	path: "/home",
 	helmet: {
-		title: "Play",
-		description: "",
+		title: "GEMPIRE | Home",
+		description: "Build your own Gempire",
 		keywords: "",
-		noIndex: true,
-		noFollow: true,
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+const FaqRoute = {
+	path: "/faq",
+	helmet: {
+		title: "GEMPIRE | FAQ",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+const LoginRoute = {
+	path: "/faq",
+	helmet: {
+		title: "GEMPIRE | Login",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+const ProfileRoute = {
+	path: "/faq",
+	helmet: {
+		title: "GEMPIRE | Profile",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+const RanksRoute = {
+	path: "/ranks",
+	helmet: {
+		title: "GEMPIRE | Ranks",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+const ShopRoute = {
+	path: "/shop",
+	helmet: {
+		title: "GEMPIRE | Shop",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
 		hasQuery: false,
 	},
 };
@@ -34,4 +85,4 @@ const NotFoundRoute = {
 	},
 };
 
-export default [MainRoute, NotFoundRoute, PlayRoute];
+export default [MainRoute, NotFoundRoute, RanksRoute, HomeRoute, ProfileRoute, LoginRoute, ShopRoute, FaqRoute];

@@ -29,7 +29,7 @@ const UserStats = () => {
 	];
 
 	return (
-		<div className="side-block justify-content-end">
+		<div className="side-block justify-content-lg-end">
 			<div className="users-balances-con">
 				<div className="stat-items-wrap">
 					{userLvlStats.map(({ id, title, value }) => (

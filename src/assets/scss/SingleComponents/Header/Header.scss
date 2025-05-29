@@ -1,10 +1,9 @@
 .header-wrapper {
-	padding: 20px 0;
+	padding: 20px 0 0;
 	width: 100%;
-	border-bottom: 1px solid #4b4b4b;
 
 	@media (min-width: 768px) {
-		padding: 30px 0;
+		padding: 30px 0 0;
 	}
 
 	.header-con {
@@ -121,6 +120,7 @@
 			margin-right: 30px;
 			width: 117px;
 			min-width: 117px;
+			cursor: pointer;
 		}
 
 		.users-balances-con {
@@ -207,4 +207,6 @@
 			margin-left: 20px;
 		}
 	}
+
+
 }

@@ -139,7 +139,7 @@ const Ranks = () => {
 	return (
 		<div className="ranks-page-con">
 			<Container>
-				<Row>
+				<Row className="justify-content-center">
 					<Col xl={10}>
 						<div className="ranks-page-content-con">
 							<div className="main-page-block">

@@ -5,14 +5,16 @@ import { Col, Container, Row } from "reactstrap";
 import getSEOOptions from "../helpers/getSEOOptions";
 import fetchWithToken from "../helpers/fetchWithToken";
 import customToast from "../helpers/customToast";
-import { useAppSelector } from "../redux";
+import { useAppDispatch, useAppSelector } from "../redux";
 
 import QuestsList from "../components/HomePage/QuestsList";
 import ActivitiesList from "../components/HomePage/ActivitiesList";
 
 import "../assets/scss/HomePage/main.scss";
+import { addCompletedQuest } from "../redux/slices/main";
 
 const Home = () => {
+	const dispatch = useAppDispatch();
 	const userQuestsProgress = useAppSelector((state) => state.main.user.quests);
 
 	const [isQuestsLoading, setIsQuestsLoading] = useState(true);
@@ -40,7 +42,7 @@ const Home = () => {
 					const progress = userQuestsProgress.find((progress) => progress.questId === quest._id);
 					let status = "NEW";
 
-					if (!!progress.completedAt) {
+					if (!!progress?.completedAt) {
 						status = "DONE";
 					}
 
@@ -49,11 +51,12 @@ const Home = () => {
 						status,
 					};
 
-					if (quest.type === "daily") {
-						acc.daily.push(newItem);
-					} else if (quest.type === "weekly") {
+					if (quest.type === "weekly") {
 						acc.weekly.push(newItem);
+					} else {
+						acc.daily.push(newItem);
 					}
+
 					return acc;
 				},
 				{ daily: [], weekly: [] }
@@ -107,6 +110,15 @@ const Home = () => {
 		const updatedDailyQuests = dailyQuests.map((quest) => {
 			if (quest._id === questId) {
 				return { ...quest, status };
+			}
+
+			if (status === "DONE") {
+				dispatch(
+					addCompletedQuest({
+						questId,
+						completedAt: Date.now(),
+					})
+				);
 			}
 			return quest;
 		});

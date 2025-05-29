@@ -21,7 +21,9 @@ const StarsAnimation = () => {
 			e.style.animationName = ["animate-dot-left", "animate-dot-right"][Math.floor(Math.random() * 2)];
 		}
 		setTimeout(() => {
-			arr.forEach((e) => ref.current.removeChild(e));
+			if (!!ref.current?.removeChild) {
+				arr.forEach((e) => ref.current.removeChild(e));
+			}
 		}, 10000);
 	}
 
@@ -37,7 +39,11 @@ const StarsAnimation = () => {
 		};
 	}, [isStart]);
 
-	return <div className="starts-animation-con" ref={ref} />;
+	return (
+		<div className="starts-animation-wrapper">
+			<div className="starts-animation-con" ref={ref} />
+		</div>
+	);
 };
 
 export default StarsAnimation;

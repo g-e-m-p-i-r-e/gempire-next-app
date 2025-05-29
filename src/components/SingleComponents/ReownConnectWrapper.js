@@ -36,7 +36,7 @@ createAppKit({
 		name: "Gempire",
 		description: "Gempire",
 		url: process.env.SITE_URL,
-		icons: ["https://assets.reown.com/reown-profile-pic.png"],
+		icons: [`${process.env.SITE_URL}/static/logo-400x400.png`],
 	},
 	features: {
 		socials: [],

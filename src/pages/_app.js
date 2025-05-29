@@ -13,7 +13,7 @@ import HelmetComponent from "../components/SingleComponents/HelmetComponent";
 import PageLayout from "../components/NextComponets/PageLayout";
 import ReownConnectWrapper from "../components/SingleComponents/ReownConnectWrapper";
 import ResizeListener from "../components/SingleComponents/ResizeListener";
-import Header from "../components/SingleComponents/Header";
+import Header from "../components/SingleComponents/Header/Header";
 import { Scripts } from "../layout";
 import StarsAnimation from "../components/SingleComponents/StarsAnimation";
 

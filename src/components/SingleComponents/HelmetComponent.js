@@ -1,7 +1,7 @@
 import React from "react";
 import { NextSeo } from "next-seo";
 
-const HelmetComponent = ({ title, description, keywords, imageLink, canonical }) => (
+const HelmetComponent = ({ title, description, keywords, canonical }) => (
 	<NextSeo
 		title={title}
 		description={description}
@@ -13,10 +13,10 @@ const HelmetComponent = ({ title, description, keywords, imageLink, canonical })
 			description: `${description}`,
 			images: [
 				{
-					url: `${imageLink}`,
-					width: 32,
-					height: 32,
-					alt: "favicon",
+					url: `${process.env.SITE_URL}/static/page-preview.png`,
+					alt: "preview",
+					width: 960,
+					height: 960,
 				},
 			],
 		}}
@@ -41,6 +41,15 @@ const HelmetComponent = ({ title, description, keywords, imageLink, canonical })
 				name: "keywords",
 				content: `${keywords}`,
 			},
+			{ name: "twitter:image", content: `${process.env.SITE_URL}/static/page-preview.png` },
+			{
+				property: "twitter:title",
+				content: "GEMPIRE",
+			},
+			{
+				property: "twitter:description",
+				content: "Build your own Gempire",
+			},
 		]}
 		additionalLinkTags={[
 			{
@@ -59,7 +68,22 @@ const HelmetComponent = ({ title, description, keywords, imageLink, canonical })
 				rel: "preconnect",
 				href: "https://fonts.googleapis.com",
 			},
+			{
+				rel: "icon",
+				href: "/favicon.ico",
+			},
+			{
+				rel: "icon",
+				href: "/static/favicon-32x32.png",
+				sizes: "32x32",
+			},
 		]}
+		twitter={{
+			site: "@gempire_app",
+			cardType: "summary",
+			card: "summary",
+			creator: "@gempire_app",
+		}}
 	/>
 );
 

@@ -43,7 +43,12 @@ export const mainSlice = createSlice({
 				...action.payload,
 			};
 		},
+		addCompletedQuest: (state, action) => {
+			state.user.quests.push({
+				...action.payload,
+			});
+		},
 	},
 });
 
-export const { setIsMobile, setUser } = mainSlice.actions;
+export const { setIsMobile, addCompletedQuest, setUser } = mainSlice.actions;

@@ -2,25 +2,29 @@ import React from "react";
 import Image from "next/image";
 import { Col, Container, Row } from "reactstrap";
 
-import { useAppSelector } from "../../redux";
+import { useAppSelector } from "../../../redux";
 
-import NavItem from "./Header/NavItem";
-import UserStats from "./Header/UserStats";
+import NavItem from "./NavItem";
+import UserStats from "./UserStats";
 
-import logoImg from "../../assets/img/logo.png";
-import { Home, Shop, Lottery, Leaderboard, Profile } from "../../assets/img/headerIcons";
+import logoImg from "../../../assets/img/logo.png";
+import { Home, Shop, Leaderboard, Profile } from "../../../assets/img/headerIcons";
 
-import "../../assets/scss/SingleComponents/Header.scss";
+import "../../../assets/scss/SingleComponents/Header/Header.scss";
+import { useRouter } from "next/router";
+import RunLine from "./RunLine";
 
 const routes = [
 	{ id: "home", title: "Home", Icon: Home, path: "/home" },
 	{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
 	{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
-	{ id: "lottery", title: "Lottery", Icon: Lottery, path: "/lottery" },
+	// { id: "lottery", title: "Lottery", Icon: Lottery, path: "/lottery" },
 	{ id: "profile", title: "Profile", Icon: Profile, path: "/profile" },
 ];
 
 const Header = () => {
+	const { push } = useRouter();
+
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 	const isAuth = !!useAppSelector((state) => state.main.user._id);
 
@@ -34,7 +38,12 @@ const Header = () => {
 								<Col>
 									<div className="header-con">
 										<div className="side-block">
-											<div className="logo-con">
+											<div
+												className="logo-con"
+												onClick={() => {
+													push("/home", undefined, { shallow: true });
+												}}
+											>
 												<Image src={logoImg} alt={""} width={117} height={25} />
 											</div>
 											<div className="nav-panel-con">
@@ -71,6 +80,8 @@ const Header = () => {
 							</div>
 						</>
 					)}
+
+					<RunLine />
 				</div>
 			</>
 		)

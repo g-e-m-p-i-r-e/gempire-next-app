@@ -1,0 +1,125 @@
+.header-wrapper {
+	.run-line-con {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffffff;
+		backdrop-filter: blur(12px);
+		min-height: 32px;
+		color: black;
+
+		margin-top: 20px;
+		width: 100%;
+		overflow: hidden;
+
+		@media (min-width: 768px) {
+			min-height: 45px;
+			color: white;
+			margin-top: 30px;
+			border-top: 1px solid rgba(255, 255, 255, 0.4);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+			background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
+		}
+
+		.line-message-con {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			@keyframes line-message-in {
+				0% {
+					opacity: 0;
+					transform: translateX(300px);
+				}
+
+				100% {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+
+			@keyframes line-message-out {
+				0% {
+					opacity: 1;
+					transform: translateX(0);
+				}
+
+				100% {
+					opacity: 0;
+					transform: translateX(-300px);
+				}
+			}
+
+			&.fade-in-con {
+				animation: line-message-in 0.3s ease-out forwards;
+			}
+			&.fade-out-con {
+				opacity: 1;
+				//transform: translateX(0);
+				animation: 0.3s line-message-out 2s ease-in-out forwards;
+			}
+
+			.descr {
+				font-family: "Inter Tight", sans-serif;
+				font-size: 12px;
+				font-weight: 400;
+				@media (min-width: 768px) {
+					font-size: 14px;
+				}
+			}
+
+			.rewards-con {
+				display: flex;
+				align-items: center;
+
+				.reward-item {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 8px;
+					border: 1px solid rgba(255, 255, 255, 0.15);
+					background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 29.17%, rgba(78, 78, 78, 0.05) 85.42%);
+					box-shadow:
+						0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
+						0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
+					backdrop-filter: blur(6px);
+					padding: 3px 8px;
+					margin-left: 4px;
+
+					@media (min-width: 768px) {
+						font-size: 16px;
+						margin-left: 8px;
+					}
+
+					.reward-title {
+						color: #07000F;
+						font-size: 10px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+						letter-spacing: 0.1px;
+						opacity: 0.4;
+
+						@media (min-width: 768px) {
+							font-size: 12px;
+							color: white;
+						}
+					}
+					.reward-value {
+						font-size: 10px;
+						font-style: normal;
+						font-weight: 700;
+						line-height: normal;
+						letter-spacing: 0.1px;
+						margin-left: 4px;
+
+						@media (min-width: 768px) {
+							font-size: 12px;
+							margin-left: 7px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

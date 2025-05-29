@@ -33,7 +33,7 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 				return false;
 			}
 
-			onQuestStatusChange(questId, "DONE")
+			onQuestStatusChange(questId, "DONE");
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -45,10 +45,10 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 			return;
 		}
 
-		if (quest.action === "url") {
-			if (quest.url) {
-				postCompleteQuest();
-				window.open(quest.url, "_blank");
+		if (quest?.data?.action === "link") {
+			if (quest?.data?.url) {
+				postCompleteQuest(quest._id);
+				window.open(quest?.data?.url, "_blank");
 			}
 		}
 	};
@@ -77,7 +77,7 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 									<div className="rewards-con">
 										{!!quest?.rewards?.length &&
 											quest.rewards.map(({ code, amount }) => (
-												<div className="reward-item">
+												<div key={`reward-item${code}${amount}`} className="reward-item">
 													<div className="reward-title">{`${code}`.toUpperCase()}</div>
 													<div className="reward-value">+{amount}</div>
 												</div>

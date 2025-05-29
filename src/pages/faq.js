@@ -30,20 +30,28 @@ const socials = [
 
 const questions = [
 	{
-		title: "Question 1",
-		descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		title: "What are $GEMP and XP?",
+		descr: "$GEMP is the in-game token of the Gempire project.<br/>XP (experience points) reflect a user's activity and determine their position on the leaderboard.",
 	},
 	{
-		title: "Question 2",
-		descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		title: "What is the leaderboard?",
+		descr: "The leaderboard shows your rank. Top-performing players receive additional rewards based on their standing.",
 	},
 	{
-		title: "Question 3",
-		descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		title: "How can I earn $GEMP?",
+		descr: "You can earn $GEMP by completing daily and weekly quests available on the platform. Participating in quests is the main way to accumulate tokens.",
 	},
 	{
-		title: "Question 4",
-		descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		title: "Do I need to invest anything?",
+		descr: "No. Participation in the pre-launch phase is completely free. All you need is a wallet, Twitter and Discord accounts - and a bit of motivation.",
+	},
+	{
+		title: "Why should I join now?",
+		descr: "Early participants have the chance to earn $GEMP before the official launch, climb the leaderboard, and gain exclusive advantages later on.",
+	},
+	{
+		title: "What rewards are available in the daily lottery?",
+		descr: "The daily lottery gives players a chance to win XP, $GEMP, and even test $MONAD - a token from the Monad ecosystem.",
 	},
 ];
 const Faq = () => {
@@ -62,10 +70,9 @@ const Faq = () => {
 					<Col xl={10}>
 						<div className="page-content-wrap">
 							<div className="side-con">
-								<div className="main-img-con">
+								<div className="main-img-con f-center">
 									<Image src={faqImg} alt={""} width={477} height={254} />
 								</div>
-								<div className="page-title">Build your own GEMPIRE!</div>
 								<div className="info-block">
 									<div className="title">About Us</div>
 									<div className="descr">
@@ -107,7 +114,7 @@ const Faq = () => {
 													</div>
 												</div>
 												<Collapse isOpen={activeQuestionId === index}>
-													<div className="question-descr">{descr}</div>
+													<div className="question-descr" dangerouslySetInnerHTML={{ __html: descr }} />
 												</Collapse>
 											</div>
 										))}
