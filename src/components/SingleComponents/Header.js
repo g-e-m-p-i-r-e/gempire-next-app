@@ -22,55 +22,58 @@ const routes = [
 
 const Header = () => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
+	const isAuth = !!useAppSelector((state) => state.main.user._id);
 
 	return (
-		<>
-			<div className="header-wrapper">
-				{!isMobile && (
-					<Container>
-						<Row>
-							<Col>
-								<div className="header-con">
-									<div className="side-block">
-										<div className="logo-con">
-											<Image src={logoImg} alt={""} width={117} height={25} />
+		isAuth && (
+			<>
+				<div className="header-wrapper">
+					{!isMobile && (
+						<Container>
+							<Row>
+								<Col>
+									<div className="header-con">
+										<div className="side-block">
+											<div className="logo-con">
+												<Image src={logoImg} alt={""} width={117} height={25} />
+											</div>
+											<div className="nav-panel-con">
+												{routes.map(({ id, title, Icon, path }) => (
+													<NavItem key={`nav-item-con${id}`} id={id} title={title} Icon={Icon} path={path} routes={routes} />
+												))}
+											</div>
 										</div>
-										<div className="nav-panel-con">
-											{routes.map(({ id, title, Icon, path }) => (
-												<NavItem key={`nav-item-con${id}`} id={id} title={title} Icon={Icon} path={path} routes={routes} />
-											))}
-										</div>
+										<UserStats />
 									</div>
-									<UserStats />
-								</div>
-							</Col>
-						</Row>
-					</Container>
-				)}
+								</Col>
+							</Row>
+						</Container>
+					)}
 
-				{isMobile && (
-					<>
-					<Container>
-						<Row>
-							<Col>
-								<div className="header-con">
-									<UserStats />
-								</div>
-							</Col>
-						</Row>
-					</Container>
+					{isMobile && (
+						<>
+							<Container>
+								<Row>
+									<Col>
+										<div className="header-con">
+											<UserStats />
+										</div>
+									</Col>
+								</Row>
+							</Container>
 
-						<div className="mobile-navbar-con">
-							<div className="nav-panel-con">
-								{routes.map(({ id, title, Icon, path }) => (
-									<NavItem key={`nav-item-con${id}`} id={id} title={title} Icon={Icon} path={path} routes={routes} />
-								))}
+							<div className="mobile-navbar-con">
+								<div className="nav-panel-con">
+									{routes.map(({ id, title, Icon, path }) => (
+										<NavItem key={`nav-item-con${id}`} id={id} title={title} Icon={Icon} path={path} routes={routes} />
+									))}
+								</div>
 							</div>
-						</div>
-					</>
-				)}
-			</div>
-		</>
+						</>
+					)}
+				</div>
+			</>
+		)
 	);
 };
 

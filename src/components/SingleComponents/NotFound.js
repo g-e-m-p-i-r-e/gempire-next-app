@@ -19,7 +19,7 @@ class NotFound extends Component {
 								color="warning"
 								className="orange-button"
 								onClick={() => {
-									router.push("/");
+									router.push("/home");
 								}}
 							>
 								Main Page

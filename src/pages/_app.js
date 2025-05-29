@@ -15,6 +15,7 @@ import ReownConnectWrapper from "../components/SingleComponents/ReownConnectWrap
 import ResizeListener from "../components/SingleComponents/ResizeListener";
 import Header from "../components/SingleComponents/Header";
 import { Scripts } from "../layout";
+import StarsAnimation from "../components/SingleComponents/StarsAnimation";
 
 import "../assets/scss/main.scss";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +37,7 @@ class WebApp extends App {
 			<ReownConnectWrapper>
 				<StoreProvider initialReduxState={initialReduxState} clientSideDispatches={clientSideDispatches}>
 					<div className="app-with-bg" />
+					<StarsAnimation />
 					<HelmetComponent {...pageProps} />
 
 					<div id="next-app">
