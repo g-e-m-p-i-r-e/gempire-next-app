@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import React, { useEffect, useState } from "react";
+import { serverSideTranslations }     from "next-i18next/serverSideTranslations";
 import { Col, Container, Dropdown, DropdownMenu, DropdownToggle, Row } from "reactstrap";
 import Image from "next/image";
 
@@ -14,6 +14,8 @@ import testAvatar from "../assets/img/LoginPage/avatars/avatar2.png";
 import arrowWhiteIcon from "../assets/img/common/arrowWhite.svg";
 
 import "../assets/scss/RanksPage/main.scss";
+import fetchWithToken from '../helpers/fetchWithToken';
+import customToast from '../helpers/customToast';
 
 const listFilters = [
 	{ id: "xp", title: "XP" },
@@ -25,116 +27,54 @@ const Ranks = () => {
 
 	const [activeFilter, setActiveFilter] = useState("xp");
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const [isLeaderboardLoading, setIsLeaderboardLoading] = useState(true);
+	const [leadersByXp, setLeadersByXp] = useState([]);
+	const [leadersByBalance, setLeadersByBalance] = useState([]);
+	const [totalUsersCount, setTotalUsersCount] = useState(0);
 
-	const leadersByXp = [
-		{
-			address: "0x123123123123123",
-			amount: 10000,
-			isGrow: true,
-			avatarSrc: testAvatar.src,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 900,
+	const [xpUserData, setXpUserData] = useState(undefined);
+	const [balanceUserData, setBalanceUserData] = useState(undefined);
 
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 800,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 700,
-			isGrow: false,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 600,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 500,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 400,
-			isGrow: true,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 300,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 200,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 100,
-			isGrow: true,
-		},
-	];
-	const leadersByBalance = [
-		{
-			address: "0x123123123123123",
-			amount: 1000000,
-			isGrow: true,
-			avatarSrc: testAvatar.src,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 900,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 800,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 700,
-			isGrow: true,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 600,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 500,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 400,
-			isGrow: false,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 300,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 200,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 100,
-			isGrow: true,
-		},
-	];
+	const getLeaderboard = async () => {
+		try {
+			setIsLeaderboardLoading(true);
 
-	const totalUsersCount = 999999;
+			const leaderboardRes = await fetchWithToken("/leaderboard");
+
+			if (!leaderboardRes?.success) {
+				customToast({ toastId: "/leaderboard", type: "error", message: "Something went wrong while get quests list. Please try again later." });
+				return false;
+			}
+
+			if (leaderboardRes?.data) {
+				setLeadersByXp(leaderboardRes.data.xp.list.map((item) => {
+					return {
+						...item,
+						isGrow: true,
+					}
+				}));
+				setLeadersByBalance(leaderboardRes.data.balance.list.map((item) => {
+					return {
+						...item,
+						isGrow: true,
+					}
+				}));
+				setXpUserData(leaderboardRes.data.xp.userData);
+				setBalanceUserData(leaderboardRes.data.balance.userData);
+			}
+
+			setTotalUsersCount(leaderboardRes.data.totalCount);
+
+		} catch (e) {
+			console.error("Error getLeaderboard:", e);
+		} finally {
+			setIsLeaderboardLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		getLeaderboard();
+	}, []);
 
 	return (
 		<div className="ranks-page-con">
@@ -181,7 +121,7 @@ const Ranks = () => {
 								</div>
 							</div>
 
-							<UserStatsInfo activeFilter={activeFilter} />
+							{(xpUserData && balanceUserData) && (<UserStatsInfo activeFilter={activeFilter} xpUserData={xpUserData} balanceUserData={balanceUserData}/>)}
 						</div>
 					</Col>
 				</Row>

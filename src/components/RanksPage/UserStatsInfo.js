@@ -13,14 +13,14 @@ import avatar1Icon from "../../assets/img/LoginPage/avatars/avatar1.png";
 
 import "../../assets/scss/RanksPage/UserStatsInfo.scss";
 
-const UserStatsInfo = ({ activeFilter }) => {
+const UserStatsInfo = ({ activeFilter, xpUserData, balanceUserData }) => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
-
-	const userAddress = "0x123123123123123222";
-	const userXp = 100;
-	const userBalance = 100;
-	const userRankXp = 100;
-	const userRankBalance = 100;
+	const username = useAppSelector((state) => state.main.user.username);
+	const wallet = useAppSelector((state) => state.main.user.wallet);
+	const userXp = xpUserData.balance;
+	const userBalance = balanceUserData.balance;
+	const userRankXp = xpUserData.position;
+	const userRankBalance = balanceUserData.position;
 	const isUserXpRankGrow = true;
 	const isUserBalanceRankGrow = false;
 	const userAvatarSrc = "";
@@ -32,9 +32,9 @@ const UserStatsInfo = ({ activeFilter }) => {
 					<ImageFallback src={userAvatarSrc} fallbackSrc={avatar1Icon} width={38} height={38} />
 				</div>
 				<div className="main-info-con">
-					<div className="address">{sliceAddress(userAddress)}</div>
+					<div className="address">{username || sliceAddress(wallet)}</div>
 					<div className="balances-con">
-						{activeFilter === "xp" && <div className="descr">{numberWithSeparator(userXp)} XP</div>}
+						{(activeFilter === "xp"  || !isMobile) && <div className="descr">{numberWithSeparator(userXp)} XP</div>}
 						{!isMobile && (
 							<div className="dot-con f-center">
 								<svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
@@ -42,12 +42,12 @@ const UserStatsInfo = ({ activeFilter }) => {
 								</svg>
 							</div>
 						)}
-						{activeFilter === "gemp" && <div className="descr">{numberWithSeparator(userBalance)} GEMP</div>}
+						{(activeFilter === "gemp" || !isMobile)  && <div className="descr">{numberWithSeparator(userBalance)} GEMP</div>}
 					</div>
 				</div>
 			</div>
 			<div className="side-con">
-				{activeFilter === "xp" && (
+				{(activeFilter === "xp" || !isMobile) && (
 					<div className="rank-item">
 						<div className="count">#{numberWithSeparator(userRankXp)}</div>
 						<div className={`grow-sign f-center ${isUserXpRankGrow ? "is-grow" : ""}`}>
@@ -63,7 +63,7 @@ const UserStatsInfo = ({ activeFilter }) => {
 						</svg>
 					</div>
 				)}
-				{activeFilter === "gemp" && (
+				{(activeFilter === "gemp" || !isMobile) && (
 					<div className="rank-item">
 						<div className="count">#{numberWithSeparator(userRankBalance)}</div>
 						<div className={`grow-sign f-center ${isUserXpRankGrow ? "is-grow" : ""}`}>
