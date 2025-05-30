@@ -47,59 +47,32 @@ const Ranks = () => {
 			}
 
 			if (leaderboardRes?.data) {
-				setLeadersByXp(leaderboardRes.data.xp.items);
-				setLeadersByBalance(leaderboardRes.data.balance.items);
+				setLeadersByXp(leaderboardRes.data.xp.items.map((item) => {
+					return {
+						...item,
+						isGrow: true,
+					}
+				}));
+				setLeadersByBalance(leaderboardRes.data.balance.items.map((item) => {
+					return {
+						...item,
+						isGrow: true,
+					}
+				}));
 				setXpUserData(leaderboardRes.data.xp.userData);
 				setBalanceUserData(leaderboardRes.data.balance.userData);
 			}
 
 			setTotalUsersCount(leaderboardRes.data.totalCount);
 
-
-			/*
-{
-  "success": true,
-  "data": {
-    "xp": {
-      "list": [
-        {
-          "username": "test",
-          "balance": 400
-        },
-        {
-          "wallet": "0x242F6039c71012E7E8f82F8851E24F112A62bdDC",
-          "balance": 500
-        }
-      ],
-      "userData": {
-        "position": 1
-      }
-    },
-    "balance": {
-      "list": [
-        {
-          "wallet": "0x242F6039c71012E7E8f82F8851E24F112A62bdDC",
-          "balance": 600
-        },
-        {
-          "username": "test",
-          "balance": 700
-        }
-      ],
-      "userData": {
-        "position": 2
-      }
-    },
-    "totalCount": 2
-  }
-}
-			 */
 		} catch (e) {
 			console.error("Error getLeaderboard:", e);
 		} finally {
 			setIsLeaderboardLoading(false);
 		}
 	};
+
+	getLeaderboard();
 
 	const leadersByXp2 = [
 		{
