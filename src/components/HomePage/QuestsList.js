@@ -21,7 +21,7 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 		try {
 			setIsLoadingQuest(true);
 
-			const res = await fetchWithToken("/quest/complete-quest", {
+			const res = await fetchWithToken("/quest/complete", {
 				method: "POST",
 				body: {
 					questId,
@@ -29,7 +29,7 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 			});
 
 			if (!res?.success) {
-				customToast({ toastId: "/quest/complete-quest", type: "error", message: "Something went wrong while complete quest. Please try again later." });
+				customToast({ toastId: "/quest/complete", type: "error", message: "Something went wrong while complete quest. Please try again later." });
 				return false;
 			}
 
