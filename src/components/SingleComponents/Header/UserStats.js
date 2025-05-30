@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useAppKitAccount, useAppKitBalance } from "@reown/appkit/react";
 
 import numberWithSeparator from "../../../helpers/numberWithSeparator";
 
@@ -15,8 +16,20 @@ const UserStats = () => {
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.balance);
 
+	const { fetchBalance } = useAppKitBalance();
+	const { isConnected } = useAppKitAccount();
+
+	const [nativeBalance, setNativeBalance] = useState(0);
+
+	useEffect(() => {
+		if (isConnected) {
+			fetchBalance().then((e) => {
+				setNativeBalance(e.data.balance);
+			});
+		}
+	}, [isConnected, fetchBalance]);
+
 	const level = 0;
-	const points = 0;
 
 	const userLvlStats = [
 		{ id: "level", title: "Lvl", value: level },
@@ -25,7 +38,7 @@ const UserStats = () => {
 
 	const userBalanceStats = [
 		{ id: "balance", img: logoSmallImg, value: balance },
-		{ id: "points", img: monadImg, value: points },
+		{ id: "monad", img: monadImg, value: nativeBalance },
 	];
 
 	return (
