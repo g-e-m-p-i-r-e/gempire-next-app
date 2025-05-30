@@ -14,6 +14,8 @@ import testAvatar from "../assets/img/LoginPage/avatars/avatar2.png";
 import arrowWhiteIcon from "../assets/img/common/arrowWhite.svg";
 
 import "../assets/scss/RanksPage/main.scss";
+import fetchWithToken from '../helpers/fetchWithToken';
+import customToast from '../helpers/customToast';
 
 const listFilters = [
 	{ id: "xp", title: "XP" },
@@ -25,8 +27,81 @@ const Ranks = () => {
 
 	const [activeFilter, setActiveFilter] = useState("xp");
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const [isLeaderboardLoading, setIsLeaderboardLoading] = useState(true);
+	const [leadersByXp, setLeadersByXp] = useState([]);
+	const [leadersByBalance, setLeadersByBalance] = useState([]);
+	const [totalUsersCount, setTotalUsersCount] = useState(0);
 
-	const leadersByXp = [
+	const [xpUserData, setXpUserData] = useState({});
+	const [balanceUserData, setBalanceUserData] = useState({});
+
+	const getLeaderboard = async () => {
+		try {
+			setIsLeaderboardLoading(true);
+
+			const leaderboardRes = await fetchWithToken("/leaderboard");
+
+			if (!leaderboardRes?.success) {
+				customToast({ toastId: "/leaderboard", type: "error", message: "Something went wrong while get quests list. Please try again later." });
+				return false;
+			}
+
+			if (leaderboardRes?.data) {
+				setLeadersByXp(leaderboardRes.data.xp.items);
+				setLeadersByBalance(leaderboardRes.data.balance.items);
+				setXpUserData(leaderboardRes.data.xp.userData);
+				setBalanceUserData(leaderboardRes.data.balance.userData);
+			}
+
+			setTotalUsersCount(leaderboardRes.data.totalCount);
+
+
+			/*
+{
+  "success": true,
+  "data": {
+    "xp": {
+      "list": [
+        {
+          "username": "test",
+          "balance": 400
+        },
+        {
+          "wallet": "0x242F6039c71012E7E8f82F8851E24F112A62bdDC",
+          "balance": 500
+        }
+      ],
+      "userData": {
+        "position": 1
+      }
+    },
+    "balance": {
+      "list": [
+        {
+          "wallet": "0x242F6039c71012E7E8f82F8851E24F112A62bdDC",
+          "balance": 600
+        },
+        {
+          "username": "test",
+          "balance": 700
+        }
+      ],
+      "userData": {
+        "position": 2
+      }
+    },
+    "totalCount": 2
+  }
+}
+			 */
+		} catch (e) {
+			console.error("Error getLeaderboard:", e);
+		} finally {
+			setIsLeaderboardLoading(false);
+		}
+	};
+
+	const leadersByXp2 = [
 		{
 			address: "0x123123123123123",
 			amount: 10000,
@@ -80,7 +155,7 @@ const Ranks = () => {
 			isGrow: true,
 		},
 	];
-	const leadersByBalance = [
+	const leadersByBalance2 = [
 		{
 			address: "0x123123123123123",
 			amount: 1000000,
@@ -134,7 +209,7 @@ const Ranks = () => {
 		},
 	];
 
-	const totalUsersCount = 999999;
+	const totalUsersCount2 = 999999;
 
 	return (
 		<div className="ranks-page-con">
