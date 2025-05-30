@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import React, { useEffect, useState } from "react";
+import { serverSideTranslations }     from "next-i18next/serverSideTranslations";
 import { Col, Container, Dropdown, DropdownMenu, DropdownToggle, Row } from "reactstrap";
 import Image from "next/image";
 
@@ -72,7 +72,9 @@ const Ranks = () => {
 		}
 	};
 
-	getLeaderboard();
+	useEffect(() => {
+		getLeaderboard();
+	}, []);
 
 	const leadersByXp2 = [
 		{
