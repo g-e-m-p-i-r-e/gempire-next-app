@@ -43,7 +43,7 @@ const LoginRoute = {
 	},
 };
 const ProfileRoute = {
-	path: "/faq",
+	path: "/profile",
 	helmet: {
 		title: "GEMPIRE | Profile",
 		description: "Build your own Gempire",

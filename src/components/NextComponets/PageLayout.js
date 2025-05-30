@@ -26,6 +26,7 @@ const PageLayout = ({ Component, ...props }) => {
 			}
 
 			dispatch(setUser(res?.data));
+			await push("/home", undefined, { shallow: true });
 
 			return true;
 		} catch (e) {

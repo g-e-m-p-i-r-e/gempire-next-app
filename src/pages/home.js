@@ -30,19 +30,19 @@ const Home = () => {
 		try {
 			setIsQuestsLoading(true);
 
-			const questRes = await fetchWithToken("/quest");
+			const questRes = await fetchWithToken("/quest?limit=50&page=0");
 
 			if (!questRes?.success) {
 				customToast({ toastId: "/quest", type: "error", message: "Something went wrong while get quests list. Please try again later." });
 				return false;
 			}
 
-			const { daily, weekly } = questRes?.data.reduce(
+			const { daily, weekly } = questRes?.data?.reduce(
 				(acc, quest) => {
-					const progress = userQuestsProgress.find((progress) => progress.questId === quest._id);
+					const progress = userQuestsProgress.find((pr) => pr.questId === quest._id);
 					let status = "NEW";
 
-					if (!!progress?.completedAt) {
+					if (progress?.completedAt) {
 						status = "DONE";
 					}
 

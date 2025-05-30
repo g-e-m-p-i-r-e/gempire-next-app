@@ -3,7 +3,6 @@ import { Col, Container, Row } from "reactstrap";
 import Image from "next/image";
 import { useAppKit, useAppKitAccount, useDisconnect } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
-import { toast } from "react-toastify";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 
@@ -35,6 +34,7 @@ const EnterLogin = () => {
 	const [isFaqOpen, setIsFaqOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isNewConnected, setIsNewConnected] = useState(false);
+	const [isAskSingModal, setIsAskSingModal] = useState(false);
 
 	const isConnectDisabled = isLoading;
 
@@ -93,19 +93,28 @@ const EnterLogin = () => {
 		}
 	};
 
+	const sign = async () => {
+		customToast({ toastId: "/user/nonce", type: "error", message: evmAddress });
+	};
+
 	const openModal = async () => {
 		if (!isConnectDisabled && !evmAddress) {
 			await disconnect();
 			await open();
 			setIsNewConnected(true);
 		} else {
-			onSignMessage();
+			setIsAskSingModal(true);
 		}
+	};
+
+	const cancelSign = async () => {
+		await disconnect();
+		setIsAskSingModal(false);
 	};
 
 	useEffect(() => {
 		if (evmAddress && !isConnectDisabled && isNewConnected) {
-			onSignMessage();
+			setIsAskSingModal(true);
 		}
 	}, [evmAddress, isNewConnected]);
 
@@ -120,7 +129,7 @@ const EnterLogin = () => {
 									<Image src={logoImg} alt={""} width={117} height={25} />
 								</div>
 							)}
-							<div className="title">
+							<div className="title" onClick={sign}>
 								Join early.
 								<br />
 								Earn XP & GEMP
@@ -166,6 +175,23 @@ const EnterLogin = () => {
 							Coinbase Wallet
 						</a>
 						, and they are often used through browser extensions or mobile apps.
+					</div>
+				</div>
+			</CustomSmallModal>
+
+			<CustomSmallModal isOpen={isAskSingModal} backdrop={"static"} close={cancelSign} modalClassName={"login-faq-modal"}>
+				<div className="login-faq-con">
+					<div className="cross f-center" onClick={cancelSign}>
+						<Image src={crossImg} alt={""} width={22} height={22} />
+					</div>
+					<div className="title">Sign In</div>
+					<div className="descr">
+						Sign the message to prove you own this wallet and proceed.
+						<br />
+						<span className="ligth">Canceling will disconnect you.</span>
+					</div>
+					<div className={`sign-btn ${isConnectDisabled ? "disabled" : ""}`} onClick={onSignMessage}>
+						Sign
 					</div>
 				</div>
 			</CustomSmallModal>

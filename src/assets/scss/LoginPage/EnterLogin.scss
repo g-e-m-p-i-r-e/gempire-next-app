@@ -115,10 +115,34 @@
 			.strong {
 				font-weight: 700;
 			}
+			.ligth {
+				opacity: 0.5;
+			}
 
 			.link {
 				color: #7c43ff;
 				font-weight: 700;
+			}
+		}
+
+		.sign-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 52px;
+			width: 100%;
+			border-radius: 31px;
+			margin-bottom: 8px;
+			cursor: pointer;
+			transition: 0.2s;
+			border: 1.5px solid #000;
+			background: #fff;
+			color: black;
+
+			&.disabled {
+				cursor: auto;
+				pointer-events: none;
+				opacity: 0.5;
 			}
 		}
 	}

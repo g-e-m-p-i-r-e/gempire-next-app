@@ -26,7 +26,7 @@ const Profile = () => {
 
 	const onLogout = async () => {
 		await deleteCookie(`${process.env.ACCESS_TOKEN_PREFIX}-accessToken`);
-		disconnect();
+		await disconnect();
 		window.location.href = "/login";
 	};
 

@@ -31,10 +31,10 @@ class WebApp extends App {
 	}
 
 	render() {
-		const { Component, pageProps, initialReduxState, clientSideDispatches, pathname } = this.props;
+		const { Component, pageProps, initialReduxState, clientSideDispatches, pathname, cookies } = this.props;
 
 		return (
-			<ReownConnectWrapper>
+			<ReownConnectWrapper cookies={cookies}>
 				<StoreProvider initialReduxState={initialReduxState} clientSideDispatches={clientSideDispatches}>
 					<div className="app-with-bg" />
 					<StarsAnimation />
@@ -60,6 +60,7 @@ class WebApp extends App {
 WebApp.getInitialProps = async (context) => {
 	const { ctx } = context;
 	const isSSR = typeof window === "undefined";
+	const cookies = ctx.req.headers.cookie;
 
 	let ua = "";
 	let reduxStore = null;
@@ -88,6 +89,7 @@ WebApp.getInitialProps = async (context) => {
 		pathname: ctx.pathname,
 		initialReduxState: reduxStore,
 		clientSideDispatches: [],
+		cookies,
 	};
 };
 

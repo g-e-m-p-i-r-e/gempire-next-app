@@ -1,20 +1,19 @@
 import React from "react";
 
-import { cookieStorage, createStorage } from "@wagmi/core";
+import { cookieStorage, createStorage, cookieToInitialState, WagmiProvider } from "wagmi";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { monadTestnet } from "@reown/appkit/networks";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { monadTestnet } from "@reown/appkit/networks";
-import { cookieToInitialState, WagmiProvider } from "wagmi";
 
-export const projectId = process.env.REOWN_PROJECT_ID;
+const projectId = process.env.REOWN_PROJECT_ID;
 
 if (!projectId) {
-	throw new Error("Project ID is not defined");
+	throw new Error("REOWN_PROJECT_ID is not defined");
 }
 
-export const networks = [monadTestnet];
+const networks = [monadTestnet];
 
 export const wagmiAdapter = new WagmiAdapter({
 	storage: createStorage({
@@ -27,7 +26,7 @@ export const wagmiAdapter = new WagmiAdapter({
 
 const queryClient = new QueryClient();
 
-createAppKit({
+export const modal = createAppKit({
 	adapters: [wagmiAdapter],
 	projectId,
 	networks: [monadTestnet],
@@ -47,11 +46,10 @@ createAppKit({
 		receive: false,
 		send: false,
 	},
-	allWallets: "HIDE",
+	// allWallets: "HIDE",
 });
 
-const ReownConnectWrapper = ({ children }) => {
-	const cookies = typeof window !== "undefined" ? document?.cookie || "" : "";
+const ReownConnectWrapper = ({ children, cookies }) => {
 	const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig, cookies);
 
 	return (
@@ -60,5 +58,4 @@ const ReownConnectWrapper = ({ children }) => {
 		</WagmiProvider>
 	);
 };
-
 export default ReownConnectWrapper;

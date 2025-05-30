@@ -3,7 +3,7 @@ import { Modal } from "reactstrap";
 
 import "../../assets/scss/SingleComponents/CustomSmallModal.scss";
 
-const CustomSmallModal = ({ isOpen, isCloseAble = true, close, children, modalClassName }) => {
+const CustomSmallModal = ({ isOpen, backdrop = true, isCloseAble = true, close, children, modalClassName }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isShowBackdrop, setisShowBackdrop] = useState(false);
 
@@ -32,7 +32,7 @@ const CustomSmallModal = ({ isOpen, isCloseAble = true, close, children, modalCl
 	}, [isOpen]);
 
 	return (
-		<Modal isOpen={isShowBackdrop} toggle={onClose} backdropClassName="swipe-able-popup-backdrop" modalClassName={`swipe-able-popup-modal ${modalClassName}`} className="swipe-able-popup-wrapper" zIndex={900}>
+		<Modal isOpen={isShowBackdrop} toggle={onClose} backdrop={backdrop} backdropClassName="swipe-able-popup-backdrop" modalClassName={`swipe-able-popup-modal ${modalClassName}`} className="swipe-able-popup-wrapper" zIndex={900}>
 			<div className={`swipe-able-popup-container ${isModalOpen ? "is-open" : "is-close"}`}>{children}</div>
 		</Modal>
 	);
