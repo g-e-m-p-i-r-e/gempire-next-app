@@ -4,6 +4,7 @@ import { setUser } from "../../redux/slices/main";
 import { useAppDispatch, useAppSelector } from "../../redux";
 
 import "../../assets/scss/ProfilePage/UsernameBlock.scss";
+import fetchWithToken from "../../helpers/fetchWithToken";
 
 const EngRegex = /^[a-zA-Z0-9_]+$/;
 
@@ -34,6 +35,14 @@ const UsernameBlock = () => {
 	const postSaveUsername = async () => {
 		try {
 			dispatch(setUser({ username: newUsername }));
+			const { success, error } = await fetchWithToken('/user/username', {
+				method: 'POST',
+				body: { username: newUsername },
+			});
+			if (!success) {
+				console.error(`Error setting username: ${error}`);
+				// TODO toast error
+			}
 			setIsUsernameInputActive(false);
 			setNewUsername("");
 		} catch (e) {
@@ -60,7 +69,7 @@ const UsernameBlock = () => {
 			{newUsername && (
 				<div className="edit-btn save" onClick={postSaveUsername}>
 					Save
-				</div>
+				</div> // TODO add limit. ( length >= 3 && length <= 16 )
 			)}
 		</div>
 	);

@@ -49,7 +49,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 								</div>
 							</div>
 							<div className="info-con">
-								<div className="address">{item.username ? item.username : sliceAddress(item.address)}</div>
+								<div className="address">{item.username ? item.username : sliceAddress(item.wallet)}</div>
 								<div className="amount">
 									{numberWithSeparator(item.balance)} {currency}
 								</div>
@@ -70,7 +70,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 										<ImageFallback src={item.avatarSrc} width={38} height={38} />
 									</div>
 									<div className="info-con">
-										<div className="address">{item.username ? item.username : sliceAddress(item.address)}</div>
+										<div className="address">{item.username ? item.username : sliceAddress(item.wallet)}</div>
 										<div className="amount">
 											{numberWithSeparator(item.balance)} {currency}
 										</div>

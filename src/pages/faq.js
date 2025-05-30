@@ -18,13 +18,13 @@ const socials = [
 		id: "discord",
 		img: discordImg,
 		title: "Discord",
-		link: "https://discord.gg",
+		link: "https://discord.gg/c3urWF6Tak",
 	},
 	{
 		id: "twitter",
 		img: twitterImg,
 		title: "Twitter",
-		link: "https://x.com",
+		link: "https://x.com/gempire_app",
 	},
 ];
 

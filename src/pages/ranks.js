@@ -32,8 +32,8 @@ const Ranks = () => {
 	const [leadersByBalance, setLeadersByBalance] = useState([]);
 	const [totalUsersCount, setTotalUsersCount] = useState(0);
 
-	const [xpUserData, setXpUserData] = useState({});
-	const [balanceUserData, setBalanceUserData] = useState({});
+	const [xpUserData, setXpUserData] = useState(undefined);
+	const [balanceUserData, setBalanceUserData] = useState(undefined);
 
 	const getLeaderboard = async () => {
 		try {
@@ -47,13 +47,13 @@ const Ranks = () => {
 			}
 
 			if (leaderboardRes?.data) {
-				setLeadersByXp(leaderboardRes.data.xp.items.map((item) => {
+				setLeadersByXp(leaderboardRes.data.xp.list.map((item) => {
 					return {
 						...item,
 						isGrow: true,
 					}
 				}));
-				setLeadersByBalance(leaderboardRes.data.balance.items.map((item) => {
+				setLeadersByBalance(leaderboardRes.data.balance.list.map((item) => {
 					return {
 						...item,
 						isGrow: true,
@@ -75,116 +75,6 @@ const Ranks = () => {
 	useEffect(() => {
 		getLeaderboard();
 	}, []);
-
-	const leadersByXp2 = [
-		{
-			address: "0x123123123123123",
-			amount: 10000,
-			isGrow: true,
-			avatarSrc: testAvatar.src,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 900,
-
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 800,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 700,
-			isGrow: false,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 600,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 500,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 400,
-			isGrow: true,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 300,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 200,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 100,
-			isGrow: true,
-		},
-	];
-	const leadersByBalance2 = [
-		{
-			address: "0x123123123123123",
-			amount: 1000000,
-			isGrow: true,
-			avatarSrc: testAvatar.src,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 900,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 800,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 700,
-			isGrow: true,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 600,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 500,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 400,
-			isGrow: false,
-		},
-		{
-			address: "0x123321321321321321",
-			amount: 300,
-			isGrow: true,
-		},
-		{
-			address: "0x123123123123123123",
-			amount: 200,
-			isGrow: false,
-		},
-		{
-			address: "0x123123123123123",
-			amount: 100,
-			isGrow: true,
-		},
-	];
-
-	const totalUsersCount2 = 999999;
 
 	return (
 		<div className="ranks-page-con">
@@ -231,7 +121,7 @@ const Ranks = () => {
 								</div>
 							</div>
 
-							<UserStatsInfo activeFilter={activeFilter} />
+							{(xpUserData && balanceUserData) && (<UserStatsInfo activeFilter={activeFilter} xpUserData={xpUserData} balanceUserData={balanceUserData}/>)}
 						</div>
 					</Col>
 				</Row>
