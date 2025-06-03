@@ -1,0 +1,65 @@
+.lottery-page-con {
+	.lottery-faq-con {
+		@media (min-width: 768px) {
+			margin-top: 24px;
+		}
+		.block-title {
+			color: #848097;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 125%;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+
+		.heading {
+			color: #848097;
+			font-size: 20px;
+			font-weight: 400;
+			line-height: 135%;
+			font-family: "Inter Tight", sans-serif;
+
+			.bold {
+				font-size: 24px;
+				color: #fff;
+				font-weight: 700;
+			}
+		}
+
+		.descr {
+			color: #848097;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 15px;
+			font-weight: 400;
+			line-height: 135%;
+
+			.bold {
+				color: #fff;
+				font-weight: 700;
+			}
+		}
+
+		.list-descr {
+			color: #fff;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 15px;
+			font-weight: 200;
+			line-height: 135%;
+			.bold {
+				font-weight: 700;
+			}
+		}
+
+		.sub-title {
+			color: #fff;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 24px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 135%;
+		}
+	}
+}

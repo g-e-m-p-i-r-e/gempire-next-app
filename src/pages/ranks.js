@@ -5,17 +5,16 @@ import Image from "next/image";
 
 import getSEOOptions from "../helpers/getSEOOptions";
 import numberWithSeparator from "../helpers/numberWithSeparator";
+import fetchWithToken from "../helpers/fetchWithToken";
+import customToast from "../helpers/customToast";
 import { useAppSelector } from "../redux";
 
 import UserStatsInfo from "../components/RanksPage/UserStatsInfo";
 import LeadersList from "../components/RanksPage/LeadersList";
 
-import testAvatar from "../assets/img/LoginPage/avatars/avatar2.png";
 import arrowWhiteIcon from "../assets/img/common/arrowWhite.svg";
 
 import "../assets/scss/RanksPage/main.scss";
-import fetchWithToken from "../helpers/fetchWithToken";
-import customToast from "../helpers/customToast";
 
 const listFilters = [
 	{ id: "xp", title: "XP" },

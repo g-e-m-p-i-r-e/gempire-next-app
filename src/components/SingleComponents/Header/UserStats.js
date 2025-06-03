@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAppKitAccount, useAppKitBalance } from "@reown/appkit/react";
 
+import { Tooltip } from "reactstrap";
 import numberWithSeparator from "../../../helpers/numberWithSeparator";
 import { useAppSelector } from "../../../redux";
 import decimalAdjust from "../../../helpers/decimalAdjust";
@@ -17,10 +18,13 @@ const UserStats = () => {
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.balance);
 
+	const toNextLvl = 100000;
+
 	const { fetchBalance } = useAppKitBalance();
 	const { isConnected } = useAppKitAccount();
 
 	const [nativeBalance, setNativeBalance] = useState(0);
+	const [tooltipOpen, setTooltipOpen] = useState(false);
 
 	useEffect(() => {
 		if (isConnected) {
@@ -45,7 +49,7 @@ const UserStats = () => {
 	return (
 		<div className="side-block justify-content-lg-end">
 			<div className="users-balances-con">
-				<div className="stat-items-wrap">
+				<div className="stat-items-wrap" id={"user-stat-lvl"}>
 					{userLvlStats.map(({ id, title, value }) => (
 						<div key={`users-balances-item${id}`} className="users-balances-item">
 							<div className="descr-wrap">
@@ -55,6 +59,9 @@ const UserStats = () => {
 						</div>
 					))}
 				</div>
+				<Tooltip isOpen={tooltipOpen} target="user-stat-lvl" placement={"bottom"} className="lvl-info-tooltip" toggle={() => setTooltipOpen(!tooltipOpen)}>
+					{numberWithSeparator(toNextLvl, ",")} XP until next level
+				</Tooltip>
 				<div className="stat-items-wrap">
 					{userBalanceStats.map(({ id, img, value }) => (
 						<div key={`users-balances-item${id}`} className="users-balances-item">

@@ -10,6 +10,7 @@ export const mainSlice = createSlice({
 			wallet: "",
 			xp: 0,
 			balance: 0,
+			tickets: 2,
 			quests: [
 				// {
 				// 	questId: "",
@@ -48,7 +49,10 @@ export const mainSlice = createSlice({
 				...action.payload,
 			});
 		},
+		incTicketsCount: (state, action) => {
+			state.user.tickets += action.payload;
+		},
 	},
 });
 
-export const { setIsMobile, addCompletedQuest, setUser } = mainSlice.actions;
+export const { setIsMobile, incTicketsCount, addCompletedQuest, setUser } = mainSlice.actions;

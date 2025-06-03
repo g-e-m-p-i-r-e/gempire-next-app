@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux";
 
 import "../../assets/scss/ProfilePage/UsernameBlock.scss";
 import fetchWithToken from "../../helpers/fetchWithToken";
+import customToast from "../../helpers/customToast";
 
 const EngRegex = /^[a-zA-Z0-9_]+$/;
 
@@ -22,8 +23,8 @@ const UsernameBlock = () => {
 	};
 
 	const onInputChange = (e) => {
-		if (e.target.value.length > 20) {
-			e.target.value = e.target.value.slice(0, 20);
+		if (e.target.value.length > 16) {
+			e.target.value = e.target.value.slice(0, 16);
 		}
 		if (!EngRegex.test(e.target.value)) {
 			e.target.value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "");
@@ -34,15 +35,21 @@ const UsernameBlock = () => {
 
 	const postSaveUsername = async () => {
 		try {
-			dispatch(setUser({ username: newUsername }));
-			const { success, error } = await fetchWithToken('/user/username', {
-				method: 'POST',
+			if (!newUsername || newUsername.length < 3 || newUsername.length > 16) {
+				customToast({ toastId: "/user/username", type: "success", message: "Username must be between 3 and 16 characters." });
+				return;
+			}
+
+			const { success, error } = await fetchWithToken("/user/username", {
+				method: "POST",
 				body: { username: newUsername },
 			});
 			if (!success) {
-				console.error(`Error setting username: ${error}`);
-				// TODO toast error
+				customToast({ toastId: "username", type: "error", message: "Something went wrong while save username. Please try again later." });
+				return;
 			}
+
+			dispatch(setUser({ username: newUsername }));
 			setIsUsernameInputActive(false);
 			setNewUsername("");
 		} catch (e) {
@@ -60,7 +67,7 @@ const UsernameBlock = () => {
 
 	return (
 		<div className="input-con">
-			<input ref={inputRef} autocomplete="off" type="text" disabled={!isUsernameInputActive} onChange={onInputChange} value={editUsername ? `@${editUsername}` : ""} className="input-item" placeholder="Add Username" />
+			<input ref={inputRef} autoComplete="off" type="text" disabled={!isUsernameInputActive} onChange={onInputChange} value={editUsername ? `@${editUsername}` : ""} className="input-item" placeholder="Add Username" />
 			{!newUsername && (
 				<div className="edit-btn" onClick={handleFocus}>
 					Edit
@@ -69,7 +76,7 @@ const UsernameBlock = () => {
 			{newUsername && (
 				<div className="edit-btn save" onClick={postSaveUsername}>
 					Save
-				</div> // TODO add limit. ( length >= 3 && length <= 16 )
+				</div>
 			)}
 		</div>
 	);

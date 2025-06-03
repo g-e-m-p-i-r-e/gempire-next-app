@@ -4,7 +4,6 @@
 		align-items: center;
 		justify-content: center;
 		background: #ffffff;
-		backdrop-filter: blur(12px);
 		min-height: 32px;
 		color: black;
 
@@ -79,10 +78,6 @@
 					border-radius: 8px;
 					border: 1px solid rgba(255, 255, 255, 0.15);
 					background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 29.17%, rgba(78, 78, 78, 0.05) 85.42%);
-					box-shadow:
-						0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
-						0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
-					backdrop-filter: blur(6px);
 					padding: 3px 8px;
 					margin-left: 4px;
 
@@ -92,7 +87,7 @@
 					}
 
 					.reward-title {
-						color: #07000F;
+						color: #07000f;
 						font-size: 10px;
 						font-style: normal;
 						font-weight: 600;

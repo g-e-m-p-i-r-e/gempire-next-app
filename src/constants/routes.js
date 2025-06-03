@@ -76,6 +76,18 @@ const ShopRoute = {
 	},
 };
 
+const LotteryRoute = {
+	path: "/lottery",
+	helmet: {
+		title: "GEMPIRE | Lottery",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
+
 const NotFoundRoute = {
 	path: "/404",
 	helmet: {
@@ -85,4 +97,4 @@ const NotFoundRoute = {
 	},
 };
 
-export default [MainRoute, NotFoundRoute, RanksRoute, HomeRoute, ProfileRoute, LoginRoute, ShopRoute, FaqRoute];
+export default [MainRoute, LotteryRoute, NotFoundRoute, RanksRoute, HomeRoute, ProfileRoute, LoginRoute, ShopRoute, FaqRoute];

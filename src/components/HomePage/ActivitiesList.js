@@ -6,6 +6,7 @@ import noQuestsBgImg from "../../assets/img/HomePage/noQuestsBg.png";
 import noQuestsImg from "../../assets/img/HomePage/noQuests.png";
 
 import "../../assets/scss/HomePage/ActivitiesList.scss";
+import numberWithSeparator from "../../helpers/numberWithSeparator";
 
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
@@ -59,18 +60,12 @@ const ActivitiesList = ({ isLoading, blockTitle, activities, withFilter }) => {
 						<div key={`activity-item${_id}`} className="activity-item">
 							<div className="title">{title}</div>
 							<div className="rewards-con">
-								{!!rewards?.xp && (
-									<div className="reward-item">
-										<div className="reward-title">XP</div>
-										<div className="reward-value">+{rewards.xp}</div>
+								{rewards.map(({ code, amount }) => (
+									<div key={`reward-item-${code}`} className="reward-item">
+										<div className="reward-title">{code}</div>
+										<div className="reward-value">+{numberWithSeparator(amount, ",")}</div>
 									</div>
-								)}
-								{!!rewards?.gemp && (
-									<div className="reward-item">
-										<div className="reward-title">GEMP</div>
-										<div className="reward-value">+{rewards.gemp}</div>
-									</div>
-								)}
+								))}
 							</div>
 						</div>
 					))}

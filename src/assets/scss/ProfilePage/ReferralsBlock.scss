@@ -23,7 +23,6 @@
 			border-radius: 8px;
 			border: 1px solid rgba(255, 255, 255, 0.15);
 			background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.1) 100%);
-			//backdrop-filter: blur(18.5px);
 			padding: 2px;
 			margin-bottom: 14px;
 
@@ -64,11 +63,8 @@
 			padding: 24px 24px 16px;
 			border-radius: 10px;
 			border: 1px solid rgba(255, 255, 255, 0.15);
-			background: radial-gradient(115.35% 89.57% at 50% 4.49%, rgba(49, 36, 59, 0.1) 0%, rgba(27, 26, 29, 0.1) 100%);
-			box-shadow:
-				0 1px 1px 0 rgba(199, 211, 234, 0.12) inset,
-				0 24px 48px 0 rgba(199, 211, 234, 0.05) inset;
-			backdrop-filter: blur(6px);
+			background: #1a0c2c;
+			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
 			margin-bottom: 14px;
 
 			.info-btn {
@@ -145,12 +141,7 @@
 
 					border-radius: 8px;
 					border: 1px solid rgba(255, 255, 255, 0.15);
-					background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
-					box-shadow:
-						0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
-						0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
-					backdrop-filter: blur(6px);
-
+					background: linear-gradient(180deg, rgb(51 52 65) 29.17%, rgb(28 28 28) 85.42%);
 					.amount {
 						text-shadow: -0.5px 0.5px 1px rgba(0, 0, 0, 0.16);
 						font-family: "Inter Tight", sans-serif;
@@ -183,11 +174,8 @@
 			width: 100%;
 			border-radius: 16px;
 			border: 1px solid rgba(255, 255, 255, 0.15);
-			background: radial-gradient(115.35% 89.57% at 50% 4.49%, rgba(49, 36, 59, 0.25) 0%, rgba(27, 26, 29, 0.25) 100%);
-			box-shadow:
-				0 1px 1px 0 rgba(199, 211, 234, 0.12) inset,
-				0 24px 48px 0 rgba(199, 211, 234, 0.05) inset;
-			backdrop-filter: blur(6px);
+			background: #1a0c2c;
+			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
 			padding: 0 16px;
 
 			.no-refs {
@@ -275,10 +263,6 @@
 						border-radius: 8px;
 						border: 1px solid #424242;
 						background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
-						box-shadow:
-							0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
-							0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
-						backdrop-filter: blur(6px);
 						padding: 3px 8px;
 						margin-right: 4px;
 						min-width: 90px;
@@ -336,6 +320,8 @@
 		font-style: normal;
 		font-weight: 400;
 		line-height: 16px;
+		border-radius: 8px;
+		padding: 6px 10px;
 	}
 
 	.tooltip-arrow::before {

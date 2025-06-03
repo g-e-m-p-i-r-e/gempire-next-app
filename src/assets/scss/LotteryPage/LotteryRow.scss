@@ -1,0 +1,344 @@
+.lottery-page-con {
+	.lottery-row-con {
+		margin-bottom: 24px;
+
+		.block-title {
+			text-align: center;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 32px;
+			margin-bottom: 8px;
+		}
+
+		.lottery-row-carousel-wrapper {
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+			border-radius: 10px;
+
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: #1a0c2c;
+			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
+			min-height: 146px;
+
+			&:before {
+				content: "";
+				background: linear-gradient(270deg, rgba(31, 21, 53, 0) 0%, #1f1535 93.44%);
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 10%;
+				height: 100%;
+				z-index: 1;
+			}
+			&:after {
+				content: "";
+				background: linear-gradient(-270deg, rgba(31, 21, 53, 0) 0%, #1f1535 93.44%);
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 10%;
+				height: 100%;
+				z-index: 1;
+			}
+
+			.loader-con {
+				position: absolute;
+				z-index: 6;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				background: #1a0c2c;
+				box-shadow:
+					0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset,
+					0px 24px 48px 0px rgba(199, 211, 234, 0.05) inset;
+
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.2s ease-in-out;
+
+				&.show {
+					pointer-events: auto;
+					opacity: 1;
+				}
+
+				.lottie-wrap {
+					width: 80px;
+				}
+			}
+
+			.center-arrow-con {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				height: calc(100% + 1px);
+				img {
+					max-height: calc(100% + 1px);
+					height: calc(100% + 1px);
+				}
+			}
+
+			.lottery-row-carousel {
+				display: flex;
+
+				.lottery-row-item {
+					display: flex;
+					align-items: center;
+					flex-direction: column;
+					flex-grow: 1;
+					margin: 20px 8px;
+
+					.img-con {
+						margin-bottom: 5px;
+						width: 64px;
+						min-width: 64px;
+					}
+
+					.title {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-grow: 1;
+						margin-bottom: 3px;
+						text-align: center;
+						font-family: "Inter Tight", sans-serif;
+						font-size: 20px;
+						font-weight: 700;
+						background: linear-gradient(180deg, #f5f5f5 29.17%, #9ca3af 85.42%);
+						background-clip: text;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+
+						&.small {
+							font-size: 16px;
+						}
+					}
+					.descr {
+						text-align: center;
+						opacity: 0.4;
+						font-family: "Inter Tight", sans-serif;
+						font-size: 10px;
+						font-weight: 600;
+					}
+				}
+			}
+
+			.timer-block {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 5;
+				padding: 11px 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+
+				background: #1a0c2c;
+
+				box-shadow:
+					0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset,
+					0px 24px 48px 0px rgba(199, 211, 234, 0.05) inset;
+
+				.timer-title {
+					color: #fff;
+					text-align: center;
+					font-family: "Inter Tight", sans-serif;
+					font-size: 18px;
+					font-style: normal;
+					font-weight: 600;
+					line-height: 32px;
+					margin-bottom: 12px;
+				}
+
+				.custom-timer {
+					.value-con {
+						display: flex;
+						align-items: center;
+						text-align: center;
+
+						.value {
+							border-radius: 8px;
+							border: 1px solid rgba(255, 255, 255, 0.15);
+							background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
+
+							font-family: "Inter Tight", sans-serif;
+							font-size: 12px;
+							font-weight: 600;
+							letter-spacing: 0.1px;
+							min-width: 45px;
+							padding: 8px 0;
+							text-transform: lowercase;
+						}
+						.dots {
+							margin: 0 6px;
+							text-shadow: -0.5px 0.5px 1px rgba(0, 0, 0, 0.16);
+							font-family: "Inter Tight", sans-serif;
+							font-size: 18px;
+							font-weight: 600;
+							opacity: 0.5;
+						}
+					}
+				}
+			}
+
+			.reward-block {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 5;
+				padding: 11px 0;
+				text-align: center;
+
+				background: #1a0c2c;
+				box-shadow:
+					0px 1px 1px 0px rgba(199, 211, 234, 0.12) inset,
+					0px 24px 48px 0px rgba(199, 211, 234, 0.05) inset;
+
+				.reward-title {
+					margin-bottom: 6px;
+					font-family: "Inter Tight", sans-serif;
+					font-size: 16px;
+					font-weight: 600;
+					line-height: 125%;
+				}
+
+				.reward-img-con {
+					margin: 0 auto 5px;
+					width: 58px;
+					min-width: 58px;
+				}
+
+				.title {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-grow: 1;
+					margin-bottom: 3px;
+					text-align: center;
+					font-family: "Inter Tight", sans-serif;
+					font-size: 20px;
+					font-weight: 700;
+					background: linear-gradient(180deg, #f5f5f5 29.17%, #9ca3af 85.42%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+
+					&.small {
+						font-size: 16px;
+					}
+				}
+				.descr {
+					text-align: center;
+					opacity: 0.4;
+					font-family: "Inter Tight", sans-serif;
+					font-size: 10px;
+					font-weight: 600;
+				}
+			}
+		}
+
+		.tickets-con {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 16px;
+			margin-top: 12px;
+			.tickets-balance-con {
+				display: flex;
+				align-items: center;
+				border-radius: 8px;
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				//background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
+				background: #170a2b;
+				box-shadow:
+					0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
+					0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
+				margin-right: 12px;
+				padding: 4px 8px;
+
+				.descr {
+					text-shadow: -0.5px 0.5px 1px rgba(0, 0, 0, 0.16);
+					font-family: "Inter Tight", sans-serif;
+					font-size: 12px;
+					font-weight: 600;
+					opacity: 0.6;
+					margin-right: 6px;
+				}
+
+				.title {
+					text-shadow: -0.5px 0.5px 1px rgba(0, 0, 0, 0.16);
+					font-family: "Inter Tight", sans-serif;
+					font-size: 12px;
+					font-weight: 700;
+					background: linear-gradient(180deg, #f5f5f5 29.17%, #9ca3af 85.42%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+					margin-right: 3px;
+				}
+			}
+
+			.tickets-price-con {
+				display: flex;
+				align-items: center;
+				border-radius: 8px;
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				background: linear-gradient(180deg, #fff 29.17%, #c5c5c5 85.42%);
+				box-shadow:
+					0 1.563px 3.126px 0 rgba(0, 0, 0, 0.08),
+					0 0.782px 0.391px 0 rgba(0, 0, 0, 0.12);
+				margin-right: 12px;
+				padding: 4px 8px;
+
+				.descr,
+				.title {
+					color: #07000f;
+					text-shadow: -0.5px 0.5px 1px rgba(0, 0, 0, 0.16);
+					font-family: "Inter Tight", sans-serif;
+					font-size: 12px;
+					font-weight: 600;
+					opacity: 0.6;
+					margin-right: 6px;
+				}
+
+				.title {
+					margin-right: 3px;
+				}
+			}
+		}
+
+		.btn-item {
+			border-radius: 31px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: #fff;
+			min-height: 52px;
+
+			color: #07000f;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 22px;
+			cursor: pointer;
+
+			&.disabled {
+				cursor: auto;
+				pointer-events: none;
+				opacity: 0.5;
+
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				background: radial-gradient(115.35% 89.57% at 50% 4.49%, #31243b 0%, #1b1a1d 100%);
+				color: white;
+			}
+		}
+	}
+}

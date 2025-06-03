@@ -1,24 +1,24 @@
 import React from "react";
 import Image from "next/image";
 import { Col, Container, Row } from "reactstrap";
+import { useRouter } from "next/router";
 
 import { useAppSelector } from "../../../redux";
 
 import NavItem from "./NavItem";
 import UserStats from "./UserStats";
+import RunLine from "./RunLine";
 
 import logoImg from "../../../assets/img/logo.png";
-import { Home, Shop, Leaderboard, Profile } from "../../../assets/img/headerIcons";
+import { Home, Shop, Leaderboard, Profile, Lottery } from "../../../assets/img/headerIcons";
 
 import "../../../assets/scss/SingleComponents/Header/Header.scss";
-import { useRouter } from "next/router";
-import RunLine from "./RunLine";
 
 const routes = [
 	{ id: "home", title: "Home", Icon: Home, path: "/home" },
 	{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
 	{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
-	// { id: "lottery", title: "Lottery", Icon: Lottery, path: "/lottery" },
+	{ id: "lottery", title: "Lottery", Icon: Lottery, path: "/lottery" },
 	{ id: "profile", title: "Profile", Icon: Profile, path: "/profile" },
 ];
 

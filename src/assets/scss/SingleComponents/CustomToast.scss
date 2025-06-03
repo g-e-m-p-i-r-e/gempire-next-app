@@ -8,19 +8,16 @@
 		background: none;
 
 		.Toastify__toast-body {
-
 			.custom-toast-content {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				padding: 16px;
-				background: linear-gradient(197.29deg, rgba(111, 95, 253, 0.8) 50.87%, #6f5ffd 116.23%);
-				border: 2px solid #6f5ffd;
-				border-radius: 16px;
-
+				border-radius: 8px;
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				background: linear-gradient(180deg, rgb(31 28 28) 0%, rgb(34 106 52) 104.55%);
 				&.error {
-					background: linear-gradient(180deg, #713efd 0%, #4400b1 100%);
-					border: 2px solid #6f5ffd;
+					background: linear-gradient(180deg, rgb(35 35 35) 0%, rgb(117 22 16) 104.55%);
 				}
 
 				.content-wrapper {
@@ -28,6 +25,12 @@
 					align-items: center;
 					justify-content: center;
 					padding-right: 20px;
+					font-family: "Inter Tight", sans-serif;
+
+					.img-con {
+						min-width: 16px;
+						margin-right: 12px;
+					}
 
 					.title {
 						margin-bottom: 8px;

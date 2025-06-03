@@ -179,6 +179,7 @@ img {
 	height: 100%;
 	pointer-events: none;
 	overflow: hidden;
+	z-index: -1;
 	.starts-animation-con {
 		position: absolute;
 		left: 0;

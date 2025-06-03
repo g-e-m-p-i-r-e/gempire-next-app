@@ -87,16 +87,19 @@ const Faq = () => {
 								<div className="main-img-con f-center">
 									<Image src={faqImg} alt={""} width={526} height={266} />
 								</div>
+								<div className="page-title">Welcome to Gempire</div>
 								<div className="info-block">
 									<div className="title">About Us</div>
+									<div className="block-title">
+										<span className="strong">Prelaunch </span>- your early access gateway into the world where builders rule.
+									</div>
 									<div className="descr">
-										Welcome to our platform, where we redefine the lottery experience through the power of cryptocurrency!
+										<span className="strong">Complete quests. Earn XP. Stack GEMPS. </span>This is your chance to prepare, level up, and secure your spot before the full game begins.
 										<br />
 										<br />
-										Our unique games let you <span className="strong">purchase</span> tickets with digital currencies, <span className="strong">giving</span> you the opportunity to <span className="strong">win incredible prizes</span> that could change your life. Thanks to our cutting-edge blockchain technology, every transaction and drawing is meticulously documented, <span className="strong">guaranteeing</span> a fair and trustworthy environment.
+										The future of Gempire belongs<span className="strong"> to those who start early.</span>
 										<br />
-										<br />
-										<span className="strong">Dive into the excitement and discover if fortune favors you!</span>
+										The earlier you move -<span className="strong"> the stronger your voice in what comes next.</span>
 									</div>
 								</div>
 								{!isMobile && (
