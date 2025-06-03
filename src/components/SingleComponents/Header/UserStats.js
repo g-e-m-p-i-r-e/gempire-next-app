@@ -4,11 +4,12 @@ import { useRouter } from "next/router";
 import { useAppKitAccount, useAppKitBalance } from "@reown/appkit/react";
 
 import numberWithSeparator from "../../../helpers/numberWithSeparator";
+import { useAppSelector } from "../../../redux";
+import decimalAdjust from "../../../helpers/decimalAdjust";
 
 import infoImg from "../../../assets/img/common/info.svg";
 import logoSmallImg from "../../../assets/img/logoSmall.png";
 import monadImg from "../../../assets/img/common/monad.png";
-import { useAppSelector } from "../../../redux";
 
 const UserStats = () => {
 	const { push } = useRouter();
@@ -38,7 +39,7 @@ const UserStats = () => {
 
 	const userBalanceStats = [
 		{ id: "balance", img: logoSmallImg, value: balance },
-		{ id: "monad", img: monadImg, value: nativeBalance },
+		{ id: "monad", img: monadImg, value: decimalAdjust(nativeBalance, 4) },
 	];
 
 	return (
@@ -47,20 +48,20 @@ const UserStats = () => {
 				<div className="stat-items-wrap">
 					{userLvlStats.map(({ id, title, value }) => (
 						<div key={`users-balances-item${id}`} className="users-balances-item">
-							<div className="value">{numberWithSeparator(value, ",")}</div>
 							<div className="descr-wrap">
 								<div className="descr">{title}</div>
 							</div>
+							<div className="value">{numberWithSeparator(value, ",")}</div>
 						</div>
 					))}
 				</div>
 				<div className="stat-items-wrap">
 					{userBalanceStats.map(({ id, img, value }) => (
 						<div key={`users-balances-item${id}`} className="users-balances-item">
-							<div className="value">{numberWithSeparator(value, ",")}</div>
 							<div className="img-con">
 								<Image src={img} alt={""} width={24} height={24} />
 							</div>
+							<div className="value">{numberWithSeparator(value, ",")}</div>
 						</div>
 					))}
 				</div>

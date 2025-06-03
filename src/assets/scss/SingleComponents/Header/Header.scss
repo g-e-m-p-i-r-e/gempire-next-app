@@ -18,7 +18,7 @@
 		bottom: 0;
 		border-top: 1px solid #4b4b4b;
 		background: linear-gradient(180deg, rgba(245, 245, 245, 0.04) 29.17%, rgba(156, 163, 175, 0.04) 85.42%);
-		backdrop-filter: blur(64px);
+		//backdrop-filter: blur(64px);
 		width: 100%;
 		padding: 15px 15px 25px;
 		z-index: 9;
@@ -158,11 +158,11 @@
 						font-weight: 600;
 						line-height: normal;
 						letter-spacing: 0.1px;
-						margin-right: 4px;
+						margin-left: 4px;
 
 						@media (min-width: 768px) {
 							font-size: 16px;
-							margin-right: 5px;
+							margin-left: 5px;
 						}
 					}
 
@@ -207,6 +207,4 @@
 			margin-left: 20px;
 		}
 	}
-
-
 }

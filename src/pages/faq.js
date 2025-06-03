@@ -5,10 +5,12 @@ import { Col, Collapse, Container, Row } from "reactstrap";
 
 import getSEOOptions from "../helpers/getSEOOptions";
 
-import faqImg from "../../src/assets/img/FaqPage/faqMain.png";
-import discordImg from "../../src/assets/img/FaqPage/discord.png";
-import twitterImg from "../../src/assets/img/FaqPage/twitter.png";
-import arrowWhiteImg from "../../src/assets/img/common/arrowWhite.svg";
+import faqImg from "../assets/img/FaqPage/faqMain.png";
+import discordImg from "../assets/img/FaqPage/discord.png";
+import twitterImg from "../assets/img/FaqPage/twitter.png";
+import telegramImg from "../assets/img/FaqPage/telegram.png";
+// import mediumImg from "../assets/img/FaqPage/medium.png";
+import arrowWhiteImg from "../assets/img/common/arrowWhite.svg";
 
 import "../assets/scss/FaqPage/main.scss";
 import { useAppSelector } from "../redux";
@@ -26,6 +28,18 @@ const socials = [
 		title: "Twitter",
 		link: "https://x.com/gempire_app",
 	},
+	{
+		id: "telegram",
+		img: telegramImg,
+		title: "Telegram",
+		link: "https://x.com/gempire_app",
+	},
+	// {
+	// 	id: "medium",
+	// 	img: mediumImg,
+	// 	title: "Medium",
+	// 	link: "",
+	// },
 ];
 
 const questions = [
@@ -71,7 +85,7 @@ const Faq = () => {
 						<div className="page-content-wrap">
 							<div className="side-con">
 								<div className="main-img-con f-center">
-									<Image src={faqImg} alt={""} width={477} height={254} />
+									<Image src={faqImg} alt={""} width={526} height={266} />
 								</div>
 								<div className="info-block">
 									<div className="title">About Us</div>
@@ -89,11 +103,10 @@ const Faq = () => {
 									<div className="info-block">
 										<div className="title">Our Socials</div>
 										<div className="socials-block">
-											{socials.map(({ id, title, img, link }) => (
+											{socials.map(({ id, img, link }) => (
 												<a key={`social-item${id}`} href={link} target="_blank" rel="noreferrer" className="social-item">
-													{title}
 													<div className="img-con f-center">
-														<Image src={img} alt={""} width={32} height={32} />
+														<Image src={img} alt={""} width={64} height={64} />
 													</div>
 												</a>
 											))}
@@ -126,11 +139,10 @@ const Faq = () => {
 								<div className="info-block">
 									<div className="title">Our Socials</div>
 									<div className="socials-block">
-										{socials.map(({ id, title, img, link }) => (
+										{socials.map(({ id, img, link }) => (
 											<a key={`social-item${id}`} href={link} target="_blank" rel="noreferrer" className="social-item">
-												{title}
 												<div className="img-con f-center">
-													<Image src={img} alt={""} width={32} height={32} />
+													<Image src={img} alt={""} width={64} height={64} />
 												</div>
 											</a>
 										))}

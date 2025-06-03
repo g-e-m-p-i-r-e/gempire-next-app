@@ -51,7 +51,15 @@
 				&.disabled {
 					cursor: auto;
 					pointer-events: none;
-					opacity: 0.5;
+					background: rgba(255, 255, 255, 0.5);
+				}
+
+				.lottie-wrap {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 40px;
+					height: 40px;
 				}
 			}
 			.btn-faq {

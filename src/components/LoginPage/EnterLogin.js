@@ -5,6 +5,7 @@ import { useAppKit, useAppKitAccount, useDisconnect } from "@reown/appkit/react"
 import { useSignMessage } from "wagmi";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 import { useAppDispatch, useAppSelector } from "../../redux";
 import fetchWithToken from "../../helpers/fetchWithToken";
@@ -18,7 +19,11 @@ import boosterImg from "../../assets/img/LoginPage/booster.png";
 import boosterMobileImg from "../../assets/img/LoginPage/boosterMobile.png";
 import crossImg from "../../assets/img/common/cross.svg";
 
+import monadLogoLottie from "../../assets/lottie/monadLogo.json";
+
 import "../../assets/scss/LoginPage/EnterLogin.scss";
+
+const Lottie = dynamic(() => import("lottie-react").then((module) => module), { ssr: false });
 
 const EnterLogin = () => {
 	const dispatch = useAppDispatch();
@@ -136,7 +141,12 @@ const EnterLogin = () => {
 							</div>
 							<div className="btns-con">
 								<div className={`btn-item ${isConnectDisabled ? "disabled" : ""}`} onClick={openModal}>
-									Connect Wallet
+									{!isConnectDisabled && "Connect Wallet"}
+									{isConnectDisabled && (
+										<div className="lottie-wrap">
+											<Lottie animationData={monadLogoLottie} loop={true} />
+										</div>
+									)}
 								</div>
 								<div className="btn-faq" onClick={() => setIsFaqOpen(true)}>
 									What is Web3 wallet?

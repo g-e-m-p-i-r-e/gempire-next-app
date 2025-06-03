@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 
 import sliceAddress from "../../helpers/sliceAddress";
 import numberWithSeparator from "../../helpers/numberWithSeparator";
+import { useAppSelector } from "../../redux";
 
 import ImageFallback from "../SingleComponents/ImageFallback";
 import CustomScrollbar from "../SingleComponents/CustomScrollbar";
@@ -13,28 +14,19 @@ import growRedIcon from "../../assets/img/common/growRed.svg";
 import "../../assets/scss/RanksPage/LeadersList.scss";
 
 const LeadersList = ({ title, leadersList, currency }) => {
+	const isMobile = useAppSelector((state) => state.main.isMobile);
+
 	const listRef = useRef();
 
 	const topLeaders = leadersList.slice(0, 3);
 	const restLeaders = leadersList.slice(3);
 
-	const resizeListener = () => {
-		console.log("test", listRef.current.clientHeight);
-	};
-
-	useEffect(() => {
-		window.addEventListener("resize", resizeListener);
-
-		return () => {
-			window.removeEventListener("resize", resizeListener);
-		};
-	}, []);
 	return (
 		<div className="leaders-list-con">
 			{!!title && <div className="block-title">{title}</div>}
 			<div className="top-leaders-con">
 				{[topLeaders[1], topLeaders[0], topLeaders[2]].map((item, i) =>
-					!!item ? (
+					item ? (
 						<div key={`${title}-leaders-${i}`} className={`leader-item ${i === 0 ? "silver" : ""} ${i === 1 ? "gold" : ""} ${i === 2 ? "bronze" : ""}`}>
 							<div className="avatar-con">
 								<div className="img-wrap" style={{ minHeight: i === 1 ? 108 : 77, minWidth: i === 1 ? 108 : 77 }}>
@@ -62,7 +54,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 			</div>
 			{!!restLeaders.length && (
 				<div ref={listRef} className="rest-leaders-list">
-					<CustomScrollbar options={{ autoHide: false }}>
+					<CustomScrollbar maxHeight={isMobile ? 400 : 0} options={{ autoHide: false }}>
 						{restLeaders.map((item, i) => (
 							<div key={`${title}-rest-leaders-${i}`} className="rest-leaders-list-item">
 								<div className="side-con">
