@@ -7,7 +7,7 @@ import "../../assets/scss/ProfilePage/UsernameBlock.scss";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
 
-const EngRegex = /^[a-zA-Z0-9_]+$/;
+const EngRegex = /[^a-zA-Z0-9_]/g;
 
 const UsernameBlock = () => {
 	const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ const UsernameBlock = () => {
 			e.target.value = e.target.value.slice(0, 16);
 		}
 
-		const cutSymbols = e.target.value.replace(EngRegex, "");
+		const cutSymbols = e.target.value.replace(EngRegex, "", "");
 
 		setNewUsername(`@${cutSymbols}`);
 	};
