@@ -10,7 +10,7 @@ export const mainSlice = createSlice({
 			wallet: "",
 			xp: 0,
 			balance: 0,
-			tickets: 2,
+			tickets: 0,
 			quests: [
 				// {
 				// 	questId: "",

@@ -26,37 +26,37 @@ const rewards = [
 	{
 		id: "badge",
 		img: badgeImg,
-		title: "Star",
+		//title: "Star",
 		descr: "Badge",
 	},
 	{
-		id: "gemp0.5",
+		id: "gemp",
 		img: gempImg,
-		title: 0.5,
+		//title: 0.5,
 		descr: "GEMP",
 	},
-	{
-		id: "modan1",
+/*	{
+		id: "monad",
 		img: monadImg,
 		title: 1,
 		descr: "Monad",
-	},
+	},*/
 	{
 		id: "nothing",
 		img: nothingImg,
-		title: "Nothing",
+		//title: "Nothing",
 		descr: "",
 	},
 	{
-		id: "ticket5",
+		id: "tickets",
 		img: ticketImg,
-		title: "5",
+		//title: "5",
 		descr: "Ticket",
 	},
 	{
-		id: "xp1000",
+		id: "xp",
 		img: xpImg,
-		title: "1,000",
+		//title: "1,000",
 		descr: "XP",
 	},
 ];
@@ -91,6 +91,13 @@ const LotteryRow = () => {
 
 		setRandomRewards(selectedRewards);
 		setState("ready");
+	};
+
+
+
+	const recoveryUserTickets = async () => {
+		const { data } = await fetchWithToken("/lottery/user");
+		dispatch(incTicketsCount(data?.tickets || 0));
 	};
 
 	const onSpin = async () => {
@@ -141,7 +148,9 @@ const LotteryRow = () => {
 		try {
 			setIsLoading(true);
 			setState("ready");
-			// const res = await fetchWithToken("/lottery")
+			const { success, data, error } = await fetchWithToken("/lottery/spin", {
+				method: "POST",
+			});
 			//
 			// if (!res?.success) {
 			// 	customToast({ toastId: "/lottery", type: "error", message: "Something went wrong while spin lottery. Please try again later." });
@@ -149,7 +158,11 @@ const LotteryRow = () => {
 			// }
 
 			// const winItem = res?.data?.reward
-			const winItemRes = rewards[Math.floor(Math.random() * rewards.length)];
+			const winItemRes = rewards.find((reward) => reward.id === data?.type);
+			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
+			else if (data.type === "nothing") winItemRes.title = "Nothing";
+			else if (data.type === "badge") winItemRes.title = data.badgeId;
+
 
 			dispatch(incTicketsCount(-1));
 			if (ticketsBalance - 1 <= 0) {
@@ -183,6 +196,12 @@ const LotteryRow = () => {
 			setTimerTo(Date.now() + 1000 * 20);
 		} else {
 			initWheel();
+		}
+	}, []);
+
+	useEffect( () => {
+		if (ticketsBalance <= 0) {
+			recoveryUserTickets();
 		}
 	}, []);
 
