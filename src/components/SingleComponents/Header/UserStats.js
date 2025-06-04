@@ -16,7 +16,7 @@ const UserStats = () => {
 	const { push } = useRouter();
 
 	const experience = useAppSelector((state) => state.main.user.xp);
-	const balance = useAppSelector((state) => state.main.user.balance);
+	const balance = useAppSelector((state) => state.main.user.gemp);
 
 	const toNextLvl = 100000;
 
@@ -42,7 +42,7 @@ const UserStats = () => {
 	];
 
 	const userBalanceStats = [
-		{ id: "balance", img: logoSmallImg, value: balance },
+		{ id: "gemp", img: logoSmallImg, value: balance },
 		{ id: "monad", img: monadImg, value: decimalAdjust(nativeBalance, 4) },
 	];
 

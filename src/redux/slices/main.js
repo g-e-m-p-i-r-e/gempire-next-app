@@ -9,7 +9,7 @@ export const mainSlice = createSlice({
 			createdAt: 0,
 			wallet: "",
 			xp: 0,
-			balance: 0,
+			gemp: 0,
 			tickets: 0,
 			quests: [
 				// {
@@ -19,6 +19,8 @@ export const mainSlice = createSlice({
 			],
 			referralCode: "",
 			referralsCount: 0,
+			referralIncome: 0,
+			invitedByReferrals: 0,
 			badges: [
 				// "id"
 			],

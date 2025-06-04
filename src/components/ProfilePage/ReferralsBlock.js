@@ -28,6 +28,8 @@ const ReferralsBlock = ({ openMainTab }) => {
 	const isPartner = useAppSelector((state) => state.main.user.isPartner);
 	const referralCode = useAppSelector((state) => state.main.user.referralCode);
 	const referralsCount = useAppSelector((state) => state.main.user.referralsCount);
+	const referralIncome = useAppSelector((state) => state.main.user.referralIncome);
+	const invitedByReferrals = useAppSelector((state) => state.main.user.invitedByReferrals);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -44,15 +46,15 @@ const ReferralsBlock = ({ openMainTab }) => {
 		},
 		{
 			title: "Verified",
-			amount: 100,
+			amount: 0,
 		},
 		{
 			title: "Invited by referrals",
-			amount: 100,
+			amount: invitedByReferrals,
 		},
 		{
 			title: "Earned GEMP",
-			amount: 35312.99,
+			amount: referralIncome,
 		},
 	];
 

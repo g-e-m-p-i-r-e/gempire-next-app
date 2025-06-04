@@ -16,7 +16,7 @@ const MainInfo = ({ openReferralsTab }) => {
 
 	const username = useAppSelector((state) => state.main.user.username);
 	const xp = useAppSelector((state) => state.main.user.xp);
-	const balance = useAppSelector((state) => state.main.user.balance);
+	const balance = useAppSelector((state) => state.main.user.gemp);
 	const referralsCount = useAppSelector((state) => state.main.user.referralsCount);
 
 	const userLvlStats = [
