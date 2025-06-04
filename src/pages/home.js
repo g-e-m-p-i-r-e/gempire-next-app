@@ -12,6 +12,7 @@ import ActivitiesList from "../components/HomePage/ActivitiesList";
 
 import "../assets/scss/HomePage/main.scss";
 import { addCompletedQuest } from "../redux/slices/main";
+import sliceAddress from "../helpers/sliceAddress";
 
 const Home = () => {
 	const dispatch = useAppDispatch();
@@ -81,7 +82,17 @@ const Home = () => {
 				return false;
 			}
 
-			setActivities(res?.data);
+			const activitiesMapped = res?.data.map((activity) => {
+				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
+				const title = activity.actionType === 'lottery' ? `@${userTag} won the lottery` : `@${userTag} completed the quest`;
+				return {
+					id: activity._id,
+					title,
+					...activity,
+				};
+			});
+
+			setActivities(activitiesMapped);
 		} catch (e) {
 			console.error("Error getActivities:", e);
 		} finally {
@@ -91,14 +102,24 @@ const Home = () => {
 	const getUserActivities = async () => {
 		try {
 			setIsUserActivityLoading(true);
-			const res = await fetchWithToken("/activity/last");
+			const res = await fetchWithToken("/activity/global");
 
 			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/activity/last", type: "error", message: "Something went wrong while get activities list. Please try again later." });
+				customToast({ toastId: "/activity/global", type: "error", message: "Something went wrong while get activities list. Please try again later." });
 				return false;
 			}
 
-			setUserActivities(res?.data);
+			const activitiesMapped = res?.data.map((activity) => {
+				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
+				const title = activity.actionType === 'lottery' ? `@${userTag} won the lottery` : `@${userTag} completed the quest`;
+				return {
+					id: activity._id,
+					title,
+					...activity,
+				};
+			});
+
+			setUserActivities(activitiesMapped);
 		} catch (e) {
 			console.error("Error getUserActivities:", e);
 		} finally {

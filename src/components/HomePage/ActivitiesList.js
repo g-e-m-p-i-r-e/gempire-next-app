@@ -60,9 +60,9 @@ const ActivitiesList = ({ isLoading, blockTitle, activities, withFilter }) => {
 						<div key={`activity-item${_id}`} className="activity-item">
 							<div className="title">{title}</div>
 							<div className="rewards-con">
-								{rewards.map(({ code, amount }) => (
-									<div key={`reward-item-${code}`} className="reward-item">
-										<div className="reward-title">{code}</div>
+								{rewards.map(({ type, amount }) => (
+									<div key={`reward-item-${type}`} className="reward-item">
+										<div className="reward-title">{type}</div>
 										<div className="reward-value">+{numberWithSeparator(amount, ",")}</div>
 									</div>
 								))}
