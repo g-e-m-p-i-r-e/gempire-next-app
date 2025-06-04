@@ -158,7 +158,7 @@ const ReferralsBlock = ({ openMainTab }) => {
 				)}
 				{!isLoading &&
 					!!referralsList.length &&
-					referralsList.map(({ _id, referral, referralCounter, rewards }) => (
+					referralsList.map(({ _id, referral, referralCounter, gemp }) => (
 						<div key={`referralsList${_id}`} className="referrals-list-item">
 							<div className="main-info">
 								<div className="avatar-con">
@@ -173,13 +173,10 @@ const ReferralsBlock = ({ openMainTab }) => {
 								</div>
 							</div>
 							<div className="rewards-con">
-								{!!rewards.length &&
-									rewards.map(({ code, amount }) => (
-										<div className="reward-item">
-											<div className="reward-title">{`${code}`.toUpperCase()}</div>
-											<div className="reward-value">{numberWithSeparator(amount, ",")}</div>
-										</div>
-									))}
+								<div className="reward-item">
+									<div className="reward-title">{"gemp".toUpperCase()}</div>
+									<div className="reward-value">{numberWithSeparator(gemp, ",")}</div>
+								</div>
 							</div>
 						</div>
 					))}

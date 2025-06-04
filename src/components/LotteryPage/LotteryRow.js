@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 import sleep from "../../helpers/sleep";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
-import { incTicketsCount } from "../../redux/slices/main";
+import { incBalance, incTicketsCount, pushBadge } from "../../redux/slices/main";
 
 import LoaderLottie from "../SingleComponents/LoaderLottie";
 
 import badgeImg from "../../assets/img/LotteryPage/rewards/badge.png";
 import gempImg from "../../assets/img/LotteryPage/rewards/gemp.png";
-import monadImg from "../../assets/img/LotteryPage/rewards/monad.png";
 import nothingImg from "../../assets/img/LotteryPage/rewards/nothing.png";
 import ticketImg from "../../assets/img/LotteryPage/rewards/ticket.png";
 import xpImg from "../../assets/img/LotteryPage/rewards/xp.png";
@@ -22,34 +23,16 @@ import "../../assets/scss/LotteryPage/LotteryRow.scss";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import CustomTimer from "../SingleComponents/CustomTimer";
 
-const images = [
-	{
-		id: "badge",
-		img: badgeImg,
-	},
-	{
-		id: "gemp",
-		img: gempImg,
-	},
-/*	{
-		id: "monad",
-		img: monadImg,
-		title: 1,
-		descr: "Monad",
-	},*/
-	{
-		id: "nothing",
-		img: nothingImg,
-	},
-	{
-		id: "tickets",
-		img: ticketImg,
-	},
-	{
-		id: "xp",
-		img: xpImg,
-	},
-];
+dayjs.extend(utc);
+
+const imgById = {
+	xp: xpImg,
+	gemp: gempImg,
+	tickets: ticketImg,
+	badge: badgeImg,
+	nothing: nothingImg,
+};
+
 const rewardsToShow = 30;
 
 const LotteryRow = () => {
@@ -68,27 +51,29 @@ const LotteryRow = () => {
 
 	const [rewards, setRewards] = useState([]);
 	const fetchRewards = async () => {
-		const { success, data } = await fetchWithToken("/info/lottery/rewards");
-		if (success) {
-			const rewardsData = data.map((reward) => {
-				const rewardImage = images.find((img) => img.id === reward.id);
-				return {
-					...reward,
-					img: rewardImage ? rewardImage.img : null,
-					title: reward.title || rewardImage?.title || "",
-					descr: reward.descr || "",
-				};
-			});
+		try {
+			const { success, data } = await fetchWithToken("/info/lottery/rewards");
+			if (!success) {
+				customToast({ type: "error", message: "Failed to fetch lottery rewards." });
+				return [];
+			}
+			const rewardsData = data.map((reward) => ({
+				...reward,
+				img: imgById[reward.id] || gempImg,
+				title: reward.title || "",
+				descr: reward.descr || "",
+			}));
 			setRewards(rewardsData);
-		} else {
-			customToast({ type: "error", message: "Failed to fetch lottery rewards." });
+
+			return rewardsData;
+		} catch (e) {
+			console.error("Error fetching rewards:", e);
 		}
+		return [];
 	};
 
-
-
-	const initWheel = (winItemRes) => {
-		const rewardsCopy = [...rewards];
+	const initWheel = (winItemRes, itemsArray = rewards) => {
+		const rewardsCopy = [...itemsArray];
 		const selectedRewards = [];
 
 		for (let i = 0; i < rewardsToShow; i++) {
@@ -104,13 +89,6 @@ const LotteryRow = () => {
 		setState("ready");
 	};
 
-
-
-	const recoveryUserTickets = async () => {
-		const { data } = await fetchWithToken("/lottery/user");
-		dispatch(incTicketsCount(data?.tickets || 0));
-	};
-
 	const onSpin = async () => {
 		if (carouselRef.current) {
 			const winItemRef = carouselRef.current.querySelector("#isWin");
@@ -120,13 +98,18 @@ const LotteryRow = () => {
 
 				const offsetToCenter = itemRect.left - carouselRect.left - carouselRect.width / 2 + itemRect.width / 2;
 
-				carouselRef.current.style.transition = "transform 3s cubic-bezier(0.25, 0.1, 0.25, 1)";
+				carouselRef.current.style.transition = "transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)";
 				carouselRef.current.style.transform = `translateX(-${offsetToCenter}px)`;
 
-				await sleep(3500);
+				await sleep(4500);
 
 				setState("showReward");
-
+				if (winItem && ["gemp", "xp", "tickets"].includes(winItem.id)) {
+					dispatch(incBalance({ code: winItem.id, amount: +winItem.title }));
+				}
+				if (winItem && winItem.badgeId) {
+					dispatch(pushBadge(winItem.badgeId));
+				}
 			}
 		}
 	};
@@ -156,6 +139,35 @@ const LotteryRow = () => {
 		}
 	};
 
+	const setTimer = () => {
+		const isAfter6PM = dayjs().utc().hour() >= 19;
+
+		if (!isAfter6PM) {
+			setTimerTo(dayjs().utc().set("hour", 17).set("minute", 0).set("second", 0).valueOf());
+		} else {
+			setTimerTo(dayjs().utc().add(1, "day").set("hour", 17).set("minute", 0).set("second", 0).valueOf());
+		}
+	};
+
+	const recoveryUserTickets = async () => {
+		const ticketsCount = ticketsBalance || 0;
+		try {
+			const res = await fetchWithToken("/lottery/user");
+			if (!res?.success) {
+				customToast({ toastId: "/lottery/user", type: "error", message: "Something went wrong while get lottery data. Please try again later." });
+				setIsLoading(false);
+				return ticketsCount;
+			}
+
+			dispatch(incTicketsCount(res?.data?.tickets || 0));
+
+			return res?.data?.tickets || 0;
+		} catch (e) {
+			console.error("Error recoveryUserTickets:", e);
+		}
+		return ticketsCount;
+	};
+
 	const getWinItem = async () => {
 		try {
 			setIsLoading(true);
@@ -163,22 +175,20 @@ const LotteryRow = () => {
 			const { success, data, error } = await fetchWithToken("/lottery/spin", {
 				method: "POST",
 			});
-			//
-			// if (!res?.success) {
-			// 	customToast({ toastId: "/lottery", type: "error", message: "Something went wrong while spin lottery. Please try again later." });
-			// 	return false;
-			// }
 
-			// const winItem = res?.data?.reward
+			if (!success) {
+				customToast({ toastId: "/lottery", type: "error", message: "Something went wrong while spin lottery. Please try again later." });
+				return false;
+			}
+
 			const winItemRes = rewards.find((reward) => reward.id === data?.type);
 			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
 			else if (data.type === "badge") winItemRes.title = data.badgeId;
-			// TODO increase balance
 
 			dispatch(incTicketsCount(-1));
 			if (ticketsBalance - 1 <= 0) {
-				setTimerTo(Date.now() + 1000 * 20);
+				setTimer();
 			}
 			setWinItem(winItemRes);
 			await sleep(100);
@@ -202,29 +212,41 @@ const LotteryRow = () => {
 		getWinItem();
 	};
 
-	useEffect(() => {
-		if (!ticketsBalance) {
-			setState("timer");
-			setTimerTo(Date.now() + 1000 * 20);
-		}
-	}, []);
+	const fetchLotteryData = async () => {
+		setIsLoading(true);
 
-	useEffect( () => {
+		const defaultRewards = await fetchRewards();
+		let isTicketsCount = !!ticketsBalance;
+
 		if (ticketsBalance <= 0) {
-			recoveryUserTickets();
+			const count = await recoveryUserTickets();
+
+			isTicketsCount = !!count;
+
+			if (!count) {
+				setState("timer");
+				setTimer();
+			}
 		}
-	}, []);
+
+		if (isTicketsCount) {
+			initWheel(null, defaultRewards);
+		}
+
+		setIsLoading(false);
+	};
+
+	const onTimerEnd = async () => {
+		setIsLoading(true);
+		const secondsRandom = Math.floor(Math.random() * 10) + 1; // Random seconds between 1 and 10
+		setTimeout(() => {
+			fetchLotteryData();
+		}, secondsRandom);
+	};
 
 	useEffect(() => {
-		fetchRewards();
+		fetchLotteryData();
 	}, []);
-
-	useEffect(() => {
-
-		if (rewards.length > 0) {
-			initWheel();
-		}
-	}, [rewards]);
 
 	return (
 		<div className="lottery-row-con">
@@ -237,9 +259,11 @@ const LotteryRow = () => {
 				</div>
 
 				<>
-					<div className="center-arrow-con">
-						<Image src={centerArrowImg} alt={""} width={15} />
-					</div>
+					{!!randomRewards.length && (
+						<div className="center-arrow-con">
+							<Image src={centerArrowImg} alt={""} width={15} />
+						</div>
+					)}
 
 					<div ref={carouselRef} className="lottery-row-carousel">
 						{randomRewards.map((reward, index) => (
@@ -267,17 +291,8 @@ const LotteryRow = () => {
 
 				{state === "timer" && (
 					<div className="timer-block">
-						<div className="timer-title">Start in</div>
-						<CustomTimer
-							withSymbols
-							date={timerTo}
-							onComplete={() => {
-								dispatch(incTicketsCount(1));
-								setState("ready");
-								setTimerTo(0);
-								initWheel();
-							}}
-						/>
+						<div className="timer-title">Next spin available in</div>
+						<CustomTimer withSymbols date={timerTo} onComplete={onTimerEnd} />
 					</div>
 				)}
 			</div>

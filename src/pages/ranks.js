@@ -11,6 +11,7 @@ import { useAppSelector } from "../redux";
 
 import UserStatsInfo from "../components/RanksPage/UserStatsInfo";
 import LeadersList from "../components/RanksPage/LeadersList";
+import LoaderLottie from "../components/SingleComponents/LoaderLottie";
 
 import arrowWhiteIcon from "../assets/img/common/arrowWhite.svg";
 
@@ -38,7 +39,7 @@ const Ranks = () => {
 		try {
 			setIsLeaderboardLoading(true);
 
-			const leaderboardRes = await fetchWithToken("/leaderboard");
+			const leaderboardRes = await fetchWithToken("/leaderboard?limit=50&page=0");
 
 			if (!leaderboardRes?.success) {
 				customToast({ toastId: "/leaderboard", type: "error", message: "Something went wrong while get quests list. Please try again later." });
@@ -53,16 +54,16 @@ const Ranks = () => {
 					}))
 				);
 				setLeadersByBalance(
-					leaderboardRes.data.balance.list.map((item) => ({
+					leaderboardRes.data.gemp.list.map((item) => ({
 						...item,
 						isGrow: true,
 					}))
 				);
-				setXpUserData(leaderboardRes.data.xp.userData);
-				setBalanceUserData(leaderboardRes.data.balance.userData);
-			}
 
-			setTotalUsersCount(leaderboardRes.data.totalCount);
+				setXpUserData(leaderboardRes.data.xp.userData);
+				setBalanceUserData(leaderboardRes.data.gemp.userData);
+				setTotalUsersCount(leaderboardRes.data.totalCount);
+			}
 		} catch (e) {
 			console.error("Error getLeaderboard:", e);
 		} finally {
@@ -76,80 +77,89 @@ const Ranks = () => {
 
 	return (
 		<div className="ranks-page-con">
-			<div className="ranks-page-wrapper">
-				<Container>
-					<Row className="justify-content-center">
-						<Col xl={10}>
-							<div className="ranks-page-content-con">
-								<div className="main-page-block">
-									<div className="title">Recent activities of all players</div>
-									<div className="general-stats-con">
-										<div className="users-count">
-											Total: <span className="strong">{numberWithSeparator(totalUsersCount, ",")}</span>
-										</div>
-										{isMobile && (
-											<div className="filter-con">
-												<div className="descr">Filter by</div>
-
-												<Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)} className="custom-drop-down-con">
-													<DropdownToggle data-toggle="dropdown" tag="div">
-														<div className="value-con">
-															<div className="val">{listFilters.find(({ id }) => id === activeFilter)?.title}</div>
-															<div className={`arrow-con ${dropdownOpen ? "active" : ""}`}>
-																<Image src={arrowWhiteIcon} alt={""} width={24} height={24} />
-															</div>
-														</div>
-													</DropdownToggle>
-													<DropdownMenu>
-														{listFilters.map(({ id, title }) => (
-															<div
-																key={`filter-item-${id}`}
-																className={`dropdown-item ${activeFilter === id ? "active" : ""}`}
-																onClick={() => {
-																	setActiveFilter(id);
-																	setDropdownOpen(false);
-																}}
-															>
-																{title}
-															</div>
-														))}
-													</DropdownMenu>
-												</Dropdown>
+			{isLeaderboardLoading && (
+				<div className="loader-con-wrap">
+					<div className="loader-con">
+						<LoaderLottie isShow />
+					</div>
+				</div>
+			)}
+			{!isLeaderboardLoading && (
+				<div className="ranks-page-wrapper">
+					<Container>
+						<Row className="justify-content-center">
+							<Col xl={10}>
+								<div className="ranks-page-content-con">
+									<div className="main-page-block">
+										<div className="title">Recent activities of all players</div>
+										<div className="general-stats-con">
+											<div className="users-count">
+												Total: <span className="strong">{numberWithSeparator(totalUsersCount, ",")}</span>
 											</div>
-										)}
+											{isMobile && (
+												<div className="filter-con">
+													<div className="descr">Filter by</div>
+
+													<Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)} className="custom-drop-down-con">
+														<DropdownToggle data-toggle="dropdown" tag="div">
+															<div className="value-con">
+																<div className="val">{listFilters.find(({ id }) => id === activeFilter)?.title}</div>
+																<div className={`arrow-con ${dropdownOpen ? "active" : ""}`}>
+																	<Image src={arrowWhiteIcon} alt={""} width={24} height={24} />
+																</div>
+															</div>
+														</DropdownToggle>
+														<DropdownMenu>
+															{listFilters.map(({ id, title }) => (
+																<div
+																	key={`filter-item-${id}`}
+																	className={`dropdown-item ${activeFilter === id ? "active" : ""}`}
+																	onClick={() => {
+																		setActiveFilter(id);
+																		setDropdownOpen(false);
+																	}}
+																>
+																	{title}
+																</div>
+															))}
+														</DropdownMenu>
+													</Dropdown>
+												</div>
+											)}
+										</div>
+									</div>
+
+									{xpUserData && balanceUserData && <UserStatsInfo activeFilter={activeFilter} xpUserData={xpUserData} balanceUserData={balanceUserData} />}
+								</div>
+							</Col>
+						</Row>
+					</Container>
+
+					<Container className="d-flex flex-grow-1 overflow-hidden">
+						<Col xl={10} className="d-flex flex-grow-1 overflow-hidden">
+							{!isMobile && (
+								<div className="leaders-con">
+									<div className="side-block">
+										<LeadersList title={"XP Leaderboard"} leadersList={leadersByXp} currency={"XP"} />
+									</div>
+									<div className="side-block">
+										<LeadersList title={"GEMP Leaderboard"} leadersList={leadersByBalance} currency={"GEMP"} />
 									</div>
 								</div>
+							)}
 
-								{xpUserData && balanceUserData && <UserStatsInfo activeFilter={activeFilter} xpUserData={xpUserData} balanceUserData={balanceUserData} />}
-							</div>
+							{isMobile && (
+								<div className="leaders-con">
+									<div className="side-block">
+										{activeFilter === "xp" && <LeadersList title={""} leadersList={activeFilter === "xp" ? leadersByXp : leadersByBalance} currency={activeFilter === "xp" ? "XP" : "GEMP"} />}
+										{activeFilter === "gemp" && <LeadersList title={""} leadersList={activeFilter === "xp" ? leadersByXp : leadersByBalance} currency={activeFilter === "xp" ? "XP" : "GEMP"} />}
+									</div>
+								</div>
+							)}
 						</Col>
-					</Row>
-				</Container>
-
-				<Container className="d-flex flex-grow-1 overflow-hidden">
-					<Col xl={10} className="d-flex flex-grow-1 overflow-hidden">
-						{!isMobile && (
-							<div className="leaders-con">
-								<div className="side-block">
-									<LeadersList title={"XP Leaderboard"} leadersList={leadersByXp} currency={"XP"} />
-								</div>
-								<div className="side-block">
-									<LeadersList title={"GEMP Leaderboard"} leadersList={leadersByBalance} currency={"GEMP"} />
-								</div>
-							</div>
-						)}
-
-						{isMobile && (
-							<div className="leaders-con">
-								<div className="side-block">
-									{activeFilter === "xp" && <LeadersList title={""} leadersList={activeFilter === "xp" ? leadersByXp : leadersByBalance} currency={activeFilter === "xp" ? "XP" : "GEMP"} />}
-									{activeFilter === "gemp" && <LeadersList title={""} leadersList={activeFilter === "xp" ? leadersByXp : leadersByBalance} currency={activeFilter === "xp" ? "XP" : "GEMP"} />}
-								</div>
-							</div>
-						)}
-					</Col>
-				</Container>
-			</div>
+					</Container>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 
 import noQuestsImg from "../../assets/img/HomePage/noQuests.png";
 import noQuestsBgImg from "../../assets/img/HomePage/noQuestsBg.png";
+import discordImg from "../../assets/img/FaqPage/discord.png";
+import twitterImg from "../../assets/img/FaqPage/twitter.png";
 
 import "../../assets/scss/HomePage/QuestsList.scss";
 import fetchWithToken from "../../helpers/fetchWithToken";
@@ -70,7 +72,10 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 						<div key={quest._id} className="custom-quest-item">
 							<div className="main-info-con">
 								<div className="icon-con">
-									<div className="icon-wrapper"></div>
+									<div className="icon-wrapper">
+										{!!quest?.data?.url?.includes("discord") && <Image src={discordImg} alt={""} width={48} height={48} />}
+										{!!quest?.data?.url?.includes("x.com") && <Image src={twitterImg} alt={""} width={48} height={48} />}
+									</div>
 								</div>
 								<div className="info-con">
 									<div className="title">{quest.title}</div>

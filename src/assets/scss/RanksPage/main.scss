@@ -6,6 +6,17 @@
 		display: flex;
 	}
 
+	.loader-con-wrap {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.loader-con {
+			width: 150px;
+		}
+	}
+
 	.ranks-page-wrapper {
 		display: flex;
 		flex-direction: column;

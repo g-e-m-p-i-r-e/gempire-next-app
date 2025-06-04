@@ -54,7 +54,15 @@ export const mainSlice = createSlice({
 		incTicketsCount: (state, action) => {
 			state.user.tickets += action.payload;
 		},
+		incBalance: (state, action) => {
+			state.user[action.payload.code] += action.payload.amount;
+		},
+		pushBadge: (state, action) => {
+			if (!state.user.badges.includes(action.payload)) {
+				state.user.badges.push(action.payload);
+			}
+		},
 	},
 });
 
-export const { setIsMobile, incTicketsCount, addCompletedQuest, setUser } = mainSlice.actions;
+export const { setIsMobile, incBalance, pushBadge, incTicketsCount, addCompletedQuest, setUser } = mainSlice.actions;

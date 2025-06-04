@@ -17,12 +17,13 @@ const UserStatsInfo = ({ activeFilter, xpUserData, balanceUserData }) => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 	const username = useAppSelector((state) => state.main.user.username);
 	const wallet = useAppSelector((state) => state.main.user.wallet);
-	const userXp = xpUserData.balance;
-	const userBalance = balanceUserData.balance;
+	const xp = useAppSelector((state) => state.main.user.xp);
+	const balance = useAppSelector((state) => state.main.user.gemp);
+
 	const userRankXp = xpUserData.position;
 	const userRankBalance = balanceUserData.position;
 	const isUserXpRankGrow = true;
-	const isUserBalanceRankGrow = false;
+	const isUserBalanceRankGrow = true;
 	const userAvatarSrc = "";
 
 	return (
@@ -34,7 +35,7 @@ const UserStatsInfo = ({ activeFilter, xpUserData, balanceUserData }) => {
 				<div className="main-info-con">
 					<div className="address">{username || sliceAddress(wallet)}</div>
 					<div className="balances-con">
-						{(activeFilter === "xp"  || !isMobile) && <div className="descr">{numberWithSeparator(userXp)} XP</div>}
+						{(activeFilter === "xp" || !isMobile) && <div className="descr">{numberWithSeparator(xp)} XP</div>}
 						{!isMobile && (
 							<div className="dot-con f-center">
 								<svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
@@ -42,7 +43,7 @@ const UserStatsInfo = ({ activeFilter, xpUserData, balanceUserData }) => {
 								</svg>
 							</div>
 						)}
-						{(activeFilter === "gemp" || !isMobile)  && <div className="descr">{numberWithSeparator(userBalance)} GEMP</div>}
+						{(activeFilter === "gemp" || !isMobile) && <div className="descr">{numberWithSeparator(balance)} GEMP</div>}
 					</div>
 				</div>
 			</div>

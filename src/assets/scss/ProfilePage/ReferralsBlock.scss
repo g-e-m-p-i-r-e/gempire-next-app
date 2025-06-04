@@ -212,6 +212,11 @@
 				.main-info {
 					display: flex;
 					align-items: center;
+					flex-grow: 1;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					margin-right: 5px;
 
 					.avatar-con {
 						min-width: 24px;
@@ -229,6 +234,9 @@
 						font-weight: 600;
 						line-height: 24px;
 						margin-right: 8px;
+						flex-grow: 1;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 
 					.ref-count-con {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
+import { setCookie } from "cookies-next";
 import { useAppDispatch } from "../../redux";
 import { setUser } from "../../redux/slices/main";
 import getAccessToken from "../../helpers/getAccessToken";
@@ -13,7 +14,7 @@ import PawsLottie from "../SingleComponents/LoaderLottie";
 const PageLayout = ({ Component, ...props }) => {
 	const dispatch = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(true);
-	const { push, pathname } = useRouter();
+	const { push, pathname, query } = useRouter();
 
 	const getUserData = async () => {
 		try {
@@ -54,6 +55,9 @@ const PageLayout = ({ Component, ...props }) => {
 	};
 
 	useEffect(() => {
+		if (query?.r) {
+			setCookie("gempire-r", query.r);
+		}
 		authUser();
 	}, []);
 

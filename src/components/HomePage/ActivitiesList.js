@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
@@ -20,17 +20,22 @@ const filterItems = [
 		title: "Lottery",
 	},
 	{
-		id: "quests",
+		id: "quest",
 		title: "Quests",
-	},
-	{
-		id: "leveling",
-		title: "Leveling",
 	},
 ];
 
 const ActivitiesList = ({ isLoading, blockTitle, activities, withFilter }) => {
 	const [activeFilter, setActiveFilter] = useState("all");
+	const [itemsFiltered, setItemsFiltered] = useState([]);
+
+	useEffect(() => {
+		if (activeFilter === "all") {
+			setItemsFiltered(activities);
+		} else {
+			setItemsFiltered(activities.filter((item) => item.actionType === activeFilter));
+		}
+	}, [activeFilter, activities]);
 	return (
 		<div className="custom-activities-con">
 			<div className="block-title">{blockTitle}</div>
@@ -56,14 +61,14 @@ const ActivitiesList = ({ isLoading, blockTitle, activities, withFilter }) => {
 			)}
 			{!isLoading && !!activities.length && (
 				<div className="activities-list">
-					{activities.map(({ _id, title, rewards }) => (
+					{itemsFiltered.map(({ _id, title, rewards }) => (
 						<div key={`activity-item${_id}`} className="activity-item">
 							<div className="title">{title}</div>
 							<div className="rewards-con">
 								{rewards.map(({ type, amount }) => (
 									<div key={`reward-item-${type}`} className="reward-item">
 										<div className="reward-title">{type}</div>
-										<div className="reward-value">+{numberWithSeparator(amount, ",")}</div>
+										{!!amount && <div className="reward-value">+{numberWithSeparator(amount, ",")}</div>}
 									</div>
 								))}
 							</div>

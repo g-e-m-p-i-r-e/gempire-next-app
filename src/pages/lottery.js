@@ -12,6 +12,7 @@ import ActivitiesList from "../components/HomePage/ActivitiesList";
 import LotteryFAQ from "../components/LotteryPage/LotteryFAQ";
 import fetchWithToken from "../helpers/fetchWithToken";
 import sliceAddress from "../helpers/sliceAddress";
+import customToast from "../helpers/customToast";
 
 const Lottery = () => {
 	const [isGlobalHistoryLoading, setIsGlobalHistoryLoading] = useState(false);
@@ -21,34 +22,56 @@ const Lottery = () => {
 	const [userHistory, setUserHistory] = useState([]);
 
 	const fetchUserHistory = async () => {
-		const { success, data } = await fetchWithToken("/activity/spins");
-		if (data) {
-			const activitiesMapped = data.map((activity) => {
-				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-				const title = `@${userTag} won the lottery`;
-				return {
-					id: activity._id,
-					title,
-					...activity,
-				};
-			});
-			setUserHistory(activitiesMapped);
+		try {
+			setIsUserHistoryLoading(true);
+			const { success, data } = await fetchWithToken("/activity/spins?limit=15&page=0");
+
+			if (!success) {
+				customToast({ toastId: "/user/nonce", type: "error", message: "Something went wrong while fetching history" });
+				return;
+			}
+
+			if (data) {
+				const activitiesMapped = data.map((activity) => {
+					const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
+					const title = `@${userTag} won the lottery`;
+					return {
+						id: activity._id,
+						title,
+						...activity,
+					};
+				});
+				setUserHistory(activitiesMapped);
+				setIsUserHistoryLoading(false);
+			}
+		} catch (e) {
+			console.error("Error fetching user history:", e);
 		}
 	};
 
 	const fetchGlobalHistory = async () => {
-		const { success, data } = await fetchWithToken("/activity/spins/global");
-		if (data) {
-			const activitiesMapped = data.map((activity) => {
-				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-				const title = `@${userTag} won the lottery`;
-				return {
-					id: activity._id,
-					title,
-					...activity,
-				};
-			});
-			setGlobalHistory(activitiesMapped);
+		try {
+			setIsGlobalHistoryLoading(true);
+			const { success, data } = await fetchWithToken("/activity/spins/global?limit=15&page=0");
+			if (!success) {
+				customToast({ toastId: "/user/nonce", type: "error", message: "Something went wrong while fetching history" });
+				return;
+			}
+			if (data) {
+				const activitiesMapped = data.map((activity) => {
+					const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
+					const title = `@${userTag} won the lottery`;
+					return {
+						id: activity._id,
+						title,
+						...activity,
+					};
+				});
+				setIsGlobalHistoryLoading(false);
+				setGlobalHistory(activitiesMapped);
+			}
+		} catch (e) {
+			console.error("Error fetching global history:", e);
 		}
 	};
 
@@ -68,7 +91,7 @@ const Lottery = () => {
 								{globalHistory.length > 0 && <ActivitiesList isLoading={isGlobalHistoryLoading} activities={globalHistory} blockTitle={"Player’s spins"} withFilter={false} />}
 							</div>
 							<div className="side-con">
-								{userHistory.length > 0 && <ActivitiesList isLoading={isGlobalHistoryLoading} activities={userHistory} blockTitle={"Your spins"} withFilter={false} />}
+								{userHistory.length > 0 && <ActivitiesList isLoading={isUserHistoryLoading} activities={userHistory} blockTitle={"Your spins"} withFilter={false} />}
 								<LotteryFAQ />
 							</div>
 						</div>

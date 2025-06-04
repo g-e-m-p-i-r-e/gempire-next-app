@@ -3,7 +3,7 @@ import { Col, Container, Row } from "reactstrap";
 import Image from "next/image";
 import { useAppKit, useAppKitAccount, useDisconnect } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
@@ -48,8 +48,9 @@ const EnterLogin = () => {
 			const res = await fetchWithToken("/user/auth", {
 				method: "POST",
 				body: {
-					address: evmAddress,
+					address: evmAddress.toLowerCase(),
 					signature: message,
+					referralCode: (await getCookie("gempire-r")) || undefined,
 				},
 			});
 

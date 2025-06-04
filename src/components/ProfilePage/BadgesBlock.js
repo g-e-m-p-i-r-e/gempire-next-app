@@ -52,12 +52,11 @@ const BadgesBlock = () => {
 		if (daysDiff >= 7) return "badge1w";
 		return null;
 	};
-	const registrationBadgeId = getRegistrationBadge();
 	const fetchBadges = async () => {
 		const { success, data } = await fetchWithToken("/info/badges");
 		if (success) {
 			const apiBadges = data.map((b) => {
-				const image = badgeImages.find((img) => img.code === b.code).image;
+				const { image } = badgeImages.find((img) => img.code === b.code);
 				const exist = userBadges.find((ub) => ub === b.id);
 				return {
 					name: b.name,
@@ -69,6 +68,8 @@ const BadgesBlock = () => {
 
 			const allBadges = [...apiBadges];
 
+			const registrationBadgeId = getRegistrationBadge();
+
 			if (registrationBadgeId) {
 				const regBadge = {
 					name: "Registration Badge",
@@ -79,9 +80,7 @@ const BadgesBlock = () => {
 				allBadges.push(regBadge);
 			}
 
-			console.log(allBadges);
-
-			setBadges(allBadges);
+			setBadges(allBadges.filter(({ exist }) => !!exist));
 		} else {
 			console.error("Failed to fetch badges");
 		}
@@ -92,25 +91,25 @@ const BadgesBlock = () => {
 	}, []);
 
 	return (
-		<div className="badges-block-con">
-			<div className="block-title">Badges</div>
-			<div className="badges-con">
-				{badges.length > 0 &&
-					badges
-						.filter((badge) => badge.exist)
-						.map((badge) => (
+		!!badges.length && (
+			<div className="badges-block-con">
+				<div className="block-title">Badges</div>
+				<div className="badges-con">
+					{badges.length > 0 &&
+						badges.map((badge) => (
 							<div className="badge-img-con f-center" key={badge.name}>
 								<Image src={badge.image} alt={""} width={64} height={72} />
 							</div>
 						))}
-				<div className="row-aligner"></div>
-				<div className="row-aligner"></div>
-				<div className="row-aligner"></div>
-				<div className="row-aligner"></div>
-				<div className="row-aligner"></div>
-				<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+					<div className="row-aligner"></div>
+				</div>
 			</div>
-		</div>
+		)
 	);
 };
 

@@ -26,30 +26,34 @@ const UsernameBlock = () => {
 		if (e.target.value.length > 16) {
 			e.target.value = e.target.value.slice(0, 16);
 		}
-		if (!EngRegex.test(e.target.value)) {
-			e.target.value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "");
-		}
 
-		setNewUsername(e.target.value);
+		const cutSymbols = e.target.value.replace(EngRegex, "");
+
+		setNewUsername(`@${cutSymbols}`);
 	};
 
 	const postSaveUsername = async () => {
 		try {
-			if (!newUsername || newUsername.length < 3 || newUsername.length > 16) {
-				customToast({ toastId: "/user/username", type: "success", message: "Username must be between 3 and 16 characters." });
+			const usernameCutted = newUsername.replace(EngRegex, "");
+			if (usernameCutted === username) {
+				return;
+			}
+
+			if (!usernameCutted || usernameCutted.length < 3 || usernameCutted.length > 16) {
+				customToast({ toastId: "/user/username", type: "error", message: "Username must be between 3 and 16 characters." });
 				return;
 			}
 
 			const { success, error } = await fetchWithToken("/user/username", {
 				method: "POST",
-				body: { username: newUsername },
+				body: { username: usernameCutted },
 			});
 			if (!success) {
 				customToast({ toastId: "username", type: "error", message: "Something went wrong while save username. Please try again later." });
 				return;
 			}
 
-			dispatch(setUser({ username: newUsername }));
+			dispatch(setUser({ username: usernameCutted }));
 			setIsUsernameInputActive(false);
 			setNewUsername("");
 		} catch (e) {
@@ -67,7 +71,7 @@ const UsernameBlock = () => {
 
 	return (
 		<div className="input-con">
-			<input ref={inputRef} autoComplete="off" type="text" disabled={!isUsernameInputActive} onChange={onInputChange} value={editUsername ? `@${editUsername}` : ""} className="input-item" placeholder="Add Username" />
+			<input ref={inputRef} autoComplete="off" type="text" disabled={!isUsernameInputActive} onChange={onInputChange} value={editUsername} className="input-item" placeholder="Add Username" />
 			{!newUsername && (
 				<div className="edit-btn" onClick={handleFocus}>
 					Edit

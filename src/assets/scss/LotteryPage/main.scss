@@ -19,12 +19,16 @@
 		.side-con {
 			display: flex;
 			flex-direction: column;
-			margin-bottom: 24px;
-
+			margin-bottom: 10px;
 
 			@media (min-width: 768px) {
 				width: calc(50% - 12px);
 				margin-bottom: 0;
+			}
+
+			.custom-activities-con {
+				flex-grow: 0;
+				margin-bottom: 15px;
 			}
 		}
 	}
