@@ -22,18 +22,14 @@ import "../../assets/scss/LotteryPage/LotteryRow.scss";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import CustomTimer from "../SingleComponents/CustomTimer";
 
-const rewards = [
+const images = [
 	{
 		id: "badge",
 		img: badgeImg,
-		//title: "Star",
-		descr: "Badge",
 	},
 	{
 		id: "gemp",
 		img: gempImg,
-		//title: 0.5,
-		descr: "GEMP",
 	},
 /*	{
 		id: "monad",
@@ -44,20 +40,14 @@ const rewards = [
 	{
 		id: "nothing",
 		img: nothingImg,
-		//title: "Nothing",
-		descr: "",
 	},
 	{
 		id: "tickets",
 		img: ticketImg,
-		//title: "5",
-		descr: "Ticket",
 	},
 	{
 		id: "xp",
 		img: xpImg,
-		//title: "1,000",
-		descr: "XP",
 	},
 ];
 const rewardsToShow = 30;
@@ -75,6 +65,27 @@ const LotteryRow = () => {
 	const [isSpinningLoading, setIsSpinningLoading] = useState(false);
 	const [state, setState] = useState("ready");
 	const [timerTo, setTimerTo] = useState(0);
+
+	const [rewards, setRewards] = useState([]);
+	const fetchRewards = async () => {
+		const { success, data } = await fetchWithToken("/info/lottery/rewards");
+		if (success) {
+			const rewardsData = data.map((reward) => {
+				const rewardImage = images.find((img) => img.id === reward.id);
+				return {
+					...reward,
+					img: rewardImage ? rewardImage.img : null,
+					title: reward.title || rewardImage?.title || "",
+					descr: reward.descr || "",
+				};
+			});
+			setRewards(rewardsData);
+		} else {
+			customToast({ type: "error", message: "Failed to fetch lottery rewards." });
+		}
+	};
+
+
 
 	const initWheel = (winItemRes) => {
 		const rewardsCopy = [...rewards];
@@ -115,6 +126,7 @@ const LotteryRow = () => {
 				await sleep(3500);
 
 				setState("showReward");
+
 			}
 		}
 	};
@@ -162,7 +174,7 @@ const LotteryRow = () => {
 			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
 			else if (data.type === "badge") winItemRes.title = data.badgeId;
-
+			// TODO increase balance
 
 			dispatch(incTicketsCount(-1));
 			if (ticketsBalance - 1 <= 0) {
@@ -194,8 +206,6 @@ const LotteryRow = () => {
 		if (!ticketsBalance) {
 			setState("timer");
 			setTimerTo(Date.now() + 1000 * 20);
-		} else {
-			initWheel();
 		}
 	}, []);
 
@@ -204,6 +214,17 @@ const LotteryRow = () => {
 			recoveryUserTickets();
 		}
 	}, []);
+
+	useEffect(() => {
+		fetchRewards();
+	}, []);
+
+	useEffect(() => {
+
+		if (rewards.length > 0) {
+			initWheel();
+		}
+	}, [rewards]);
 
 	return (
 		<div className="lottery-row-con">
