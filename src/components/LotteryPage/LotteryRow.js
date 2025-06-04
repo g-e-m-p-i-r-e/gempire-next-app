@@ -114,7 +114,18 @@ const LotteryRow = () => {
 		}
 	};
 
-	const onStart = async (winItemRes) => {
+	const setTimer = () => {
+		const isAfter6PM = dayjs().utc().hour() >= 19;
+
+		if (!isAfter6PM) {
+			setTimerTo(dayjs().utc().set("hour", 17).set("minute", 0).set("second", 0).valueOf());
+		} else {
+			setTimerTo(dayjs().utc().add(1, "day").set("hour", 17).set("minute", 0).set("second", 0).valueOf());
+		}
+	};
+
+
+	const onStart = async (winItemRes, reward) => {
 		try {
 			setIsLoading(true);
 			setIsSpinningLoading(true);
@@ -134,20 +145,24 @@ const LotteryRow = () => {
 			await sleep(500);
 			await onSpin();
 			setIsSpinningLoading(false);
+
+			if (reward) {
+				if (reward.type === "gemp" || reward.type === "xp") {
+					dispatch(incBalance({ code: reward.type, amount: +reward.amount }));
+				} else if (reward.type === "tickets") {
+					dispatch(incTicketsCount(+reward.amount));
+				}
+			}
+
+
+			if (ticketsBalance - 1 <= 0) {
+				setTimer();
+			}
 		} catch (e) {
 			console.error("Error onStart:", e);
 		}
 	};
 
-	const setTimer = () => {
-		const isAfter6PM = dayjs().utc().hour() >= 19;
-
-		if (!isAfter6PM) {
-			setTimerTo(dayjs().utc().set("hour", 17).set("minute", 0).set("second", 0).valueOf());
-		} else {
-			setTimerTo(dayjs().utc().add(1, "day").set("hour", 17).set("minute", 0).set("second", 0).valueOf());
-		}
-	};
 
 	const recoveryUserTickets = async () => {
 		const ticketsCount = ticketsBalance || 0;
@@ -185,14 +200,20 @@ const LotteryRow = () => {
 			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
 			else if (data.type === "badge") winItemRes.title = data.badgeId;
+			
+			let reward = undefined;
+
+			if (data.type === "gemp" || data.type === "xp") {
+				reward = { code: data.type, amount: +data.amount };
+			} else if (data.type === "tickets") {
+				reward = { code: "tickets", amount: +data.amount };
+			}
 
 			dispatch(incTicketsCount(-1));
-			if (ticketsBalance - 1 <= 0) {
-				setTimer();
-			}
+
 			setWinItem(winItemRes);
 			await sleep(100);
-			await onStart(winItemRes);
+			await onStart(winItemRes, reward);
 		} catch (e) {
 			console.error("Error getWinItem:", e);
 		}
@@ -243,6 +264,7 @@ const LotteryRow = () => {
 			fetchLotteryData();
 		}, secondsRandom);
 	};
+
 
 	useEffect(() => {
 		fetchLotteryData();

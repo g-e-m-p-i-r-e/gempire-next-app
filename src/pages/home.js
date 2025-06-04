@@ -92,7 +92,7 @@ const Home = () => {
 				};
 			});
 
-			setActivities(activitiesMapped);
+			setUserActivities(activitiesMapped);
 		} catch (e) {
 			console.error("Error getActivities:", e);
 		} finally {
@@ -119,7 +119,7 @@ const Home = () => {
 				};
 			});
 
-			setUserActivities(activitiesMapped);
+			setActivities(activitiesMapped);
 		} catch (e) {
 			console.error("Error getUserActivities:", e);
 		} finally {
