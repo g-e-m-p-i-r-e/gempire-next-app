@@ -14,7 +14,7 @@ import PawsLottie from "../SingleComponents/LoaderLottie";
 const PageLayout = ({ Component, ...props }) => {
 	const dispatch = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(true);
-	const { push, pathname, query } = useRouter();
+	const { push, pathname, query, asPath } = useRouter();
 
 	const getUserData = async () => {
 		try {
@@ -28,7 +28,7 @@ const PageLayout = ({ Component, ...props }) => {
 
 			dispatch(setUser(res?.data));
 			// TODO redirect on login
-			await push(pathname === "/" ? "/home" : pathname, undefined, { shallow: true });
+			await push(pathname === "/" ? "/home" : asPath, undefined, { shallow: true });
 
 			return true;
 		} catch (e) {

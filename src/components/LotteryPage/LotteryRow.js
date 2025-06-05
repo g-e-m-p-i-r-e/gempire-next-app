@@ -7,8 +7,10 @@ import sleep from "../../helpers/sleep";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
 import { incBalance, incTicketsCount, pushBadge } from "../../redux/slices/main";
+import { useAppDispatch, useAppSelector } from "../../redux";
 
 import LoaderLottie from "../SingleComponents/LoaderLottie";
+import CustomTimer from "../SingleComponents/CustomTimer";
 
 import badgeImg from "../../assets/img/LotteryPage/rewards/badge.png";
 import gempImg from "../../assets/img/LotteryPage/rewards/gemp.png";
@@ -20,8 +22,6 @@ import ticketWhiteImg from "../../assets/img/common/ticketWhite.svg";
 import centerArrowImg from "../../assets/img/LotteryPage/rewards/centerArrow.png";
 
 import "../../assets/scss/LotteryPage/LotteryRow.scss";
-import { useAppDispatch, useAppSelector } from "../../redux";
-import CustomTimer from "../SingleComponents/CustomTimer";
 
 dayjs.extend(utc);
 
@@ -89,7 +89,7 @@ const LotteryRow = () => {
 		setState("ready");
 	};
 
-	const onSpin = async () => {
+	const onSpin = async (winItemRes) => {
 		if (carouselRef.current) {
 			const winItemRef = carouselRef.current.querySelector("#isWin");
 			if (winItemRef) {
@@ -104,11 +104,11 @@ const LotteryRow = () => {
 				await sleep(4500);
 
 				setState("showReward");
-				if (winItem && ["gemp", "xp", "tickets"].includes(winItem.id)) {
-					dispatch(incBalance({ code: winItem.id, amount: +winItem.title }));
+				if (winItemRes && ["gemp", "xp", "tickets"].includes(winItemRes.id)) {
+					dispatch(incBalance({ code: winItemRes.id, amount: +winItemRes.title }));
 				}
-				if (winItem && winItem.badgeId) {
-					dispatch(pushBadge(winItem.badgeId));
+				if (winItemRes && winItemRes.badgeId) {
+					dispatch(pushBadge(winItemRes.badgeId));
 				}
 			}
 		}
@@ -124,8 +124,7 @@ const LotteryRow = () => {
 		}
 	};
 
-
-	const onStart = async (winItemRes, reward) => {
+	const onStart = async (winItemRes) => {
 		try {
 			setIsLoading(true);
 			setIsSpinningLoading(true);
@@ -143,17 +142,8 @@ const LotteryRow = () => {
 			}
 
 			await sleep(500);
-			await onSpin();
+			await onSpin(winItemRes);
 			setIsSpinningLoading(false);
-
-			if (reward) {
-				if (reward.type === "gemp" || reward.type === "xp") {
-					dispatch(incBalance({ code: reward.type, amount: +reward.amount }));
-				} else if (reward.type === "tickets") {
-					dispatch(incTicketsCount(+reward.amount));
-				}
-			}
-
 
 			if (ticketsBalance - 1 <= 0) {
 				setTimer();
@@ -162,7 +152,6 @@ const LotteryRow = () => {
 			console.error("Error onStart:", e);
 		}
 	};
-
 
 	const recoveryUserTickets = async () => {
 		const ticketsCount = ticketsBalance || 0;
@@ -200,20 +189,12 @@ const LotteryRow = () => {
 			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
 			else if (data.type === "badge") winItemRes.title = data.badgeId;
-			
-			let reward = undefined;
-
-			if (data.type === "gemp" || data.type === "xp") {
-				reward = { code: data.type, amount: +data.amount };
-			} else if (data.type === "tickets") {
-				reward = { code: "tickets", amount: +data.amount };
-			}
 
 			dispatch(incTicketsCount(-1));
 
 			setWinItem(winItemRes);
 			await sleep(100);
-			await onStart(winItemRes, reward);
+			await onStart(winItemRes);
 		} catch (e) {
 			console.error("Error getWinItem:", e);
 		}
@@ -264,7 +245,6 @@ const LotteryRow = () => {
 			fetchLotteryData();
 		}, secondsRandom);
 	};
-
 
 	useEffect(() => {
 		fetchLotteryData();

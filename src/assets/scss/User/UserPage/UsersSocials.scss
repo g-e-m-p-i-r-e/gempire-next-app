@@ -1,0 +1,80 @@
+.user-profile-page-con {
+	.page-content-wrap {
+		.block-title {
+			margin-bottom: 8px;
+			color: #848097;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 125%;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			padding-left: 15px;
+		}
+
+		.socials-con-wrapper {
+			padding: 0 16px;
+
+			.socials-con {
+				display: flex;
+				margin-bottom: 18px;
+
+				.social-item {
+					flex-grow: 1;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 8px;
+					border: 1px solid rgba(255, 255, 255, 0.15);
+					background: radial-gradient(104.29% 104.29% at 50.17% 115.71%, rgb(30 10 57) 0%, rgb(89 50 145) 100%);
+					margin-right: 8px;
+					padding: 10px;
+
+					&:last-child {
+						margin-right: 0;
+					}
+
+					&.cursor-pointer {
+						cursor: pointer;
+					}
+
+					.info-wrap {
+						flex-grow: 1;
+						display: flex;
+						align-items: center;
+						margin-right: 10px;
+
+						.img-con {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							width: 24px;
+							min-width: 24px;
+							height: 24px;
+							margin-right: 8px;
+							border-radius: 4.549px;
+							background: linear-gradient(90deg, #252525 0%, #474546 51.37%, #1e1e1e 98.63%);
+							box-shadow: 0 1.319px 2.44px -0.527px #000;
+						}
+
+						.descr {
+							color: #fff;
+							font-family: "Inter Tight", sans-serif;
+							font-size: 14px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+							letter-spacing: 0.1px;
+							opacity: 0.8;
+							flex-grow: 1;
+							text-overflow: ellipsis;
+							overflow: hidden;
+							white-space: nowrap;
+							width: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
