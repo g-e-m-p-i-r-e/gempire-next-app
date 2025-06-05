@@ -23,7 +23,7 @@ const Lottery = () => {
 	const fetchUserHistory = async () => {
 		try {
 			setIsUserHistoryLoading(true);
-			const { success, data } = await fetchWithToken("/activity/spins?limit=15&page=0");
+			const { success, data } = await fetchWithToken("/history/spins?limit=15&page=0");
 
 			if (!success) {
 				customToast({ toastId: "/user/nonce", type: "error", message: "Something went wrong while fetching history" });
@@ -46,7 +46,7 @@ const Lottery = () => {
 	const fetchGlobalHistory = async () => {
 		try {
 			setIsGlobalHistoryLoading(true);
-			const { success, data } = await fetchWithToken("/activity/spins/global?limit=15&page=0");
+			const { success, data } = await fetchWithToken("/history/spins/global?limit=15&page=0");
 			if (!success) {
 				customToast({ toastId: "/user/nonce", type: "error", message: "Something went wrong while fetching history" });
 				return;
