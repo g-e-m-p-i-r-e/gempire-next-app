@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
+import { incBalance } from "../../redux/slices/main";
+import { useAppDispatch } from "../../redux";
+import fetchWithToken from "../../helpers/fetchWithToken";
+import customToast from "../../helpers/customToast";
+
 import noQuestsImg from "../../assets/img/HomePage/noQuests.png";
 import noQuestsBgImg from "../../assets/img/HomePage/noQuestsBg.png";
 import discordImg from "../../assets/img/FaqPage/discord.png";
 import twitterImg from "../../assets/img/FaqPage/twitter.png";
 
 import "../../assets/scss/HomePage/QuestsList.scss";
-import fetchWithToken from "../../helpers/fetchWithToken";
-import customToast                     from "../../helpers/customToast";
-import { incBalance, incTicketsCount } from "../../redux/slices/main";
-import { useAppDispatch }              from "../../redux";
 
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 	const dispatch = useAppDispatch();
+
 	const [isLoadingQuest, setIsLoadingQuest] = useState(false);
 	const postCompleteQuest = async (questId) => {
 		if (isLoadingQuest) {
@@ -26,27 +28,25 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 		try {
 			setIsLoadingQuest(true);
 
-			const { data, success } = await fetchWithToken("/quest/complete", {
+			const res = await fetchWithToken("/quest/complete", {
 				method: "POST",
 				body: {
 					questId,
 				},
 			});
 
-			if (!success) {
+			if (!res?.success) {
 				customToast({ toastId: "/quest/complete", type: "error", message: "Something went wrong while complete quest. Please try again later." });
 				return false;
 			}
 
-			if (data) {
-				data.forEach((reward) => {
-					if (reward.code === "gemp" || reward.code === "xp") {
-						dispatch(incBalance({ code: reward.code, amount: +reward.amount }));
-					} else if (reward.code === "tickets") {
-						dispatch(incTicketsCount(+reward.amount));
-					}
-				});
-			}
+			const rewards = quests.find((q) => q._id === questId)?.rewards || [];
+
+			rewards.forEach(({ code, amount }) => {
+				if (["gemp", "xp", "tickets"].includes(code)) {
+					dispatch(incBalance({ code, amount: +amount }));
+				}
+			});
 
 			onQuestStatusChange(questId, "DONE");
 		} catch (e) {

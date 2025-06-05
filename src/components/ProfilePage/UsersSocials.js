@@ -30,8 +30,8 @@ const UsersSocials = () => {
 		window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${token}`;
 	};
 
-	const twitterClickHandler = (isEdit) => {
-		if (isEdit || !twitterUsername) {
+	const twitterClickHandler = () => {
+		if (!twitterUsername) {
 			authTwitter();
 		} else {
 			window.open(`https://twitter.com/${twitterUsername}`, "_blank");

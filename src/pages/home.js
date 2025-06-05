@@ -6,13 +6,13 @@ import getSEOOptions from "../helpers/getSEOOptions";
 import fetchWithToken from "../helpers/fetchWithToken";
 import customToast from "../helpers/customToast";
 import { useAppDispatch, useAppSelector } from "../redux";
+import { addCompletedQuest } from "../redux/slices/main";
 
 import QuestsList from "../components/HomePage/QuestsList";
 import ActivitiesList from "../components/HomePage/ActivitiesList";
+import LotteryRow from "../components/LotteryPage/LotteryRow";
 
 import "../assets/scss/HomePage/main.scss";
-import { addCompletedQuest } from "../redux/slices/main";
-import sliceAddress from "../helpers/sliceAddress";
 
 const Home = () => {
 	const dispatch = useAppDispatch();
@@ -82,15 +82,10 @@ const Home = () => {
 				return false;
 			}
 
-			const activitiesMapped = res?.data.map((activity) => {
-				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-				const title = activity.actionType === 'lottery' ? `@${userTag} won the lottery` : `@${userTag} completed the quest`;
-				return {
-					id: activity._id,
-					title,
-					...activity,
-				};
-			});
+			const activitiesMapped = res?.data.map((activity) => ({
+				id: activity._id,
+				...activity,
+			}));
 
 			setUserActivities(activitiesMapped);
 		} catch (e) {
@@ -109,15 +104,10 @@ const Home = () => {
 				return false;
 			}
 
-			const activitiesMapped = res?.data.map((activity) => {
-				const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-				const title = activity.actionType === 'lottery' ? `@${userTag} won the lottery` : `@${userTag} completed the quest`;
-				return {
-					id: activity._id,
-					title,
-					...activity,
-				};
-			});
+			const activitiesMapped = res?.data.map((activity) => ({
+				id: activity._id,
+				...activity,
+			}));
 
 			setActivities(activitiesMapped);
 		} catch (e) {
@@ -165,6 +155,9 @@ const Home = () => {
 			<Container>
 				<Row className="justify-content-center">
 					<Col xl={10}>
+						<div className="test-con">
+							<LotteryRow />
+						</div>
 						<div className="page-content-wrap">
 							<div className="side-con">
 								<QuestsList isLoading={isQuestsLoading} blockTitle={"Daily Mission Cards"} quests={dailyQuests} onQuestStatusChange={onQuestStatusChange} />

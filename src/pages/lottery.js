@@ -11,7 +11,6 @@ import "../assets/scss/LotteryPage/main.scss";
 import ActivitiesList from "../components/HomePage/ActivitiesList";
 import LotteryFAQ from "../components/LotteryPage/LotteryFAQ";
 import fetchWithToken from "../helpers/fetchWithToken";
-import sliceAddress from "../helpers/sliceAddress";
 import customToast from "../helpers/customToast";
 
 const Lottery = () => {
@@ -32,15 +31,10 @@ const Lottery = () => {
 			}
 
 			if (data) {
-				const activitiesMapped = data.map((activity) => {
-					const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-					const title = `@${userTag} won the lottery`;
-					return {
-						id: activity._id,
-						title,
-						...activity,
-					};
-				});
+				const activitiesMapped = data.map((activity) => ({
+					id: activity._id,
+					...activity,
+				}));
 				setUserHistory(activitiesMapped);
 				setIsUserHistoryLoading(false);
 			}
@@ -58,15 +52,10 @@ const Lottery = () => {
 				return;
 			}
 			if (data) {
-				const activitiesMapped = data.map((activity) => {
-					const userTag = activity.userTag.startsWith("0x") ? sliceAddress(activity.userTag) : activity.userTag;
-					const title = `@${userTag} won the lottery`;
-					return {
-						id: activity._id,
-						title,
-						...activity,
-					};
-				});
+				const activitiesMapped = data.map((activity) => ({
+					id: activity._id,
+					...activity,
+				}));
 				setIsGlobalHistoryLoading(false);
 				setGlobalHistory(activitiesMapped);
 			}

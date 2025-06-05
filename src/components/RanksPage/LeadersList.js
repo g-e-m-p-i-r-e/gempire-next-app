@@ -12,6 +12,7 @@ import growGreenIcon from "../../assets/img/common/growGreen.svg";
 import growRedIcon from "../../assets/img/common/growRed.svg";
 
 import "../../assets/scss/RanksPage/LeadersList.scss";
+import LinkElement from "../SingleComponents/LinkElement";
 
 const LeadersList = ({ title, leadersList, currency }) => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
@@ -41,7 +42,9 @@ const LeadersList = ({ title, leadersList, currency }) => {
 								</div>
 							</div>
 							<div className="info-con">
-								<div className="address">{item.username ? item.username : sliceAddress(item.wallet)}</div>
+								<LinkElement className="address" href={`/user/${item.username || item.wallet}`}>
+									{item.username ? item.username : sliceAddress(item.wallet)}
+								</LinkElement>
 								<div className="amount">
 									{numberWithSeparator(item.balance)} {currency}
 								</div>
@@ -62,7 +65,9 @@ const LeadersList = ({ title, leadersList, currency }) => {
 										<ImageFallback src={item.avatarSrc} width={38} height={38} />
 									</div>
 									<div className="info-con">
-										<div className="address">{item.username ? item.username : sliceAddress(item.wallet)}</div>
+										<LinkElement className="address" href={`/user/${item.username || item.wallet}`}>
+											{item.username ? item.username : sliceAddress(item.wallet)}
+										</LinkElement>
 										<div className="amount">
 											{numberWithSeparator(item.balance)} {currency}
 										</div>

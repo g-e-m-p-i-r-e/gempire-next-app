@@ -50,10 +50,13 @@
 
 				.info-con {
 					.address {
+						display: block;
 						text-align: center;
 						font-size: 14px;
 						font-weight: 700;
 						margin-bottom: 4px;
+						color: white;
+						text-decoration: none;
 					}
 					.amount {
 						color: #848097;
@@ -171,9 +174,12 @@
 
 					.info-con {
 						.address {
+							display: block;
 							font-size: 16px;
 							font-weight: 700;
 							margin-bottom: 4px;
+							color: white;
+							text-decoration: none;
 						}
 						.amount {
 							color: #848097;

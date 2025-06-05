@@ -94,6 +94,14 @@
 					@media (min-width: 768px) {
 						font-size: 15px;
 					}
+
+					.link-item {
+						color: #ffffff;
+						text-decoration: none;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
 				}
 
 				.rewards-con {
