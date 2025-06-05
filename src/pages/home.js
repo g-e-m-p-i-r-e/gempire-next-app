@@ -75,10 +75,10 @@ const Home = () => {
 	const getActivities = async () => {
 		try {
 			setIsActivityLoading(true);
-			const res = await fetchWithToken("/activity");
+			const res = await fetchWithToken("/history");
 
 			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/activity", type: "error", message: "Something went wrong while get activities list. Please try again later." });
+				customToast({ toastId: "/history", type: "error", message: "Something went wrong while get activities list. Please try again later." });
 				return false;
 			}
 
@@ -94,18 +94,18 @@ const Home = () => {
 
 			setUserActivities(activitiesMapped);
 		} catch (e) {
-			console.error("Error getActivities:", e);
+			console.error("Error getUserActivities:", e);
 		} finally {
 			setIsActivityLoading(false);
 		}
 	};
-	const getUserActivities = async () => {
+	const getGlobalActivities = async () => {
 		try {
 			setIsUserActivityLoading(true);
-			const res = await fetchWithToken("/activity/global");
+			const res = await fetchWithToken("/history/global");
 
 			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/activity/global", type: "error", message: "Something went wrong while get activities list. Please try again later." });
+				customToast({ toastId: "/history/global", type: "error", message: "Something went wrong while get activities list. Please try again later." });
 				return false;
 			}
 
@@ -121,7 +121,7 @@ const Home = () => {
 
 			setActivities(activitiesMapped);
 		} catch (e) {
-			console.error("Error getUserActivities:", e);
+			console.error("Error getGlobalActivities:", e);
 		} finally {
 			setIsUserActivityLoading(false);
 		}
@@ -157,7 +157,7 @@ const Home = () => {
 	useEffect(() => {
 		getQuests();
 		getActivities();
-		getUserActivities();
+		getGlobalActivities();
 	}, []);
 
 	return (
