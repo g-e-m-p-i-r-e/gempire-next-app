@@ -9,11 +9,14 @@ import twitterImg from "../../assets/img/FaqPage/twitter.png";
 
 import "../../assets/scss/HomePage/QuestsList.scss";
 import fetchWithToken from "../../helpers/fetchWithToken";
-import customToast from "../../helpers/customToast";
+import customToast                     from "../../helpers/customToast";
+import { incBalance, incTicketsCount } from "../../redux/slices/main";
+import { useAppDispatch }              from "../../redux";
 
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
+	const dispatch = useAppDispatch();
 	const [isLoadingQuest, setIsLoadingQuest] = useState(false);
 	const postCompleteQuest = async (questId) => {
 		if (isLoadingQuest) {
@@ -23,16 +26,26 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 		try {
 			setIsLoadingQuest(true);
 
-			const res = await fetchWithToken("/quest/complete", {
+			const { data, success } = await fetchWithToken("/quest/complete", {
 				method: "POST",
 				body: {
 					questId,
 				},
 			});
 
-			if (!res?.success) {
+			if (!success) {
 				customToast({ toastId: "/quest/complete", type: "error", message: "Something went wrong while complete quest. Please try again later." });
 				return false;
+			}
+
+			if (data) {
+				data.forEach((reward) => {
+					if (reward.code === "gemp" || reward.code === "xp") {
+						dispatch(incBalance({ code: reward.code, amount: +reward.amount }));
+					} else if (reward.code === "tickets") {
+						dispatch(incTicketsCount(+reward.amount));
+					}
+				});
 			}
 
 			onQuestStatusChange(questId, "DONE");
