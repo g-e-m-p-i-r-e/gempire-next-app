@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useAppKitAccount, useAppKitBalance } from "@reown/appkit/react";
 
 import { Tooltip } from "reactstrap";
@@ -8,13 +7,10 @@ import numberWithSeparator from "../../../helpers/numberWithSeparator";
 import { useAppSelector } from "../../../redux";
 import decimalAdjust from "../../../helpers/decimalAdjust";
 
-import infoImg from "../../../assets/img/common/info.svg";
 import logoSmallImg from "../../../assets/img/logoSmall.png";
 import monadImg from "../../../assets/img/common/monad.png";
 
 const UserStats = () => {
-	const { push } = useRouter();
-
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.gemp);
 
@@ -72,14 +68,6 @@ const UserStats = () => {
 						</div>
 					))}
 				</div>
-			</div>
-			<div
-				className="info-btn"
-				onClick={() => {
-					push("/faq", undefined, { shallow: true });
-				}}
-			>
-				<Image src={infoImg} alt={""} width={24} height={24} />
 			</div>
 		</div>
 	);

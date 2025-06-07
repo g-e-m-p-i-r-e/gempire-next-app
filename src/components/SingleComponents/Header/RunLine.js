@@ -1,38 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import "../../../assets/scss/SingleComponents/Header/RunLine.scss";
-
-const items = [
-	{
-		_id: "12345",
-		username: "Zed",
-		rewards: [
-			{ code: "gemp", amount: 100 },
-			{ code: "xp", amount: 50 },
-		],
-	},
-	{
-		_id: "1",
-		username: "Anonym",
-		rewards: [
-			{ code: "gemp", amount: 100 },
-			{ code: "xp", amount: 50 },
-		],
-	},
-	{
-		_id: "2",
-		username: "Andry",
-		rewards: [{ code: "gemp", amount: 100 }],
-	},
-	{
-		_id: "3",
-		username: "yourmom",
-		rewards: [{ code: "gemp", amount: 100.11 }],
-	},
-];
+import fetchWithToken from "../../../helpers/fetchWithToken";
+import sliceAddress from "../../../helpers/sliceAddress";
+import LinkElement from "../LinkElement";
 
 const RunLine = () => {
+	const [items, setItems] = useState([]);
 	const [activeItem, setActiveItem] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onFadeOut = ({ animationName }) => {
 		if (animationName === "line-message-out") {
@@ -40,23 +16,58 @@ const RunLine = () => {
 		}
 	};
 
+	const getGlobalActivities = async () => {
+		if (isLoading) return;
+
+		try {
+			setIsLoading(true);
+			const res = await fetchWithToken("/history/global?limit=20&page=0");
+
+			if (!res?.success || !res?.data) {
+				return;
+			}
+
+			const activitiesMapped = res?.data.map((activity) => ({
+				id: activity._id,
+				...activity,
+			}));
+
+			setItems(activitiesMapped);
+		} catch (e) {
+			console.error("Error getGlobalActivities:", e);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		if (!activeItem) {
+		getGlobalActivities();
+	}, []);
+
+	useEffect(() => {
+		if (!activeItem && !!items.length) {
 			setActiveItem(items[Math.floor(Math.random() * items.length)]);
 		}
-	}, [activeItem]);
+	}, [activeItem, items.length]);
+
+	const username = activeItem ? (activeItem.userTag.startsWith("0x") ? sliceAddress(activeItem.userTag) : activeItem.userTag) : "";
 
 	return (
 		<div className="run-line-con">
 			{activeItem && (
 				<div className="line-message-con fade-in-con">
 					<div className="line-message-con fade-out-con" onAnimationEnd={onFadeOut}>
-						<div className="descr">@{activeItem.username} completed the mission</div>
+						<div className="descr">
+							<LinkElement href={`/user/${activeItem.userTag}`} className={"link-item"}>
+								@{username}
+							</LinkElement>
+							{activeItem.actionType === "lottery" ? " won the lottery" : " completed the quest"}
+						</div>
 						<div className="rewards-con">
 							{!!activeItem?.rewards?.length &&
-								activeItem.rewards.map(({ code, amount }) => (
-									<div key={`reward-item${code}${amount}`} className="reward-item">
-										<div className="reward-title">{`${code}`.toUpperCase()}</div>
+								activeItem.rewards.map(({ type, amount }) => (
+									<div key={`reward-item${type}${amount}`} className="reward-item">
+										<div className="reward-title">{`${type}`}</div>
 										<div className="reward-value">+{amount}</div>
 									</div>
 								))}

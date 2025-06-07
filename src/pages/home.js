@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Col, Container, Row } from "reactstrap";
+import Image from "next/image";
 
 import getSEOOptions from "../helpers/getSEOOptions";
 import fetchWithToken from "../helpers/fetchWithToken";
@@ -9,23 +10,23 @@ import { useAppDispatch, useAppSelector } from "../redux";
 import { addCompletedQuest } from "../redux/slices/main";
 
 import QuestsList from "../components/HomePage/QuestsList";
-import ActivitiesList from "../components/HomePage/ActivitiesList";
 import LotteryRow from "../components/LotteryPage/LotteryRow";
+import LinkElement from "../components/SingleComponents/LinkElement";
+
+import aboutDesktopImg from "../assets/img/HomePage/aboutBg.png";
+import aboutBgMobileImg from "../assets/img/HomePage/aboutBgMobile.png";
 
 import "../assets/scss/HomePage/main.scss";
 
 const Home = () => {
 	const dispatch = useAppDispatch();
 	const userQuestsProgress = useAppSelector((state) => state.main.user.quests);
+	const isMobile = useAppSelector((state) => state.main.isMobile);
 
 	const [isQuestsLoading, setIsQuestsLoading] = useState(true);
-	const [isActivityLoading, setIsActivityLoading] = useState(true);
-	const [isUserActivityLoading, setIsUserActivityLoading] = useState(true);
 
 	const [dailyQuests, setDailyQuests] = useState([]);
 	const [weeklyQuests, setWeeklyQuests] = useState([]);
-	const [activities, setActivities] = useState([]);
-	const [userActivities, setUserActivities] = useState([]);
 
 	const getQuests = async () => {
 		try {
@@ -72,51 +73,6 @@ const Home = () => {
 		}
 	};
 
-	const getActivities = async () => {
-		try {
-			setIsActivityLoading(true);
-			const res = await fetchWithToken("/history");
-
-			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/history", type: "error", message: "Something went wrong while get activities list. Please try again later." });
-				return false;
-			}
-
-			const activitiesMapped = res?.data.map((activity) => ({
-				id: activity._id,
-				...activity,
-			}));
-
-			setUserActivities(activitiesMapped);
-		} catch (e) {
-			console.error("Error getUserActivities:", e);
-		} finally {
-			setIsActivityLoading(false);
-		}
-	};
-	const getGlobalActivities = async () => {
-		try {
-			setIsUserActivityLoading(true);
-			const res = await fetchWithToken("/history/global");
-
-			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/history/global", type: "error", message: "Something went wrong while get activities list. Please try again later." });
-				return false;
-			}
-
-			const activitiesMapped = res?.data.map((activity) => ({
-				id: activity._id,
-				...activity,
-			}));
-
-			setActivities(activitiesMapped);
-		} catch (e) {
-			console.error("Error getGlobalActivities:", e);
-		} finally {
-			setIsUserActivityLoading(false);
-		}
-	};
-
 	const onQuestStatusChange = (questId, status) => {
 		const updatedDailyQuests = dailyQuests.map((quest) => {
 			if (quest._id === questId) {
@@ -146,8 +102,6 @@ const Home = () => {
 
 	useEffect(() => {
 		getQuests();
-		getActivities();
-		getGlobalActivities();
 	}, []);
 
 	return (
@@ -161,11 +115,27 @@ const Home = () => {
 						<div className="page-content-wrap">
 							<div className="side-con">
 								<QuestsList isLoading={isQuestsLoading} blockTitle={"Daily Mission Cards"} quests={dailyQuests} onQuestStatusChange={onQuestStatusChange} />
-								<QuestsList isLoading={isQuestsLoading} blockTitle={"Weekly Mission Cards"} quests={weeklyQuests} onQuestStatusChange={onQuestStatusChange} />
 							</div>
 							<div className="side-con">
-								<ActivitiesList isLoading={isActivityLoading} blockTitle={"Recent activities of all players"} activities={activities} />
-								<ActivitiesList isLoading={isUserActivityLoading} blockTitle={"Your activities"} activities={userActivities} withFilter />
+								<QuestsList isLoading={isQuestsLoading} blockTitle={"Weekly Mission Cards"} quests={weeklyQuests} onQuestStatusChange={onQuestStatusChange} />
+							</div>
+						</div>
+					</Col>
+				</Row>
+				<Row className="justify-content-center">
+					<Col xl={10}>
+						<div className="about-block-con">
+							<div className="img-con">
+								<Image src={isMobile ? aboutBgMobileImg : aboutDesktopImg} alt={""} width={isMobile ? 500 : 1074} height={201} />
+							</div>
+							<div className="about-con-wrap">
+								<div className="descr-con">
+									<div className="title">Stay tuned,</div>
+									<div className="descr">it's on the way!</div>
+								</div>
+								<LinkElement href={"/faq"} className="btn-item f-center">
+									About Us
+								</LinkElement>
 							</div>
 						</div>
 					</Col>

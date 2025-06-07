@@ -10,7 +10,7 @@ import UserStats from "./UserStats";
 import RunLine from "./RunLine";
 
 import logoImg from "../../../assets/img/logo.png";
-import { Home, Shop, Leaderboard, Profile, Lottery } from "../../../assets/img/headerIcons";
+import { Home, Shop, Leaderboard, Profile, Info } from "../../../assets/img/headerIcons";
 
 import "../../../assets/scss/SingleComponents/Header/Header.scss";
 
@@ -18,7 +18,7 @@ const routes = [
 	{ id: "home", title: "Home", Icon: Home, path: "/home" },
 	{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
 	{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
-	{ id: "lottery", title: "Lottery", Icon: Lottery, path: "/lottery" },
+	{ id: "about", title: "About Us", Icon: Info, path: "/faq" },
 	{ id: "profile", title: "Profile", Icon: Profile, path: "/profile" },
 ];
 

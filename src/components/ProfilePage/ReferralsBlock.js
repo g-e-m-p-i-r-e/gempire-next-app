@@ -11,6 +11,7 @@ import customToast from "../../helpers/customToast";
 import CopyInput from "./CopyInput";
 import ImageFallback from "../SingleComponents/ImageFallback";
 import RefInfoModal from "./RefInfoModal";
+import CustomScrollbar from "../SingleComponents/CustomScrollbar";
 
 import lockIcon from "../../assets/img/common/lock.svg";
 import referralsIcon from "../../assets/img/common/referrals.svg";
@@ -156,30 +157,32 @@ const ReferralsBlock = ({ openMainTab }) => {
 						<div className="descr">Invite friends and earn GEMP.</div>
 					</div>
 				)}
-				{!isLoading &&
-					!!referralsList.length &&
-					referralsList.map(({ _id, referral, referralCounter, gemp }) => (
-						<div key={`referralsList${_id}`} className="referrals-list-item">
-							<div className="main-info">
-								<div className="avatar-con">
-									<ImageFallback src={defaultAvatar} width={24} height={24} />
+				{!isLoading && !!referralsList.length && (
+					<CustomScrollbar maxHeight={400} options={{ autoHide: false }}>
+						{referralsList.map(({ _id, referral, referralCounter, gemp }) => (
+							<div key={`referralsList${_id}`} className="referrals-list-item">
+								<div className="main-info">
+									<div className="avatar-con">
+										<ImageFallback src={defaultAvatar} width={24} height={24} />
+									</div>
+									<div className="username">{referral}</div>
+									<div className="ref-count-con">
+										<div className="descr">{referralCounter}</div>
+										<div className="icon-con">
+											<Image src={referralsIcon} alt={""} width={12} height={12} />
+										</div>
+									</div>
 								</div>
-								<div className="username">{referral}</div>
-								<div className="ref-count-con">
-									<div className="descr">{referralCounter}</div>
-									<div className="icon-con">
-										<Image src={referralsIcon} alt={""} width={12} height={12} />
+								<div className="rewards-con">
+									<div className="reward-item">
+										<div className="reward-title">{"gemp".toUpperCase()}</div>
+										<div className="reward-value">{numberWithSeparator(gemp, ",")}</div>
 									</div>
 								</div>
 							</div>
-							<div className="rewards-con">
-								<div className="reward-item">
-									<div className="reward-title">{"gemp".toUpperCase()}</div>
-									<div className="reward-value">{numberWithSeparator(gemp, ",")}</div>
-								</div>
-							</div>
-						</div>
-					))}
+						))}
+					</CustomScrollbar>
+				)}
 			</div>
 
 			<RefInfoModal setIsOpen={setIsInfoModalOpen} isOpen={isInfoModalOpen} />

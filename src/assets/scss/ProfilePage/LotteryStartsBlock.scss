@@ -1,0 +1,87 @@
+.profile-page-con {
+	.lottery-block-con {
+		.simplebar-track {
+			&.simplebar-vertical {
+				right: 15px;
+			}
+		}
+		.title {
+			margin-bottom: 8px;
+			color: #848097;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 125%;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			padding-left: 15px;
+		}
+
+		.rewards-list-con {
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: #1a0c2c;
+			border-radius: 12px;
+			padding: 16px 4px 0;
+			margin: 0 6px;
+
+			.reward-item {
+				display: flex;
+				align-items: center;
+				margin-bottom: 8px;
+
+				.img-wrap-con {
+					position: relative;
+					margin-right: 16px;
+					.img-con {
+						width: 96px;
+						min-width: 96px;
+					}
+
+					.counter-con {
+						border-radius: 16px;
+						border: 1px solid rgba(255, 255, 255, 0.15);
+						background: linear-gradient(180deg, rgba(245, 245, 245, 0.12) 29.17%, rgba(156, 163, 175, 0.12) 85.42%);
+						padding: 3px 5px;
+						position: absolute;
+						top: 10px;
+						right: 10px;
+						font-family: "Inter Tight", sans-serif;
+						font-size: 11px;
+						font-weight: 600;
+						color: rgba(255, 255, 255, 0.8);
+					}
+				}
+
+				.reward-title {
+					font-family: "Inter Tight", sans-serif;
+					font-size: 20px;
+					font-weight: 600;
+					background: linear-gradient(180deg, #f5f5f5 29.17%, #9ca3af 85.42%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+					margin-bottom: 4px;
+				}
+
+				.reward-descr {
+					font-family: "Inter Tight", sans-serif;
+					font-size: 10px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: normal;
+					opacity: 0.4;
+					margin-bottom: 2px;
+				}
+				.reward-value {
+					font-family: "Inter Tight", sans-serif;
+					font-size: 20px;
+					font-weight: 700;
+					background: linear-gradient(180deg, #f5f5f5 29.17%, #9ca3af 85.42%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+				}
+			}
+		}
+	}
+}

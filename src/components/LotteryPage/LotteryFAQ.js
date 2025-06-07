@@ -1,10 +1,9 @@
 import React from "react";
 
-import "../../assets/scss/LotteryPage/LotteryFAQ.scss";
+import "../../assets/scss/HomePage/LotteryPage/LotteryFAQ.scss";
 
 const LotteryFaq = () => (
 	<div className="lottery-faq-con">
-		<div className="block-title">Rules</div>
 		<div className="heading">
 			<span className="bold">Welcome to the daily lottery </span>- your gateway to early rewards in the world of Gempire.
 		</div>

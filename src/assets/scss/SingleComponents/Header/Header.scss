@@ -47,6 +47,7 @@
 			margin-right: 10px;
 			cursor: pointer;
 			transition: 0.2s;
+			white-space: nowrap;
 
 			@media (min-width: 768px) {
 				border: 1px solid rgba(124, 67, 255, 0);

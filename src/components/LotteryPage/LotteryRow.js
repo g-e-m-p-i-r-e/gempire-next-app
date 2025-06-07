@@ -11,33 +11,23 @@ import { useAppDispatch, useAppSelector } from "../../redux";
 
 import LoaderLottie from "../SingleComponents/LoaderLottie";
 import CustomTimer from "../SingleComponents/CustomTimer";
+import LotteryInfoModal from "./LotteryInfoModal";
 
-import badgeImg from "../../assets/img/LotteryPage/rewards/badge.png";
 import gempImg from "../../assets/img/LotteryPage/rewards/gemp.png";
-import nothingImg from "../../assets/img/LotteryPage/rewards/nothing.png";
-import ticketImg from "../../assets/img/LotteryPage/rewards/ticket.png";
-import xpImg from "../../assets/img/LotteryPage/rewards/xp.png";
-import ticketBlackImg from "../../assets/img/common/ticketBlack.svg";
 import ticketWhiteImg from "../../assets/img/common/ticketWhite.svg";
 import centerArrowImg from "../../assets/img/LotteryPage/rewards/centerArrow.png";
+import lotteryRewardsImg from "../../assets/img/LotteryPage/rewards/lotteryRewardsImg";
 
-import "../../assets/scss/LotteryPage/LotteryRow.scss";
+import "../../assets/scss/HomePage/LotteryPage/LotteryRow.scss";
 
 dayjs.extend(utc);
-
-const imgById = {
-	xp: xpImg,
-	gemp: gempImg,
-	tickets: ticketImg,
-	badge: badgeImg,
-	nothing: nothingImg,
-};
 
 const rewardsToShow = 30;
 
 const LotteryRow = () => {
 	const dispatch = useAppDispatch();
 	const ticketsBalance = useAppSelector((state) => state.main.user.tickets);
+	const isMobile = useAppSelector((state) => state.main.isMobile);
 
 	const carouselRef = useRef(null);
 
@@ -59,7 +49,7 @@ const LotteryRow = () => {
 			}
 			const rewardsData = data.map((reward) => ({
 				...reward,
-				img: imgById[reward.id] || gempImg,
+				img: lotteryRewardsImg[reward.id] || gempImg,
 				title: reward.title || "",
 				descr: reward.descr || "",
 			}));
@@ -115,7 +105,7 @@ const LotteryRow = () => {
 	};
 
 	const setTimer = () => {
-		const isAfter6PM = dayjs().utc().hour() >= 19;
+		const isAfter6PM = dayjs().utc().hour() >= 17;
 
 		if (!isAfter6PM) {
 			setTimerTo(dayjs().utc().set("hour", 17).set("minute", 0).set("second", 0).valueOf());
@@ -271,7 +261,7 @@ const LotteryRow = () => {
 						{randomRewards.map((reward, index) => (
 							<div id={reward.isWin ? "isWin" : undefined} key={`${reward.id}${index}`} className="lottery-row-item">
 								<div className="img-con">
-									<Image src={reward.img} alt={""} width={64} height={64} priority />
+									<Image src={reward.img} alt={""} width={isMobile ? 64 : 120} height={isMobile ? 64 : 120} priority />
 								</div>
 								<div className={`title ${reward.id === "nothing" ? "small" : ""}`}>{reward.title}</div>
 								{reward.descr && <div className="descr">{reward.descr}</div>}
@@ -284,7 +274,7 @@ const LotteryRow = () => {
 					<div className="reward-block">
 						<div className="reward-title">Your reward</div>
 						<div className="reward-img-con">
-							<Image src={winItem.img} alt={""} width={58} height={58} />
+							<Image src={winItem.img} alt={""} width={isMobile ? 58 : 100} height={isMobile ? 58 : 100} />
 						</div>
 						<div className={`title ${winItem.id === "nothing" ? "small" : ""}`}>{winItem.title}</div>
 						{winItem.descr && <div className="descr">{winItem.descr}</div>}
@@ -308,13 +298,15 @@ const LotteryRow = () => {
 							<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
 						</div>
 					</div>
-					<div className="tickets-price-con">
+					<div className="tickets-balance-con">
 						<div className="descr">Price</div>
 						<div className="title">1</div>
 						<div className="img-con f-center">
-							<Image src={ticketBlackImg} alt={""} width={14} height={14} />
+							<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
 						</div>
 					</div>
+
+					<LotteryInfoModal />
 				</div>
 			)}
 

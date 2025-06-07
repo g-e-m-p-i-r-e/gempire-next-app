@@ -176,7 +176,12 @@
 			border: 1px solid rgba(255, 255, 255, 0.15);
 			background: #1a0c2c;
 			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
-			padding: 0 16px;
+
+			.simplebar-track {
+				&.simplebar-vertical {
+					right: 5px;
+				}
+			}
 
 			.no-refs {
 				text-align: center;
@@ -207,7 +212,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 10px 0;
+				padding: 10px 16px;
 
 				.main-info {
 					display: flex;

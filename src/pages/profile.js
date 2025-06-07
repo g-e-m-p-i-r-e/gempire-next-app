@@ -13,6 +13,7 @@ import UsernameBlock from "../components/ProfilePage/UsernameBlock";
 import CopyInput from "../components/ProfilePage/CopyInput";
 import BadgesBlock from "../components/ProfilePage/BadgesBlock";
 import ReferralsBlock from "../components/ProfilePage/ReferralsBlock";
+import LotteryStartsBlock from "../components/ProfilePage/LotteryStartsBlock";
 
 import "../assets/scss/ProfilePage/main.scss";
 
@@ -65,6 +66,11 @@ const Profile = () => {
 									)}
 								</div>
 							</div>
+						</Col>
+					</Row>
+					<Row className="justify-content-center">
+						<Col xl={10}>
+							<LotteryStartsBlock />
 						</Col>
 					</Row>
 				</Container>
