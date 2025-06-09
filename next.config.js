@@ -1,9 +1,17 @@
 const path = require("path");
+const withPWA = require("next-pwa")({
+	dest: "public",
+	register: false,
+	disable: process.env.DISABLE_PWA === "true",
+	runtimeCaching: [],
+	publicExcludes: ["!**/*"],
+	buildExcludes: [() => true],
+});
 const ESLintPlugin = require("eslint-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const { i18n } = require("./next-i18next.config");
 
-module.exports = {
+module.exports = withPWA({
 	i18n,
 	webpack: (configWebpack) => {
 		const nextCssLoaders = configWebpack.module.rules.find((rule) => typeof rule.oneOf === "object");
@@ -50,4 +58,4 @@ module.exports = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
-};
+});

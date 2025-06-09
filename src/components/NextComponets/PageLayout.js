@@ -55,6 +55,10 @@ const PageLayout = ({ Component, ...props }) => {
 	};
 
 	useEffect(() => {
+		if (navigator.serviceWorker) {
+			navigator.serviceWorker.register("/sw.js", { scope: "/" });
+		}
+
 		if (query?.r) {
 			setCookie("gempire-r", query.r);
 		}

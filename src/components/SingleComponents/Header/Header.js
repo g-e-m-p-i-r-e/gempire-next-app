@@ -33,7 +33,7 @@ const Header = () => {
 			<>
 				<div className="header-wrapper">
 					{!isMobile && (
-						<Container>
+						<Container className="container-wrap">
 							<Row>
 								<Col>
 									<div className="header-con">

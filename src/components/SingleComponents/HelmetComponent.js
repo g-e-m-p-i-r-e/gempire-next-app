@@ -50,23 +50,51 @@ const HelmetComponent = ({ title, description, keywords, canonical }) => (
 				property: "twitter:description",
 				content: "Build your own Gempire",
 			},
+			{
+				property: "application-name",
+				content: "PAWS",
+			},
+			{
+				property: "apple-mobile-web-app-capable",
+				content: "yes",
+			},
+			{
+				property: "apple-mobile-web-app-status-bar-style",
+				content: "default",
+			},
+			{
+				property: "apple-mobile-web-app-title",
+				content: "PAWS",
+			},
+			{
+				property: "format-detection",
+				content: "telephone=no",
+			},
+			{
+				property: "mobile-web-app-capable",
+				content: "yes",
+			},
+			{
+				property: "msapplication-config",
+				content: "/icons/browserconfig.xml",
+			},
+			{
+				property: "msapplication-tap-highlight",
+				content: "no",
+			},
+			{
+				property: "theme-color",
+				content: "#180d30",
+			},
+			{
+				property: "msapplication-TileImage",
+				content: "/icons/144.png",
+			},
 		]}
 		additionalLinkTags={[
 			{
-				rel: "dns-prefetch",
-				href: "https://fonts.googleapis.com",
-			},
-			{
 				rel: "preconnect",
 				href: "https://www.google-analytics.com",
-			},
-			{
-				rel: "preconnect",
-				href: "https://www.googletagmanager.com",
-			},
-			{
-				rel: "preconnect",
-				href: "https://fonts.googleapis.com",
 			},
 			{
 				rel: "icon",
@@ -76,6 +104,35 @@ const HelmetComponent = ({ title, description, keywords, canonical }) => (
 				rel: "icon",
 				href: "/static/favicon-32x32.png",
 				sizes: "32x32",
+			},
+			{
+				rel: "icon",
+				href: "/icons/72.png",
+				sizes: "72x72",
+			},
+			{
+				rel: "icon",
+				href: "/icons/96.png",
+				sizes: "96x96",
+			},
+			{
+				rel: "icon",
+				href: "/icons/144.png",
+				sizes: "144x144",
+			},
+			{
+				rel: "icon",
+				href: "/icons/192.png",
+				sizes: "192x192",
+			},
+			{
+				rel: "apple-touch-icon",
+				href: "/icons/512.png",
+				sizes: "512x512",
+			},
+			{
+				rel: "manifest",
+				href: "/manifest.json",
 			},
 		]}
 		twitter={{

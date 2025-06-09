@@ -65,8 +65,11 @@
 					font-size: 14px;
 				}
 				.link-item {
-					color: white;
 					text-decoration: none;
+					color: #07000f;
+					@media (min-width: 768px) {
+						color: white;
+					}
 				}
 			}
 
