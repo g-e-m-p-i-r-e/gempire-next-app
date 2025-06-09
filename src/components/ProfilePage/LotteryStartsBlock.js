@@ -10,7 +10,7 @@ import lotteryRewardsImg from "../../assets/img/LotteryPage/rewards/lotteryRewar
 
 import "../../assets/scss/ProfilePage/LotteryStartsBlock.scss";
 
-const LotteryStartsBlock = (props) => {
+const LotteryStartsBlock = () => {
 	const rewards = [
 		{
 			id: "tickets",
@@ -53,7 +53,7 @@ const LotteryStartsBlock = (props) => {
 		<div className="lottery-block-con">
 			<div className="title">LOTTERY WINS</div>
 			<CustomScrollbar maxHeight={400} options={{ autoHide: false }}>
-				<Row className="rewards-list-con">
+				<Row className="rewards-list-con m-0">
 					{rewards.map((reward, i) => (
 						<Col key={`reward-${reward.id}${i}`} xs={12} md={4} lg={3}>
 							<div className="reward-item">

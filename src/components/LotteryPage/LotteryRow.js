@@ -22,8 +22,6 @@ import "../../assets/scss/HomePage/LotteryPage/LotteryRow.scss";
 
 dayjs.extend(utc);
 
-const rewardsToShow = 30;
-
 const LotteryRow = () => {
 	const dispatch = useAppDispatch();
 	const ticketsBalance = useAppSelector((state) => state.main.user.tickets);
@@ -65,6 +63,7 @@ const LotteryRow = () => {
 	const initWheel = (winItemRes, itemsArray = rewards) => {
 		const rewardsCopy = [...itemsArray];
 		const selectedRewards = [];
+		const rewardsToShow = isMobile ? 30 : 50;
 
 		for (let i = 0; i < rewardsToShow; i++) {
 			if (i === rewardsToShow - 10 && winItemRes) {
@@ -88,10 +87,10 @@ const LotteryRow = () => {
 
 				const offsetToCenter = itemRect.left - carouselRect.left - carouselRect.width / 2 + itemRect.width / 2;
 
-				carouselRef.current.style.transition = "transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)";
+				carouselRef.current.style.transition = "transform 6s cubic-bezier(0.25, 0.1, 0.25, 1)";
 				carouselRef.current.style.transform = `translateX(-${offsetToCenter}px)`;
 
-				await sleep(4500);
+				await sleep(6500);
 
 				setState("showReward");
 				if (winItemRes && ["gemp", "xp", "tickets"].includes(winItemRes.id)) {

@@ -10,6 +10,7 @@ import CustomScrollbar from "../SingleComponents/CustomScrollbar";
 
 import growGreenIcon from "../../assets/img/common/growGreen.svg";
 import growRedIcon from "../../assets/img/common/growRed.svg";
+import defaultAvatarIcon from "../../assets/img/LoginPage/avatars/avatar1.png";
 
 import "../../assets/scss/RanksPage/LeadersList.scss";
 import LinkElement from "../SingleComponents/LinkElement";
@@ -31,7 +32,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 						<div key={`${title}-leaders-${i}`} className={`leader-item ${i === 0 ? "silver" : ""} ${i === 1 ? "gold" : ""} ${i === 2 ? "bronze" : ""}`}>
 							<div className="avatar-con">
 								<div className="img-wrap" style={{ minHeight: i === 1 ? 108 : 77, minWidth: i === 1 ? 108 : 77 }}>
-									<ImageFallback src={item.avatarSrc} width={i === 1 ? 100 : 70} height={i === 1 ? 100 : 70} />
+									<ImageFallback src={item.avatarSrc || defaultAvatarIcon} width={i === 1 ? 100 : 70} height={i === 1 ? 100 : 70} />
 								</div>
 								<div className="place-number">
 									<div className="num">
@@ -62,7 +63,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 							<div key={`${title}-rest-leaders-${i}`} className="rest-leaders-list-item">
 								<div className="side-con">
 									<div className="avatar-con">
-										<ImageFallback src={item.avatarSrc} width={38} height={38} />
+										<ImageFallback src={item.avatarSrc || defaultAvatarIcon} width={38} height={38} />
 									</div>
 									<div className="info-con">
 										<LinkElement className="address" href={`/user/${item.username || item.wallet}`}>

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAppKitAccount, useAppKitBalance } from "@reown/appkit/react";
-
 import { Tooltip } from "reactstrap";
+
 import numberWithSeparator from "../../../helpers/numberWithSeparator";
 import { useAppSelector } from "../../../redux";
 import decimalAdjust from "../../../helpers/decimalAdjust";
 
+import LinkElement from "../LinkElement";
+
 import logoSmallImg from "../../../assets/img/logoSmall.png";
 import monadImg from "../../../assets/img/common/monad.png";
+import defaultAvatarImg from "../../../assets/img/LoginPage/avatars/avatar1.png";
+import arrowWhiteImg from "../../../assets/img/common/arrowWhite.svg";
 
 const UserStats = () => {
 	const experience = useAppSelector((state) => state.main.user.xp);
@@ -69,6 +73,15 @@ const UserStats = () => {
 					))}
 				</div>
 			</div>
+
+			<LinkElement href={"/profile"} className="user-profile-link">
+				<div className="avatar-img">
+					<Image src={defaultAvatarImg} alt={""} width={24} height={24} />
+				</div>
+				<div className="arrow-img">
+					<Image src={arrowWhiteImg} alt={""} width={12} height={12} />
+				</div>
+			</LinkElement>
 		</div>
 	);
 };

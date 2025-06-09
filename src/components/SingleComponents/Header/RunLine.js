@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import "../../../assets/scss/SingleComponents/Header/RunLine.scss";
 import fetchWithToken from "../../../helpers/fetchWithToken";
 import sliceAddress from "../../../helpers/sliceAddress";
+
 import LinkElement from "../LinkElement";
+
+import "../../../assets/scss/SingleComponents/Header/RunLine.scss";
 
 const RunLine = () => {
 	const [items, setItems] = useState([]);
@@ -67,7 +69,7 @@ const RunLine = () => {
 							{!!activeItem?.rewards?.length &&
 								activeItem.rewards.map(({ type, amount }) => (
 									<div key={`reward-item${type}${amount}`} className="reward-item">
-										<div className="reward-title">{`${type}`}</div>
+										<div className="reward-title">{type === "tickets" ? `${type}` : `${type}`.toUpperCase()}</div>
 										<div className="reward-value">+{amount}</div>
 									</div>
 								))}

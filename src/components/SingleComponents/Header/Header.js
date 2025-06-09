@@ -10,7 +10,7 @@ import UserStats from "./UserStats";
 import RunLine from "./RunLine";
 
 import logoImg from "../../../assets/img/logo.png";
-import { Home, Shop, Leaderboard, Profile, Info } from "../../../assets/img/headerIcons";
+import { Home, Shop, Leaderboard, Info } from "../../../assets/img/headerIcons";
 
 import "../../../assets/scss/SingleComponents/Header/Header.scss";
 
@@ -19,7 +19,7 @@ const routes = [
 	{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
 	{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
 	{ id: "about", title: "About Us", Icon: Info, path: "/faq" },
-	{ id: "profile", title: "Profile", Icon: Profile, path: "/profile" },
+	// { id: "profile", title: "Profile", Icon: Profile, path: "/profile" },
 ];
 
 const Header = () => {

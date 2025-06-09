@@ -41,6 +41,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			//flex-direction: column;
 			padding: 6px 10px;
 			overflow: hidden;
 			border-radius: 44px;
@@ -50,6 +51,7 @@
 			white-space: nowrap;
 
 			@media (min-width: 768px) {
+				flex-direction: row;
 				border: 1px solid rgba(124, 67, 255, 0);
 			}
 
@@ -61,13 +63,33 @@
 
 			&.hovered,
 			&.active {
-				path,
-				circle,
-				ellipse {
-					stroke: #af8cff;
+				&:not(.about) {
+					path,
+					circle,
+					ellipse {
+						stroke: #af8cff;
 
-					@media (min-width: 768px) {
-						stroke: #fff;
+						@media (min-width: 768px) {
+							stroke: #fff;
+						}
+					}
+				}
+
+				&.about {
+					path,
+					circle,
+					ellipse {
+						fill: #af8cff;
+
+						@media (min-width: 768px) {
+							fill: #fff;
+						}
+					}
+				}
+				@media (min-width: 768px) {
+					.descr {
+						opacity: 1;
+						color: #fff;
 					}
 				}
 			}
@@ -84,6 +106,11 @@
 				@media (min-width: 768px) {
 					border: 1px solid #7c43fe;
 					background: linear-gradient(180deg, #713efd 0%, #4400b1 100%), rgba(124, 67, 255, 0.2);
+
+					.descr {
+						opacity: 1;
+						color: #fff;
+					}
 				}
 			}
 
@@ -96,16 +123,20 @@
 				height: 23px;
 			}
 			.descr {
-				font-size: 14px;
+				margin-left: 5px;
+				font-size: 12px;
 				font-style: normal;
 				font-weight: 600;
 				line-height: normal;
 				letter-spacing: 0.2px;
-				padding-left: 8px;
 				color: #af8cff;
 
 				@media (min-width: 768px) {
 					color: #fff;
+					opacity: 0.5;
+					margin-top: 0;
+					font-size: 14px;
+					margin-left: 8px;
 				}
 			}
 		}
@@ -203,6 +234,37 @@
 						}
 					}
 				}
+			}
+		}
+
+		.user-profile-link {
+			margin-left: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid transparent;
+			transition: 0.2s;
+			padding: 3px;
+			border-radius: 6px;
+
+			&:hover {
+				border: 1px solid rgba(255, 255, 255, 0.15);
+			}
+
+			.avatar-img {
+				background: rgba(124, 67, 255, 0.2);
+				min-width: 24px;
+				width: 24px;
+				border: 1px solid #6f42c1;
+				border-radius: 6px;
+				overflow: hidden;
+			}
+			.arrow-img {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transform: rotate(180deg);
+				margin-left: 5px;
 			}
 		}
 
