@@ -13,10 +13,12 @@ import logoSmallImg from "../../../assets/img/logoSmall.png";
 import monadImg from "../../../assets/img/common/monad.png";
 import defaultAvatarImg from "../../../assets/img/LoginPage/avatars/avatar1.png";
 import arrowWhiteImg from "../../../assets/img/common/arrowWhite.svg";
+import infoImg from "../../../assets/img/common/info.svg";
 
 const UserStats = () => {
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.gemp);
+	const isMobile = useAppSelector((state) => state.main.isMobile);
 
 	const toNextLvl = 100000;
 
@@ -74,14 +76,21 @@ const UserStats = () => {
 				</div>
 			</div>
 
-			<LinkElement href={"/profile"} className="user-profile-link">
-				<div className="avatar-img">
-					<Image src={defaultAvatarImg} alt={""} width={24} height={24} />
-				</div>
-				<div className="arrow-img">
-					<Image src={arrowWhiteImg} alt={""} width={12} height={12} />
-				</div>
-			</LinkElement>
+			{!isMobile && (
+				<LinkElement href={"/profile"} className="user-profile-link">
+					<div className="avatar-img">
+						<Image src={defaultAvatarImg} alt={""} width={24} height={24} />
+					</div>
+					<div className="arrow-img">
+						<Image src={arrowWhiteImg} alt={""} width={12} height={12} />
+					</div>
+				</LinkElement>
+			)}
+			{isMobile && (
+				<LinkElement href={"/faq"} className="f-center">
+					<Image src={infoImg} alt={""} width={18} height={18} />
+				</LinkElement>
+			)}
 		</div>
 	);
 };
