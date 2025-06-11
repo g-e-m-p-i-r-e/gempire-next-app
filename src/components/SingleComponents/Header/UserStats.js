@@ -18,13 +18,15 @@ const UserStats = () => {
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.gemp);
 
-	const toNextLvl = 100000;
-
 	const { fetchBalance } = useAppKitBalance();
 	const { isConnected } = useAppKitAccount();
 
 	const [nativeBalance, setNativeBalance] = useState(0);
 	const [tooltipOpen, setTooltipOpen] = useState(false);
+
+	const [level, setLevel] = useState(0);
+	const [discriminant, setDiscriminant] = useState(0);
+	const [toNextLvl, setToNextLevel] = useState(0);
 
 	useEffect(() => {
 		if (isConnected) {
@@ -34,7 +36,20 @@ const UserStats = () => {
 		}
 	}, [isConnected, fetchBalance]);
 
-	const level = 0;
+	useEffect(() => {
+		setDiscriminant(355216 + 16 * experience);
+	}, [experience]);
+
+	useEffect(() => {
+		setLevel(Math.max(
+			1,
+			Math.floor((Math.sqrt(discriminant) - 588) / 8)
+		));
+	}, [discriminant]);
+
+	useEffect(() => {
+		setToNextLevel(8 * level + 592);
+	}, [level]);
 
 	const userLvlStats = [
 		{ id: "level", title: "Lvl", value: level },

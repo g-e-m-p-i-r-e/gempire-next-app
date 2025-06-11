@@ -29,9 +29,22 @@ const badgeImages = [
 		image: badge90d,
 	},
 	{
-		code: "lucky",
+		code: "bronzelottery",
 		image: badgeLock,
 	},
+	{
+		code: "silverlottery",
+		image: badgeLock,
+	},
+	{
+		code: "goldlottery",
+		image: badgeLock,
+	},
+	{
+		code: "platinumlottery",
+		image: badgeLock,
+	},
+
 ];
 
 const BadgesBlock = () => {

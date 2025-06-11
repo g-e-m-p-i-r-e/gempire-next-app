@@ -93,9 +93,9 @@ const Ranks = () => {
 									<div className="main-page-block">
 										<div className="title">Recent activities of all players</div>
 										<div className="general-stats-con">
-											<div className="users-count">
+								{/*			<div className="users-count">
 												Total: <span className="strong">{numberWithSeparator(totalUsersCount, ",")}</span>
-											</div>
+											</div>*/}
 											{isMobile && (
 												<div className="filter-con">
 													<div className="descr">Filter by</div>

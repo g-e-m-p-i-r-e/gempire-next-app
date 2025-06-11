@@ -159,15 +159,15 @@ const ReferralsBlock = ({ openMainTab }) => {
 				)}
 				{!isLoading && !!referralsList.length && (
 					<CustomScrollbar maxHeight={400} options={{ autoHide: false }}>
-						{referralsList.map(({ _id, referral, referralCounter, gemp }) => (
+						{referralsList.map(({ _id, wallet, username, referralData, referralsCount }) => (
 							<div key={`referralsList${_id}`} className="referrals-list-item">
 								<div className="main-info">
 									<div className="avatar-con">
 										<ImageFallback src={defaultAvatar} width={24} height={24} />
 									</div>
-									<div className="username">{referral}</div>
+									<div className="username">{username || wallet}</div>
 									<div className="ref-count-con">
-										<div className="descr">{referralCounter}</div>
+										<div className="descr">{referralsCount}</div>
 										<div className="icon-con">
 											<Image src={referralsIcon} alt={""} width={12} height={12} />
 										</div>
@@ -176,7 +176,7 @@ const ReferralsBlock = ({ openMainTab }) => {
 								<div className="rewards-con">
 									<div className="reward-item">
 										<div className="reward-title">{"gemp".toUpperCase()}</div>
-										<div className="reward-value">{numberWithSeparator(gemp, ",")}</div>
+										<div className="reward-value">{numberWithSeparator(referralData.gemp, ",")}</div>
 									</div>
 								</div>
 							</div>
