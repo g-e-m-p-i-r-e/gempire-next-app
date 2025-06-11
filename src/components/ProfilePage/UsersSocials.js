@@ -38,9 +38,28 @@ const UsersSocials = () => {
 		}
 	};
 
+	const discordAuth = async () => {
+		try {
+			const { data, error } = await fetchWithToken("/user/dis", {
+				method: "GET",
+			});
+			if (data) {
+				window.location.href = data;
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const discordClickHandler = () => {
+		if (!discordUsername) {
+			discordAuth();
+		}
+	}
+
 	const userSocials = [
 		{ id: "twitter", title: twitterUsername ? `@${twitterUsername}` : "Connect", img: twitterImg, onClick: twitterClickHandler },
-		{ id: "discord", title: discordUsername ? `@${discordUsername}` : "Connect", img: discordImg },
+		{ id: "discord", title: discordUsername ? `@${discordUsername}` : "Connect", img: discordImg, onClick: discordClickHandler },
 	];
 
 	return (
