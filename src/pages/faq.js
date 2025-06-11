@@ -32,7 +32,7 @@ const socials = [
 		id: "telegram",
 		img: telegramImg,
 		title: "Telegram",
-		link: "https://x.com/gempire_app",
+		link: "https://t.me/gempire_app",
 	},
 	// {
 	// 	id: "medium",
