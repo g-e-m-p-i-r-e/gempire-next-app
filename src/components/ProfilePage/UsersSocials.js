@@ -55,18 +55,18 @@ const UsersSocials = () => {
 		if (!discordUsername) {
 			discordAuth();
 		}
-	}
+	};
 
 	const userSocials = [
-		{ id: "twitter", title: twitterUsername ? `@${twitterUsername}` : "Connect", img: twitterImg, onClick: twitterClickHandler },
-		{ id: "discord", title: discordUsername ? `@${discordUsername}` : "Connect", img: discordImg, onClick: discordClickHandler },
+		{ id: "twitter", title: twitterUsername ? `@${twitterUsername}` : "Connect", isConnected: !!twitterUsername, img: twitterImg, onClick: twitterClickHandler },
+		{ id: "discord", title: discordUsername ? `@${discordUsername}` : "Connect", isConnected: !!discordUsername, img: discordImg, onClick: discordClickHandler },
 	];
 
 	return (
 		<div className="socials-con-wrapper">
 			<div className="block-title">Socials</div>
 			<div className="socials-con">
-				{userSocials.map(({ id, title, img, onClick }) => (
+				{userSocials.map(({ id, title, img, onClick, isConnected }) => (
 					<div key={`socials-con${id}`} className="social-item" onClick={onClick}>
 						<div className="info-wrap">
 							<div className="img-con">
@@ -74,9 +74,11 @@ const UsersSocials = () => {
 							</div>
 							<div className="descr">{title}</div>
 						</div>
-						<div className="edit-btn f-center">
-							<Image src={editImg} alt={""} width={18} height={18} />
-						</div>
+						{!isConnected && (
+							<div className="edit-btn f-center">
+								<Image src={editImg} alt={""} width={18} height={18} />
+							</div>
+						)}
 					</div>
 				))}
 			</div>
