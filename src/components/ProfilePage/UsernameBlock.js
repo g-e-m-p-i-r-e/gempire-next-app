@@ -48,6 +48,10 @@ const UsernameBlock = () => {
 				method: "POST",
 				body: { username: usernameCutted },
 			});
+			if (!success && error?.message?.toLowerCase()?.includes("duplicate")) {
+				customToast({ toastId: "username", type: "error", message: "This username is already taken. Please choose another one." });
+				return;
+			}
 			if (!success) {
 				customToast({ toastId: "username", type: "error", message: "Something went wrong while save username. Please try again later." });
 				return;

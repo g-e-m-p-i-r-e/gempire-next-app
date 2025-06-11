@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Collapse } from "reactstrap";
 import { useRouter } from "next/router";
+
 import { useAppSelector } from "../../../redux";
 
+import LinkElement from "../LinkElement";
+
 const NavItem = ({ id, title, Icon, path, routes }) => {
-	const { push, pathname } = useRouter();
+	const { pathname } = useRouter();
 
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 
@@ -16,22 +19,14 @@ const NavItem = ({ id, title, Icon, path, routes }) => {
 	}, [pathname]);
 
 	return (
-		<div
-			key={`nav-item-con${id}`}
-			className={`nav-item-con ${id} ${hoveredId === id ? "hovered" : ""} ${activeId === id ? "active" : ""}`}
-			onMouseEnter={() => setHoveredId(id)}
-			onMouseLeave={() => setHoveredId("")}
-			onClick={() => {
-				push(path, undefined, { shallow: true });
-			}}
-		>
+		<LinkElement key={`nav-item-con${id}`} href={path} className={`nav-item-con ${id} ${hoveredId === id ? "hovered" : ""} ${activeId === id ? "active" : ""}`} onMouseEnter={() => setHoveredId(id)} onMouseLeave={() => setHoveredId("")}>
 			<div className="icon-con f-center">
 				<Icon />
 			</div>
 			<Collapse isOpen={!isMobile || hoveredId === id || activeId === id} horizontal>
 				<div className="descr">{title}</div>
 			</Collapse>
-		</div>
+		</LinkElement>
 	);
 };
 
