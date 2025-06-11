@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { UncontrolledTooltip } from "reactstrap";
+
+import fetchWithToken from "../../helpers/fetchWithToken";
+import { useAppSelector } from "../../redux";
 
 import badge1m from "../../assets/img/ProfilePage/badges/1m.png";
 import badge1w from "../../assets/img/ProfilePage/badges/1w.png";
@@ -8,55 +12,63 @@ import badge90d from "../../assets/img/ProfilePage/badges/90d.png";
 import badgeLock from "../../assets/img/ProfilePage/badges/lock.png";
 
 import "../../assets/scss/ProfilePage/BadgesBlock.scss";
-import fetchWithToken from "../../helpers/fetchWithToken";
-import { useAppSelector } from "../../redux";
 
 const badgeImages = [
 	{
 		code: "badge1m",
 		image: badge1m,
+		hint: "You have been registered for 1 month",
 	},
 	{
 		code: "badge1w",
 		image: badge1w,
+		hint: "You have been registered for 1 week",
 	},
 	{
 		code: "badge60d",
 		image: badge60d,
+		hint: "You have been registered for 60 days",
 	},
 	{
 		code: "badge90d",
 		image: badge90d,
+		hint: "You have been registered for 90 days",
 	},
 	{
 		code: "bronzelottery",
 		image: badgeLock,
+		hint: "Bronze Lottery Badge",
 	},
 	{
 		code: "silverlottery",
 		image: badgeLock,
+		hint: "Silver Lottery Badge",
 	},
 	{
 		code: "goldlottery",
 		image: badgeLock,
+		hint: "Gold Lottery Badge",
 	},
 	{
 		code: "platinumlottery",
 		image: badgeLock,
+		hint: "Platinum Lottery Badge",
 	},
 	{
 		code: "lucky",
 		image: badgeLock,
+		hint: "Lucky Badge",
 	},
 	{
-		code: 'discord',
+		code: "discord",
 		image: badgeLock,
+		hint: "Discord Badge",
 	},
 	{
-		code: 'twitter',
+		code: "twitter",
 		image: badgeLock,
-	}
-
+		hint: "Twitter Badge",
+	},
 ];
 
 const BadgesBlock = () => {
@@ -81,7 +93,6 @@ const BadgesBlock = () => {
 		const { success, data } = await fetchWithToken("/info/badges");
 		if (success) {
 			const apiBadges = data.map((b) => {
-				console.log(b);
 				const { image } = badgeImages.find((img) => img.code === b.code);
 				const exist = userBadges.find((ub) => ub === b.id);
 				return {
@@ -89,6 +100,7 @@ const BadgesBlock = () => {
 					code: b.code,
 					image,
 					exist: exist !== undefined,
+					hint: badgeImages.find((img) => img.code === b.code)?.hint,
 				};
 			});
 
@@ -101,6 +113,7 @@ const BadgesBlock = () => {
 					name: "Registration Badge",
 					code: registrationBadgeId,
 					image: badgeImages.find((img) => img.code === registrationBadgeId).image,
+					hint: badgeImages.find((img) => img.code === registrationBadgeId)?.hint,
 					exist: true,
 				};
 				allBadges.push(regBadge);
@@ -123,8 +136,13 @@ const BadgesBlock = () => {
 				<div className="badges-con">
 					{badges.length > 0 &&
 						badges.map((badge) => (
-							<div className="badge-img-con f-center" key={badge.name}>
+							<div id={`badge-${badge.code}`} className="badge-img-con f-center" key={badge.name}>
 								<Image src={badge.image} alt={""} width={64} height={72} />
+								{badge.hint && (
+									<UncontrolledTooltip target={`badge-${badge.code}`} placement={"top"} className="badge-info-tooltip">
+										{badge.hint}
+									</UncontrolledTooltip>
+								)}
 							</div>
 						))}
 					<div className="row-aligner"></div>

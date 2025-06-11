@@ -8,6 +8,7 @@ import ImageFallback from "../SingleComponents/ImageFallback";
 
 import defaultAvatar from "../../assets/img/LoginPage/avatars/avatar1.png";
 import referralsIcon from "../../assets/img/ProfilePage/referrals.svg";
+import partnerMarkIcon from "../../assets/img/common/partnerMark.svg";
 
 import "../../assets/scss/ProfilePage/MainInfo.scss";
 
@@ -15,6 +16,8 @@ const MainInfo = ({ openReferralsTab }) => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 
 	const username = useAppSelector((state) => state.main.user.username);
+	const isPartner = useAppSelector((state) => state.main.user.isPartner);
+
 	const xp = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.gemp);
 	const referralsCount = useAppSelector((state) => state.main.user.referralsCount);
@@ -37,7 +40,14 @@ const MainInfo = ({ openReferralsTab }) => {
 			<div className="avatar-con">
 				<ImageFallback src={defaultAvatar} width={84} height={84} />
 			</div>
-			<div className="username">{username ? `@${username}` : "Anonym"}</div>
+			<div className="username">
+				{username ? `@${username}` : "Anonym"}
+				{isPartner && (
+					<div className="icon-con">
+						<Image src={partnerMarkIcon} alt={""} width={20} height={20} />
+					</div>
+				)}
+			</div>
 			<div className="stat-items-wrap">
 				{userLvlStats.map(({ id, title, value }) => (
 					<div key={`users-balances-item${id}`} className="users-balances-item">

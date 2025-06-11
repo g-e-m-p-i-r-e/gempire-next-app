@@ -8,6 +8,7 @@ import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
 import { incBalance, incTicketsCount, pushBadge } from "../../redux/slices/main";
 import { useAppDispatch, useAppSelector } from "../../redux";
+import shuffleArray from "../../helpers/shuffleArray";
 
 import LoaderLottie from "../SingleComponents/LoaderLottie";
 import CustomTimer from "../SingleComponents/CustomTimer";
@@ -45,12 +46,18 @@ const LotteryRow = () => {
 				customToast({ type: "error", message: "Failed to fetch lottery rewards." });
 				return [];
 			}
-			const rewardsData = data.map((reward) => ({
-				...reward,
-				img: lotteryRewardsImg[reward.id] || gempImg,
-				title: reward.title || "",
-				descr: reward.descr || "",
-			}));
+			const rewardsData = data.map((reward) => {
+				let imgSrc = reward.img || lotteryRewardsImg[reward.id] || gempImg;
+				if (reward.id === "badge") {
+					imgSrc = lotteryRewardsImg[`${reward.id}${reward.title}`] || gempImg;
+				}
+				return {
+					...reward,
+					img: imgSrc,
+					title: reward.title || "",
+					descr: reward.descr || "",
+				};
+			});
 			setRewards(rewardsData);
 
 			return rewardsData;
@@ -61,7 +68,7 @@ const LotteryRow = () => {
 	};
 
 	const initWheel = (winItemRes, itemsArray = rewards) => {
-		const rewardsCopy = [...itemsArray];
+		const rewardsCopy = shuffleArray(itemsArray);
 		const selectedRewards = [];
 		const rewardsToShow = isMobile ? 30 : 50;
 

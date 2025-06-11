@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-import { setCookie } from "cookies-next";
+import { deleteCookie, setCookie } from "cookies-next";
 import { useAppDispatch } from "../../redux";
 import { setUser } from "../../redux/slices/main";
 import getAccessToken from "../../helpers/getAccessToken";
 import fetchWithToken from "../../helpers/fetchWithToken";
-import customToast from "../../helpers/customToast";
 
 import PawsLottie from "../SingleComponents/LoaderLottie";
 
@@ -20,9 +19,8 @@ const PageLayout = ({ Component, ...props }) => {
 		try {
 			const res = await fetchWithToken("/user");
 
-			if (!res?.success || !res?.data) {
-				customToast({ toastId: "/user", type: "error", message: "Something went wrong while get user data. Please try again later." });
-
+			if (!res?.data) {
+				await deleteCookie(`${process.env.ACCESS_TOKEN_PREFIX}-accessToken`, { domain: process.env.APP_DOMAIN });
 				return false;
 			}
 

@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 import { setUser } from "../../redux/slices/main";
 import { useAppDispatch, useAppSelector } from "../../redux";
-
-import "../../assets/scss/ProfilePage/UsernameBlock.scss";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
+
+import successMark from "../../assets/img/common/successMark.svg";
+
+import "../../assets/scss/ProfilePage/UsernameBlock.scss";
 
 const EngRegex = /[^a-zA-Z0-9_]/g;
 
@@ -15,11 +18,15 @@ const UsernameBlock = () => {
 
 	const username = useAppSelector((state) => state.main.user.username);
 
-	const [isUsernameInputActive, setIsUsernameInputActive] = useState(false);
 	const [newUsername, setNewUsername] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
+
 	const handleFocus = () => {
-		setIsUsernameInputActive(true);
 		setNewUsername(username || "");
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
 	};
 
 	const onInputChange = (e) => {
@@ -33,7 +40,12 @@ const UsernameBlock = () => {
 	};
 
 	const postSaveUsername = async () => {
+		if (isLoading) {
+			return;
+		}
 		try {
+			setIsLoading(true);
+
 			const usernameCutted = newUsername.replace(EngRegex, "");
 			if (usernameCutted === username) {
 				return;
@@ -58,32 +70,57 @@ const UsernameBlock = () => {
 			}
 
 			dispatch(setUser({ username: usernameCutted }));
-			setIsUsernameInputActive(false);
 			setNewUsername("");
+			setIsSaved(true);
+			if (inputRef.current) {
+				inputRef.current.blur();
+			}
 		} catch (e) {
 			console.error(`Err at postSaveUsername: ${e}`);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const handleKeyDown = async (event) => {
+		if (event.key === "Enter") {
+			await postSaveUsername();
 		}
 	};
 
 	useEffect(() => {
-		if (inputRef.current && isUsernameInputActive) {
-			inputRef.current.focus();
-		}
-	}, [inputRef, isUsernameInputActive]);
+		let timer = null;
 
-	const editUsername = newUsername || username;
+		if (isSaved) {
+			timer = setTimeout(() => {
+				setIsSaved(false);
+			}, 2000);
+		}
+		return () => {
+			if (timer) {
+				clearTimeout(timer);
+			}
+		};
+	}, [isSaved]);
+
+	const editUsername = newUsername || `@${username}`;
 
 	return (
 		<div className="input-con">
-			<input ref={inputRef} autoComplete="off" type="text" disabled={!isUsernameInputActive} onChange={onInputChange} value={editUsername} className="input-item" placeholder="Add Username" />
-			{!newUsername && (
+			<input ref={inputRef} autoComplete="off" type="text" onKeyDown={handleKeyDown} onChange={onInputChange} value={editUsername} className="input-item" placeholder="Add Username" />
+			{!newUsername && !isSaved && (
 				<div className="edit-btn" onClick={handleFocus}>
 					Edit
 				</div>
 			)}
-			{newUsername && (
+			{newUsername && !isSaved && (
 				<div className="edit-btn save" onClick={postSaveUsername}>
 					Save
+				</div>
+			)}
+			{isSaved && (
+				<div className="edit-btn">
+					<Image src={successMark} alt={""} width={16} height={16} />
 				</div>
 			)}
 		</div>

@@ -59,7 +59,7 @@ const UserPage = () => {
 						<Col xl={10}>
 							<div className="page-content-wrap">
 								<div className="side-block">
-									<MainInfo username={userData.username} balance={userData.gemp} xp={userData.xp} />
+									<MainInfo username={userData.username} balance={userData.gemp} xp={userData.xp} isPartner={userData.isPartner} />
 								</div>
 								<div className="side-block">
 									<UsersSocials discordUsername={userData?.discordData?.username} twitterUsername={userData?.twitterData?.username} />
