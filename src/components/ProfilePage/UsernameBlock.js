@@ -103,11 +103,17 @@ const UsernameBlock = () => {
 		};
 	}, [isSaved]);
 
-	const editUsername = newUsername || `@${username}`;
+	const onBlur = () => {
+		if (inputRef.current && newUsername.length === 1) {
+			setNewUsername("");
+		}
+	};
+
+	const editUsername = newUsername || (username ? `@${username}` : "");
 
 	return (
 		<div className="input-con">
-			<input ref={inputRef} autoComplete="off" type="text" onKeyDown={handleKeyDown} onChange={onInputChange} value={editUsername} className="input-item" placeholder="Add Username" />
+			<input ref={inputRef} autoComplete="off" type="text" onKeyDown={handleKeyDown} onChange={onInputChange} onBlur={onBlur} value={editUsername} className="input-item" placeholder="Add Username" />
 			{!newUsername && !isSaved && (
 				<div className="edit-btn" onClick={handleFocus}>
 					Edit
