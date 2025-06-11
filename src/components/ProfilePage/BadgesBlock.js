@@ -44,6 +44,18 @@ const badgeImages = [
 		code: "platinumlottery",
 		image: badgeLock,
 	},
+	{
+		code: "lucky",
+		image: badgeLock,
+	},
+	{
+		code: 'discord',
+		image: badgeLock,
+	},
+	{
+		code: 'twitter',
+		image: badgeLock,
+	}
 
 ];
 
@@ -69,6 +81,7 @@ const BadgesBlock = () => {
 		const { success, data } = await fetchWithToken("/info/badges");
 		if (success) {
 			const apiBadges = data.map((b) => {
+				console.log(b);
 				const { image } = badgeImages.find((img) => img.code === b.code);
 				const exist = userBadges.find((ub) => ub === b.id);
 				return {
