@@ -144,6 +144,10 @@
 						background: linear-gradient(180deg, #ffffff 0%, #e8dfff 100%);
 						color: #5d507d;
 					}
+					&.CHECK {
+						background: linear-gradient(180deg, #713efd 0%, #4400b1 100%);
+						color: white;
+					}
 					&.DONE {
 						cursor: auto;
 						opacity: 0.5;

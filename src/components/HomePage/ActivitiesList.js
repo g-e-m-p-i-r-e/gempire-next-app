@@ -73,7 +73,7 @@ const ActivitiesList = ({ isLoading, blockTitle, activities, withFilter }) => {
 							<div key={`activity-item${_id}`} className="activity-item">
 								<div className="title">
 									<p>
-										<LinkElement href={`/user/${userId}`} className={"link-item"}>
+										<LinkElement href={`/profile/${userId}`} className={"link-item"}>
 											@{username}
 										</LinkElement>
 										{actionType === "lottery" ? " won the lottery" : " completed the quest"}

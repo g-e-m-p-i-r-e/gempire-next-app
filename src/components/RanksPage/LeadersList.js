@@ -43,7 +43,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 								</div>
 							</div>
 							<div className="info-con">
-								<LinkElement className="address" href={`/user/${item.username || item.wallet}`}>
+								<LinkElement className="address" href={`/profile/${item.username || item.wallet}`}>
 									{item.username ? item.username : sliceAddress(item.wallet)}
 								</LinkElement>
 								<div className="amount">
@@ -66,7 +66,7 @@ const LeadersList = ({ title, leadersList, currency }) => {
 										<ImageFallback src={item.avatarSrc || defaultAvatarIcon} width={38} height={38} />
 									</div>
 									<div className="info-con">
-										<LinkElement className="address" href={`/user/${item.username || item.wallet}`}>
+										<LinkElement className="address" href={`/profile/${item.username || item.wallet}`}>
 											{item.username ? item.username : sliceAddress(item.wallet)}
 										</LinkElement>
 										<div className="amount">

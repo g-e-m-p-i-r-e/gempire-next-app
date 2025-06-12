@@ -6,7 +6,7 @@ import utc from "dayjs/plugin/utc";
 import sleep from "../../helpers/sleep";
 import fetchWithToken from "../../helpers/fetchWithToken";
 import customToast from "../../helpers/customToast";
-import { incBalance, incTicketsCount, pushBadge } from "../../redux/slices/main";
+import { incBalance, incLotteryHistory, incTicketsCount, pushBadge } from "../../redux/slices/main";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import shuffleArray from "../../helpers/shuffleArray";
 
@@ -18,6 +18,8 @@ import gempImg from "../../assets/img/LotteryPage/rewards/gemp.png";
 import ticketWhiteImg from "../../assets/img/common/ticketWhite.svg";
 import centerArrowImg from "../../assets/img/LotteryPage/rewards/centerArrow.png";
 import lotteryRewardsImg from "../../assets/img/LotteryPage/rewards/lotteryRewardsImg";
+import ticketsBgImg from "../../assets/img/LotteryPage/ticketsBg.png";
+import ticketsBgMobileImg from "../../assets/img/LotteryPage/ticketsBgMobile.png";
 
 import "../../assets/scss/HomePage/LotteryPage/LotteryRow.scss";
 
@@ -186,6 +188,10 @@ const LotteryRow = () => {
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
 			else if (data.type === "badge") winItemRes.title = data.badgeId;
 
+			if (data.type !== "nothing") {
+				dispatch(incLotteryHistory({ code: data.type, amount: data.amount || 1 }));
+			}
+
 			dispatch(incTicketsCount(-1));
 
 			setWinItem(winItemRes);
@@ -197,7 +203,7 @@ const LotteryRow = () => {
 	};
 
 	const onClickBtn = () => {
-		if (isLoading) return;
+		if (isLoading || state === "timer") return;
 
 		if (state === "showReward") {
 			if (ticketsBalance <= 0) {
@@ -240,6 +246,13 @@ const LotteryRow = () => {
 		setTimeout(() => {
 			fetchLotteryData();
 		}, secondsRandom);
+	};
+
+	const getBtnText = () => {
+		if (isSpinningLoading) return "Spinning...";
+		if (isLoading) return "Spin";
+		if (state === "showReward") return "Ok";
+		return "Spin";
 	};
 
 	useEffect(() => {
@@ -289,40 +302,37 @@ const LotteryRow = () => {
 
 				{state === "timer" && (
 					<div className="timer-block">
+						<div className="img-bg">
+							<Image src={isMobile ? ticketsBgMobileImg : ticketsBgImg} alt={""} layout="fill" />
+						</div>
 						<div className="timer-title">Next spin available in</div>
 						<CustomTimer withSymbols date={timerTo} onComplete={onTimerEnd} />
 					</div>
 				)}
 			</div>
 
-			{state !== "timer" && (
-				<div className="tickets-con">
-					<div className="tickets-balance-con">
-						<div className="descr">Balance</div>
-						<div className="title">{ticketsBalance}</div>
-						<div className="img-con f-center">
-							<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
-						</div>
+			<div className="tickets-con">
+				<div className="tickets-balance-con">
+					<div className="descr">Balance</div>
+					<div className="title">{ticketsBalance}</div>
+					<div className="img-con f-center">
+						<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
 					</div>
-					<div className="tickets-balance-con">
-						<div className="descr">Price</div>
-						<div className="title">1</div>
-						<div className="img-con f-center">
-							<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
-						</div>
+				</div>
+				<div className="tickets-balance-con">
+					<div className="descr">Price</div>
+					<div className="title">1</div>
+					<div className="img-con f-center">
+						<Image src={ticketWhiteImg} alt={""} width={14} height={14} />
 					</div>
-
-					<LotteryInfoModal />
 				</div>
-			)}
 
-			{state !== "timer" && (
-				<div onClick={onClickBtn} className={`btn-item f-center ${isLoading || isSpinningLoading ? "disabled" : ""}`}>
-					{state === "ready" && !isLoading && !isSpinningLoading && "Spin"}
-					{((state === "ready" && isLoading) || isSpinningLoading) && "Spinning..."}
-					{state === "showReward" && "Ok"}
-				</div>
-			)}
+				<LotteryInfoModal />
+			</div>
+
+			<div onClick={onClickBtn} className={`btn-item f-center ${isLoading || isSpinningLoading || state === "timer" ? "disabled" : ""}`}>
+				{getBtnText()}
+			</div>
 		</div>
 	);
 };

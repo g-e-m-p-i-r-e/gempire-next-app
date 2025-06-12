@@ -4,20 +4,20 @@ import { Col, Container, Row } from "reactstrap";
 import { useDisconnect } from "@reown/appkit/react";
 import { deleteCookie } from "cookies-next";
 
-import getSEOOptions from "../helpers/getSEOOptions";
-import { useAppSelector } from "../redux";
+import getSEOOptions from "../../helpers/getSEOOptions";
+import { useAppSelector } from "../../redux";
 
-import UsersSocials from "../components/ProfilePage/UsersSocials";
-import MainInfo from "../components/ProfilePage/MainInfo";
-import UsernameBlock from "../components/ProfilePage/UsernameBlock";
-import CopyInput from "../components/ProfilePage/CopyInput";
-import BadgesBlock from "../components/ProfilePage/BadgesBlock";
-import ReferralsBlock from "../components/ProfilePage/ReferralsBlock";
-import LotteryStartsBlock from "../components/ProfilePage/LotteryStartsBlock";
+import UsersSocials from "../../components/ProfilePage/UsersSocials";
+import MainInfo from "../../components/ProfilePage/MainInfo";
+import UsernameBlock from "../../components/ProfilePage/UsernameBlock";
+import CopyInput from "../../components/ProfilePage/CopyInput";
+import BadgesBlock from "../../components/ProfilePage/BadgesBlock";
+import ReferralsBlock from "../../components/ProfilePage/ReferralsBlock";
+import LotteryStartsBlock from "../../components/ProfilePage/LotteryStartsBlock";
 
-import "../assets/scss/ProfilePage/main.scss";
+import "../../assets/scss/ProfilePage/main.scss";
 
-const Profile = () => {
+const Index = () => {
 	const userWallet = useAppSelector((state) => state.main.user.wallet);
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 
@@ -52,8 +52,6 @@ const Profile = () => {
 												<CopyInput title={"Digital wallet ID"} value={userWallet} />
 											</div>
 
-											<BadgesBlock />
-
 											<div className="btn-logout f-center" onClick={onLogout}>
 												Log Out
 											</div>
@@ -70,6 +68,8 @@ const Profile = () => {
 					</Row>
 					<Row className="justify-content-center">
 						<Col xl={10}>
+							<BadgesBlock />
+
 							<LotteryStartsBlock />
 						</Col>
 					</Row>
@@ -85,4 +85,4 @@ export const getServerSideProps = async ({ locale, resolvedUrl }) => ({
 		...getSEOOptions(resolvedUrl),
 	},
 });
-export default Profile;
+export default Index;

@@ -1,49 +1,46 @@
 .profile-page-con {
-	.page-content-wrap {
-		.badges-block-con {
-			width: 100%;
-			padding: 0 16px;
-			margin-bottom: 16px;
+	.badges-block-con {
+		width: 100%;
+		margin-bottom: 16px;
 
-			.block-title {
-				margin-bottom: 8px;
-				color: #848097;
-				font-family: "Inter Tight", sans-serif;
-				font-size: 12px;
-				font-weight: 500;
-				line-height: 125%;
-				letter-spacing: 1px;
-				text-transform: uppercase;
-				padding-left: 15px;
+		.block-title {
+			margin-bottom: 8px;
+			color: #848097;
+			font-family: "Inter Tight", sans-serif;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 125%;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			padding-left: 15px;
+		}
+
+		.badges-con {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			padding: 16px 16px 6px;
+			border-radius: 16px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: #1a0c2c;
+			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
+
+			.badge-img-con {
+				margin-right: 5px;
+				margin-bottom: 10px;
+				width: 64px;
+				min-width: 64px;
+				transition: 0.2s;
+				&:hover {
+					transform: translateY(-5px);
+				}
 			}
 
-			.badges-con {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				justify-content: space-around;
-				padding: 16px 16px 6px;
-				border-radius: 16px;
-				border: 1px solid rgba(255, 255, 255, 0.15);
-				background: #1a0c2c;
-				box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
-
-				.badge-img-con {
-					margin-right: 5px;
-					margin-bottom: 10px;
-					width: 64px;
-					min-width: 64px;
-					transition: 0.2s;
-					&:hover {
-						transform: translateY(-5px);
-					}
-				}
-
-				.row-aligner {
-					height: 0;
-					width: 64px;
-					margin-right: 5px;
-				}
+			.row-aligner {
+				height: 0;
+				width: 64px;
+				margin-right: 5px;
 			}
 		}
 	}

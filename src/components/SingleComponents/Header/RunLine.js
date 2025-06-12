@@ -60,7 +60,7 @@ const RunLine = () => {
 				<div className="line-message-con fade-in-con">
 					<div className="line-message-con fade-out-con" onAnimationEnd={onFadeOut}>
 						<div className="descr">
-							<LinkElement href={`/user/${activeItem.userTag}`} className={"link-item"}>
+							<LinkElement href={`/profile/${activeItem.userTag}`} className={"link-item"}>
 								@{username}
 							</LinkElement>
 							{activeItem.actionType === "lottery" ? " won the lottery" : " completed the quest"}

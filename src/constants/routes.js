@@ -88,7 +88,7 @@ const LotteryRoute = {
 	},
 };
 const UserProfileRoute = {
-	path: "/user/:id",
+	path: "/profile/:id",
 	helmet: {
 		title: "GEMPIRE | User Profile",
 		description: "Build your own Gempire",

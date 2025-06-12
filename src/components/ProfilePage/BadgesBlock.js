@@ -10,6 +10,12 @@ import badge1w from "../../assets/img/ProfilePage/badges/1w.png";
 import badge60d from "../../assets/img/ProfilePage/badges/60d.png";
 import badge90d from "../../assets/img/ProfilePage/badges/90d.png";
 import badgeLock from "../../assets/img/ProfilePage/badges/lock.png";
+import discord from "../../assets/img/ProfilePage/badges/discord.png";
+import twitter from "../../assets/img/ProfilePage/badges/twitter.png";
+import lotteryBronze from "../../assets/img/ProfilePage/badges/lotteryBronze.png";
+import lotterySilver from "../../assets/img/ProfilePage/badges/lotterySilver.png";
+import lotteryGold from "../../assets/img/ProfilePage/badges/lotteryGold.png";
+import lotteryPlatinum from "../../assets/img/ProfilePage/badges/lotteryPlatinum.png";
 
 import "../../assets/scss/ProfilePage/BadgesBlock.scss";
 
@@ -36,22 +42,22 @@ const badgeImages = [
 	},
 	{
 		code: "bronzelottery",
-		image: badgeLock,
+		image: lotteryBronze,
 		hint: "Bronze Lottery Badge",
 	},
 	{
 		code: "silverlottery",
-		image: badgeLock,
+		image: lotterySilver,
 		hint: "Silver Lottery Badge",
 	},
 	{
 		code: "goldlottery",
-		image: badgeLock,
+		image: lotteryGold,
 		hint: "Gold Lottery Badge",
 	},
 	{
 		code: "platinumlottery",
-		image: badgeLock,
+		image: lotteryPlatinum,
 		hint: "Platinum Lottery Badge",
 	},
 	{
@@ -61,12 +67,12 @@ const badgeImages = [
 	},
 	{
 		code: "discord",
-		image: badgeLock,
+		image: discord,
 		hint: "Discord Badge",
 	},
 	{
 		code: "twitter",
-		image: badgeLock,
+		image: twitter,
 		hint: "Twitter Badge",
 	},
 ];

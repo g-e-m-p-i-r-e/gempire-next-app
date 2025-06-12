@@ -62,8 +62,15 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 
 		if (quest?.data?.action === "link") {
 			if (quest?.data?.url) {
-				postCompleteQuest(quest._id);
-				window.open(quest?.data?.url, "_blank");
+				if (!quest.check || quest.status === "CHECK") {
+					postCompleteQuest(quest._id);
+				} else {
+					onQuestStatusChange(quest._id, "CHECK");
+				}
+
+				if (quest.status !== "CHECK") {
+					window.open(quest?.data?.url, "_blank");
+				}
 			}
 		}
 	};
@@ -105,6 +112,7 @@ const QuestsList = ({ blockTitle, quests, isLoading, onQuestStatusChange }) => {
 							</div>
 							<div className={`btn-con f-center ${quest.status}`} onClick={() => onQuestClick(quest)}>
 								{quest.status === "NEW" && "Start"}
+								{quest.status === "CHECK" && "Verify"}
 								{quest.status === "DONE" && "Claimed"}
 							</div>
 						</div>
