@@ -87,7 +87,7 @@ const LotteryRow = () => {
 		setState("ready");
 	};
 
-	const onSpin = async (winItemRes) => {
+	const onSpin = async () => {
 		if (carouselRef.current) {
 			const winItemRef = carouselRef.current.querySelector("#isWin");
 			if (winItemRef) {
@@ -102,12 +102,6 @@ const LotteryRow = () => {
 				await sleep(6500);
 
 				setState("showReward");
-				if (winItemRes && ["gemp", "xp", "tickets"].includes(winItemRes.id)) {
-					dispatch(incBalance({ code: winItemRes.id, amount: +winItemRes.title }));
-				}
-				if (winItemRes && winItemRes.badgeId) {
-					dispatch(pushBadge(winItemRes.badgeId));
-				}
 			}
 		}
 	};
@@ -140,7 +134,7 @@ const LotteryRow = () => {
 			}
 
 			await sleep(500);
-			await onSpin(winItemRes);
+			await onSpin();
 			setIsSpinningLoading(false);
 
 			if (ticketsBalance - 1 <= 0) {
@@ -193,6 +187,15 @@ const LotteryRow = () => {
 			}
 
 			dispatch(incTicketsCount(-1));
+
+			setTimeout(() => {
+				if (winItemRes && ["gemp", "xp", "tickets"].includes(winItemRes.id)) {
+					dispatch(incBalance({ code: winItemRes.id, amount: +winItemRes.title }));
+				}
+				if (winItemRes && winItemRes.badgeId) {
+					dispatch(pushBadge(winItemRes.badgeId));
+				}
+			}, 8500);
 
 			setWinItem(winItemRes);
 			await sleep(100);
