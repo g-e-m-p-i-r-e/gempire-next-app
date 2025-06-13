@@ -69,6 +69,11 @@ const badgeImages = [
 		image: twitter,
 		hint: "Twitter Badge",
 	},
+	{
+		code: "incrypted",
+		image: lotteryPlatinum,
+		hint: "Participated in Incrypted 2025",
+	},
 ];
 
 const BadgesBlock = ({ userBadges, registrationDate: createdAt }) => {
@@ -116,7 +121,7 @@ const BadgesBlock = ({ userBadges, registrationDate: createdAt }) => {
 			}
 
 			data.forEach((b) => {
-				const exist = !userBadges.find((ub) => ub === b.id);
+				const exist = userBadges.find((ub) => ub === b.id);
 
 				if (exist) {
 					const { image, hint } = badgeImages.find((img) => img.code === b.code);

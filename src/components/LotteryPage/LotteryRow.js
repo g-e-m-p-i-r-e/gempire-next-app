@@ -58,6 +58,7 @@ const LotteryRow = () => {
 					img: imgSrc,
 					title: reward.title || "",
 					descr: reward.descr || "",
+					badgeId: reward.badgeId || "",
 				};
 			});
 			setRewards(rewardsData);
@@ -178,9 +179,13 @@ const LotteryRow = () => {
 			}
 
 			const winItemRes = rewards.find((reward) => reward.id === data?.type);
-			if (data.amount !== undefined && data.amount > 0) winItemRes.title = data?.amount;
+			if (data.amount !== undefined && data.amount > 0 && data.type !== "badge") winItemRes.title = data?.amount;
 			else if (data.type === "nothing") winItemRes.title = "Nothing";
-			else if (data.type === "badge") winItemRes.title = data.badgeId;
+			else if (data.type === "badge") {
+				const rewardData = rewards.find(({ badgeId }) => badgeId === data?.badgeId);
+				winItemRes.title = rewardData?.title || "";
+				winItemRes.img = lotteryRewardsImg[`badge${rewardData.title}`] || gempImg;
+			}
 
 			if (data.type !== "nothing") {
 				dispatch(incLotteryHistory({ code: data.type, amount: data.amount || 1 }));
