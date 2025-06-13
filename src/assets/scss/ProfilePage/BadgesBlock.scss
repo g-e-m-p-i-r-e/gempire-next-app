@@ -1,4 +1,5 @@
-.profile-page-con {
+.profile-page-con,
+.user-profile-page-con {
 	.badges-block-con {
 		width: 100%;
 		margin-bottom: 16px;
@@ -26,11 +27,32 @@
 			background: #1a0c2c;
 			box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.12);
 
+			.empty-list {
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+				padding: 10px 0 20px;
+				.img-con {
+					margin-bottom: 4px;
+				}
+
+				.descr {
+					color: rgba(255, 255, 255, 0.7);
+					text-align: center;
+					font-family: "Inter Tight", sans-serif;
+					font-size: 15px;
+					font-weight: 300;
+					line-height: 21px;
+					letter-spacing: 0.175px;
+				}
+			}
+
 			.badge-img-con {
-				margin-right: 5px;
+				margin-right: 15px;
 				margin-bottom: 10px;
-				width: 64px;
-				min-width: 64px;
+				width: 72px;
+				min-width: 72px;
 				transition: 0.2s;
 				&:hover {
 					transform: translateY(-5px);

@@ -3,7 +3,7 @@ import { Col, Container, Row } from "reactstrap";
 import Image from "next/image";
 import { useAppKit, useAppKitAccount, useDisconnect } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
-import { getCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
@@ -45,19 +45,25 @@ const EnterLogin = () => {
 
 	const postLogIn = async (message) => {
 		try {
+			const coupon = (await getCookie("gempire-coupon")) || undefined;
+
 			const res = await fetchWithToken("/user/auth", {
 				method: "POST",
 				body: {
 					address: evmAddress.toLowerCase(),
 					signature: message,
 					referralCode: (await getCookie("gempire-r")) || undefined,
+					coupon,
 				},
 			});
 
 			if (!res?.success || !res?.data) {
 				customToast({ toastId: "/user/auth", type: "error", message: "Something went wrong while auth. Please try again later." });
-
 				return false;
+			}
+
+			if (coupon) {
+				await deleteCookie("gempire-coupon");
 			}
 
 			let expires = new Date();

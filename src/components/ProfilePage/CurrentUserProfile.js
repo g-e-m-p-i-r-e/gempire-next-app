@@ -1,24 +1,25 @@
 import React, { useState } from "react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Col, Container, Row } from "reactstrap";
 import { useDisconnect } from "@reown/appkit/react";
 import { deleteCookie } from "cookies-next";
 
-import getSEOOptions from "../../helpers/getSEOOptions";
 import { useAppSelector } from "../../redux";
 
-import UsersSocials from "../../components/ProfilePage/UsersSocials";
-import MainInfo from "../../components/ProfilePage/MainInfo";
-import UsernameBlock from "../../components/ProfilePage/UsernameBlock";
-import CopyInput from "../../components/ProfilePage/CopyInput";
-import BadgesBlock from "../../components/ProfilePage/BadgesBlock";
-import ReferralsBlock from "../../components/ProfilePage/ReferralsBlock";
-import LotteryStartsBlock from "../../components/ProfilePage/LotteryStartsBlock";
+import UsersSocials from "./UsersSocials";
+import MainInfo from "./MainInfo";
+import UsernameBlock from "./UsernameBlock";
+import CopyInput from "./CopyInput";
+import BadgesBlock from "./BadgesBlock";
+import ReferralsBlock from "./ReferralsBlock";
+import LotteryStartsBlock from "./LotteryStartsBlock";
 
 import "../../assets/scss/ProfilePage/main.scss";
 
-const Index = () => {
+const CurrentUserProfile = () => {
 	const userWallet = useAppSelector((state) => state.main.user.wallet);
+	const userBadges = useAppSelector((state) => state.main.user.badges);
+	const registrationDate = useAppSelector((state) => state.main.user.createdAt);
+
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 
 	const [activeMobileTab, setActiveMobileTab] = useState("main");
@@ -68,7 +69,7 @@ const Index = () => {
 					</Row>
 					<Row className="justify-content-center">
 						<Col xl={10}>
-							<BadgesBlock />
+							<BadgesBlock userBadges={userBadges} registrationDate={registrationDate} />
 
 							<LotteryStartsBlock />
 						</Col>
@@ -79,10 +80,4 @@ const Index = () => {
 	);
 };
 
-export const getServerSideProps = async ({ locale, resolvedUrl }) => ({
-	props: {
-		...(await serverSideTranslations(locale, ["common"])),
-		...getSEOOptions(resolvedUrl),
-	},
-});
-export default Index;
+export default CurrentUserProfile;

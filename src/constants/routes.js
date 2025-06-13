@@ -42,17 +42,7 @@ const LoginRoute = {
 		hasQuery: false,
 	},
 };
-const ProfileRoute = {
-	path: "/profile",
-	helmet: {
-		title: "GEMPIRE | Profile",
-		description: "Build your own Gempire",
-		keywords: "",
-		noIndex: false,
-		noFollow: false,
-		hasQuery: false,
-	},
-};
+
 const RanksRoute = {
 	path: "/ranks",
 	helmet: {
@@ -76,21 +66,10 @@ const ShopRoute = {
 	},
 };
 
-const LotteryRoute = {
-	path: "/lottery",
-	helmet: {
-		title: "GEMPIRE | Lottery",
-		description: "Build your own Gempire",
-		keywords: "",
-		noIndex: false,
-		noFollow: false,
-		hasQuery: false,
-	},
-};
 const UserProfileRoute = {
 	path: "/profile/:id",
 	helmet: {
-		title: "GEMPIRE | User Profile",
+		title: "GEMPIRE | Profile",
 		description: "Build your own Gempire",
 		keywords: "",
 		noIndex: false,
@@ -108,4 +87,4 @@ const NotFoundRoute = {
 	},
 };
 
-export default [MainRoute, LotteryRoute, UserProfileRoute, NotFoundRoute, RanksRoute, HomeRoute, ProfileRoute, LoginRoute, ShopRoute, FaqRoute];
+export default [MainRoute, UserProfileRoute, NotFoundRoute, RanksRoute, HomeRoute, LoginRoute, ShopRoute, FaqRoute];

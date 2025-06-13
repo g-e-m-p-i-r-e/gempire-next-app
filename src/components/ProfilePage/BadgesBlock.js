@@ -3,19 +3,18 @@ import Image from "next/image";
 import { UncontrolledTooltip } from "reactstrap";
 
 import fetchWithToken from "../../helpers/fetchWithToken";
-import { useAppSelector } from "../../redux";
 
 import badge1m from "../../assets/img/ProfilePage/badges/1m.png";
 import badge1w from "../../assets/img/ProfilePage/badges/1w.png";
 import badge60d from "../../assets/img/ProfilePage/badges/60d.png";
 import badge90d from "../../assets/img/ProfilePage/badges/90d.png";
-import badgeLock from "../../assets/img/ProfilePage/badges/lock.png";
 import discord from "../../assets/img/ProfilePage/badges/discord.png";
 import twitter from "../../assets/img/ProfilePage/badges/twitter.png";
 import lotteryBronze from "../../assets/img/ProfilePage/badges/lotteryBronze.png";
 import lotterySilver from "../../assets/img/ProfilePage/badges/lotterySilver.png";
 import lotteryGold from "../../assets/img/ProfilePage/badges/lotteryGold.png";
 import lotteryPlatinum from "../../assets/img/ProfilePage/badges/lotteryPlatinum.png";
+import emojiSadImg from "../../assets/img/common/emojiSad.svg";
 
 import "../../assets/scss/ProfilePage/BadgesBlock.scss";
 
@@ -23,22 +22,22 @@ const badgeImages = [
 	{
 		code: "badge1m",
 		image: badge1m,
-		hint: "You have been registered for 1 month",
+		hint: "Registered for 1 month",
 	},
 	{
 		code: "badge1w",
 		image: badge1w,
-		hint: "You have been registered for 1 week",
+		hint: "Registered for 1 week",
 	},
 	{
 		code: "badge60d",
 		image: badge60d,
-		hint: "You have been registered for 60 days",
+		hint: "Registered for 60 days",
 	},
 	{
 		code: "badge90d",
 		image: badge90d,
-		hint: "You have been registered for 90 days",
+		hint: "Registered for 90 days",
 	},
 	{
 		code: "bronzelottery",
@@ -61,11 +60,6 @@ const badgeImages = [
 		hint: "Platinum Lottery Badge",
 	},
 	{
-		code: "lucky",
-		image: badgeLock,
-		hint: "Lucky Badge",
-	},
-	{
 		code: "discord",
 		image: discord,
 		hint: "Discord Badge",
@@ -77,10 +71,9 @@ const badgeImages = [
 	},
 ];
 
-const BadgesBlock = () => {
+const BadgesBlock = ({ userBadges, registrationDate: createdAt }) => {
 	const [badges, setBadges] = useState([]);
-	const userBadges = useAppSelector((state) => state.main.user.badges);
-	const createdAt = useAppSelector((state) => state.main.user.createdAt);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const getRegistrationBadge = () => {
 		if (!createdAt) return null;
@@ -96,38 +89,51 @@ const BadgesBlock = () => {
 		return null;
 	};
 	const fetchBadges = async () => {
-		const { success, data } = await fetchWithToken("/info/badges");
-		if (success) {
-			const apiBadges = data.map((b) => {
-				const { image } = badgeImages.find((img) => img.code === b.code);
-				const exist = userBadges.find((ub) => ub === b.id);
-				return {
-					name: b.name,
-					code: b.code,
-					image,
-					exist: exist !== undefined,
-					hint: badgeImages.find((img) => img.code === b.code)?.hint,
-				};
-			});
-
-			const allBadges = [...apiBadges];
+		try {
+			setIsLoading(true);
+			const userBadgesArray = [];
 
 			const registrationBadgeId = getRegistrationBadge();
-
 			if (registrationBadgeId) {
-				const regBadge = {
-					name: "Registration Badge",
+				const { image, hint } = badgeImages.find((img) => img.code === registrationBadgeId);
+				userBadgesArray.push({
 					code: registrationBadgeId,
-					image: badgeImages.find((img) => img.code === registrationBadgeId).image,
-					hint: badgeImages.find((img) => img.code === registrationBadgeId)?.hint,
-					exist: true,
-				};
-				allBadges.push(regBadge);
+					image,
+					hint,
+				});
 			}
 
-			setBadges(allBadges.filter(({ exist }) => !!exist));
-		} else {
-			console.error("Failed to fetch badges");
+			if (!userBadges.length) {
+				setBadges(userBadgesArray);
+				return;
+			}
+
+			const { success, data } = await fetchWithToken("/info/badges");
+
+			if (!success) {
+				console.error("Failed to fetch badges from server");
+				return;
+			}
+
+			data.forEach((b) => {
+				const exist = !userBadges.find((ub) => ub === b.id);
+
+				if (exist) {
+					const { image, hint } = badgeImages.find((img) => img.code === b.code);
+
+					userBadgesArray.push({
+						code: b.code,
+						image,
+						hint,
+					});
+				}
+			});
+
+			setBadges(userBadgesArray);
+		} catch (e) {
+			console.error("Error fetching badges:", e);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -136,14 +142,14 @@ const BadgesBlock = () => {
 	}, []);
 
 	return (
-		!!badges.length && (
+		!isLoading && (
 			<div className="badges-block-con">
 				<div className="block-title">Badges</div>
-				<div className="badges-con">
-					{badges.length > 0 &&
-						badges.map((badge) => (
-							<div id={`badge-${badge.code}`} className="badge-img-con f-center" key={badge.name}>
-								<Image src={badge.image} alt={""} width={64} height={72} />
+				{!!badges.length && (
+					<div className="badges-con">
+						{badges.map((badge) => (
+							<div id={`badge-${badge.code}`} className="badge-img-con f-center" key={`badge-${badge.code}`}>
+								<Image src={badge.image} alt={""} width={72} height={81} />
 								{badge.hint && (
 									<UncontrolledTooltip target={`badge-${badge.code}`} placement={"top"} className="badge-info-tooltip">
 										{badge.hint}
@@ -151,13 +157,24 @@ const BadgesBlock = () => {
 								)}
 							</div>
 						))}
-					<div className="row-aligner"></div>
-					<div className="row-aligner"></div>
-					<div className="row-aligner"></div>
-					<div className="row-aligner"></div>
-					<div className="row-aligner"></div>
-					<div className="row-aligner"></div>
-				</div>
+						<div className="row-aligner"></div>
+						<div className="row-aligner"></div>
+						<div className="row-aligner"></div>
+						<div className="row-aligner"></div>
+						<div className="row-aligner"></div>
+						<div className="row-aligner"></div>
+					</div>
+				)}
+				{!badges.length && (
+					<div className="badges-con">
+						<div className="empty-list">
+							<div className="img-con">
+								<Image src={emojiSadImg} alt={""} width={36} height={36} />
+							</div>
+							<div className="descr">No earned badges yet</div>
+						</div>
+					</div>
+				)}
 			</div>
 		)
 	);

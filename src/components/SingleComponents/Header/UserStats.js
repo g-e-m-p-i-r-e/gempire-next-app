@@ -16,6 +16,9 @@ import arrowWhiteImg from "../../../assets/img/common/arrowWhite.svg";
 import infoImg from "../../../assets/img/common/info.svg";
 
 const UserStats = () => {
+	const userWallet = useAppSelector((state) => state.main.user.wallet);
+	const username = useAppSelector((state) => state.main.user.username);
+
 	const experience = useAppSelector((state) => state.main.user.xp);
 	const balance = useAppSelector((state) => state.main.user.gemp);
 	const isMobile = useAppSelector((state) => state.main.isMobile);
@@ -43,10 +46,7 @@ const UserStats = () => {
 	}, [experience]);
 
 	useEffect(() => {
-		setLevel(Math.max(
-			1,
-			Math.floor((Math.sqrt(discriminant) - 588) / 8)
-		));
+		setLevel(Math.max(1, Math.floor((Math.sqrt(discriminant) - 588) / 8)));
 	}, [discriminant]);
 
 	useEffect(() => {
@@ -92,7 +92,7 @@ const UserStats = () => {
 			</div>
 
 			{!isMobile && (
-				<LinkElement href={"/profile"} className="user-profile-link">
+				<LinkElement href={`/profile/${username || userWallet}`} className="user-profile-link">
 					<div className="avatar-img">
 						<Image src={defaultAvatarImg} alt={""} width={24} height={24} />
 					</div>

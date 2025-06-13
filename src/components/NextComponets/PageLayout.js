@@ -52,6 +52,12 @@ const PageLayout = ({ Component, ...props }) => {
 		setIsLoading(false);
 	};
 
+	const reconnectUser = async () => {
+		await setCookie("gempire-coupon", query.coupon);
+		await deleteCookie(`${process.env.ACCESS_TOKEN_PREFIX}-accessToken`);
+		window.location.href = "/login";
+	};
+
 	useEffect(() => {
 		if (navigator.serviceWorker) {
 			navigator.serviceWorker.register("/sw.js", { scope: "/" });
@@ -60,6 +66,12 @@ const PageLayout = ({ Component, ...props }) => {
 		if (query?.r) {
 			setCookie("gempire-r", query.r);
 		}
+
+		if (query?.coupon) {
+			reconnectUser();
+			return () => {};
+		}
+
 		authUser();
 	}, []);
 
