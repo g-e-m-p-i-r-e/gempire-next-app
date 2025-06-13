@@ -4,4 +4,15 @@
 	@media screen and (width >= 992px) {
 		padding: 60px 0 290px;
 	}
+
+	.orange-button {
+		display: block;
+		width: fit-content;
+		background: #ffffff;
+		color: #000000;
+		text-decoration: none;
+		padding: 10px 16px;
+		border-radius: 8px;
+		margin: 8px auto 0;
+	}
 }

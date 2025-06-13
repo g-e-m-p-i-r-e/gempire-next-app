@@ -26,7 +26,9 @@ const PageLayout = ({ Component, ...props }) => {
 
 			dispatch(setUser(res?.data));
 			// TODO redirect on login
-			await push(pathname === "/" ? "/home" : asPath, undefined, { shallow: true });
+			if (pathname !== "/404") {
+				await push(pathname === "/" ? "/home" : asPath, undefined, { shallow: true });
+			}
 
 			return true;
 		} catch (e) {
