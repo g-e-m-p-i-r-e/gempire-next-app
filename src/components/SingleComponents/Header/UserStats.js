@@ -42,16 +42,19 @@ const UserStats = () => {
 
 	useEffect(() => {
 		const discriminant = 355216 + 16 * experience;
-		const currentLvl = Math.max(1, Math.floor((Math.sqrt(discriminant) - 588) / 8));
-		setLevel(currentLvl);
-		const xpAtLevelStart =  4 * level * level + 588 * level - 592;
+		const currentLvl = Math.max(
+			1,
+			Math.floor((Math.sqrt(discriminant) - 588) / 8)
+		);
+		const xpAtLevelStart = 4 * currentLvl * currentLvl + 588 * currentLvl - 592;
 		const xpInLevel = experience - xpAtLevelStart;
-
-
-		const xpNeededTotal = 8 * level + 592;
+		const xpNeededTotal = 8 * currentLvl + 592;
 		const xpToNextLevel = xpNeededTotal - xpInLevel;
+
+		setLevel(currentLvl);
 		setToNextLevel(xpToNextLevel);
 	}, [experience]);
+
 
 	const userLvlStats = [
 		{ id: "level", title: "Lvl", value: level },
