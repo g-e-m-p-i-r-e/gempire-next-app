@@ -30,7 +30,6 @@ const UserStats = () => {
 	const [tooltipOpen, setTooltipOpen] = useState(false);
 
 	const [level, setLevel] = useState(0);
-	const [discriminant, setDiscriminant] = useState(0);
 	const [toNextLvl, setToNextLevel] = useState(0);
 
 	useEffect(() => {
@@ -42,16 +41,12 @@ const UserStats = () => {
 	}, [isConnected, fetchBalance]);
 
 	useEffect(() => {
-		setDiscriminant(355216 + 16 * experience);
+		const discriminant = 355216 + 16 * experience;
+		const currentLvl = Math.max(1, Math.floor((Math.sqrt(discriminant) - 588) / 8));
+
+		setLevel(currentLvl);
+		setToNextLevel(8 * currentLvl + 592);
 	}, [experience]);
-
-	useEffect(() => {
-		setLevel(Math.max(1, Math.floor((Math.sqrt(discriminant) - 588) / 8)));
-	}, [discriminant]);
-
-	useEffect(() => {
-		setToNextLevel(8 * level + 592);
-	}, [level]);
 
 	const userLvlStats = [
 		{ id: "level", title: "Lvl", value: level },
