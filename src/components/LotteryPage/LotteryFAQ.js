@@ -10,7 +10,7 @@ const LotteryFaq = () => (
 		<br />
 
 		<div className="descr">
-			Spin the wheel once a day and <span className="bold">collect bonus XP or GEMPS</span> to strengthen your position before the full game launches. Every spin brings you closer <span className="bold">to the top of the leaderboard.</span>
+			Spin the wheel once a day and <span className="bold">collect bonus XP or GEMPS</span> to strengthen your position before the full Gempire ecosystem opens. Every spin brings you closer <span className="bold">to the top of the leaderboard.</span>
 		</div>
 		<br />
 		<ul>
