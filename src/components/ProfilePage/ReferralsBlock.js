@@ -119,7 +119,7 @@ const ReferralsBlock = ({ openMainTab }) => {
 				<div className="info-title">Invite friends and earn</div>
 				<div className="info-stats-con f-center">
 					<div className="info-stats-item">
-						<div className="title">5%</div>
+						<div className="title">{isPartner ? "10%" : "5%"}</div>
 						<div className="descr">from level 1</div>
 					</div>
 					<div className="info-stats-item">
