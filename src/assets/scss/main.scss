@@ -140,9 +140,7 @@ p {
 
 img {
 	max-width: 100%;
-	aspect-ratio: attr(width) / attr(height);
-	height: auto;
-	pointer-events: none;
+	line-height: 0 !important;
 }
 
 .f-center {
