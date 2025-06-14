@@ -85,7 +85,7 @@ const Faq = () => {
 						<div className="page-content-wrap">
 							<div className="side-con">
 								<div className="main-img-con f-center">
-									<Image src={faqImg} alt={""} width={526} height={266} />
+									<Image src={faqImg} alt={""} width={526} height={280} />
 								</div>
 								<div className="page-title">Welcome to Gempire</div>
 								<div className="info-block">

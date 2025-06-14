@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-import { deleteCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useAppDispatch } from "../../redux";
 import { setUser } from "../../redux/slices/main";
 import getAccessToken from "../../helpers/getAccessToken";
@@ -47,8 +47,8 @@ const PageLayout = ({ Component, ...props }) => {
 			isLogIn = await getUserData();
 		}
 
-		if (!isLogIn) {
-			await push("/login", undefined, { shallow: true });
+		if (!isLogIn && pathname !== "/login") {
+			await push(`/login${query}`, undefined, { shallow: true });
 		}
 
 		setIsLoading(false);
@@ -57,7 +57,9 @@ const PageLayout = ({ Component, ...props }) => {
 	const reconnectUser = async () => {
 		await setCookie("gempire-coupon", query.coupon);
 		await deleteCookie(`${process.env.ACCESS_TOKEN_PREFIX}-accessToken`);
-		window.location.href = "/login";
+		if (pathname !== "/login") {
+			window.location.href = `/login?coupon=${query.coupon}`;
+		}
 	};
 
 	useEffect(() => {
@@ -69,7 +71,7 @@ const PageLayout = ({ Component, ...props }) => {
 			setCookie("gempire-r", query.r);
 		}
 
-		if (query?.coupon) {
+		if (query?.coupon && !getCookie("gempire-coupon")) {
 			reconnectUser();
 			return () => {};
 		}

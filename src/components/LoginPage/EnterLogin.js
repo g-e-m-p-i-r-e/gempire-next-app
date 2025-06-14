@@ -163,7 +163,7 @@ const EnterLogin = () => {
 					</Col>
 					<Col md={6}>
 						<div className="img-con f-center">
-							<Image src={isMobile ? boosterMobileImg : boosterImg} alt={""} width={isMobile ? 220 : 664} height={isMobile ? 220 : 744} />
+							<Image src={isMobile ? boosterMobileImg : boosterImg} alt={""} width={isMobile ? 220 : 664} height={isMobile ? 367 : 725} />
 						</div>
 					</Col>
 				</Row>
