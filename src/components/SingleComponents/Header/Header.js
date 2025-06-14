@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import Image                          from "next/image";
 import { Col, Container, Row } from "reactstrap";
 
 import { useAppSelector } from "../../../redux";
@@ -17,14 +17,27 @@ import "../../../assets/scss/SingleComponents/Header/Header.scss";
 const Header = () => {
 	const isMobile = useAppSelector((state) => state.main.isMobile);
 	const isAuth = !!useAppSelector((state) => state.main.user._id);
-
-	const routes = [
+	const userWallet = useAppSelector((state) => state.main.user.wallet);
+	const username = useAppSelector((state) => state.main.user.username);
+	const [routes, setRoutes] = useState([
 		{ id: "home", title: "Home", Icon: Home, path: "/home" },
 		{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
 		{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
 		{ id: "about", title: "About Us", Icon: Info, path: "/faq", isDisabled: isMobile },
 		{ id: "profile", title: "Profile", Icon: Profile, path: "/profile", isDisabled: !isMobile },
-	];
+	]);
+
+	useEffect(() => {
+		if (username || userWallet) {
+			setRoutes([
+				{ id: "home", title: "Home", Icon: Home, path: "/home" },
+				{ id: "ranks", title: "Ranks", Icon: Leaderboard, path: "/ranks" },
+				{ id: "shop", title: "Shop", Icon: Shop, path: "/shop" },
+				{ id: "about", title: "About Us", Icon: Info, path: "/faq", isDisabled: isMobile },
+				{ id: "profile", title: "Profile", Icon: Profile, path: `/profile/${username || userWallet}`, isDisabled: !isMobile },
+			]);
+		}
+	}, [username, userWallet]);
 
 	return (
 		isAuth && (
