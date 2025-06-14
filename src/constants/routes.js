@@ -77,6 +77,17 @@ const UserProfileRoute = {
 		hasQuery: true,
 	},
 };
+const ProfileRoute = {
+	path: "/profile",
+	helmet: {
+		title: "GEMPIRE | Profile",
+		description: "Build your own Gempire",
+		keywords: "",
+		noIndex: false,
+		noFollow: false,
+		hasQuery: false,
+	},
+};
 
 const NotFoundRoute = {
 	path: "/404",
@@ -87,4 +98,4 @@ const NotFoundRoute = {
 	},
 };
 
-export default [MainRoute, UserProfileRoute, NotFoundRoute, RanksRoute, HomeRoute, LoginRoute, ShopRoute, FaqRoute];
+export default [MainRoute, UserProfileRoute, ProfileRoute, NotFoundRoute, RanksRoute, HomeRoute, LoginRoute, ShopRoute, FaqRoute];
