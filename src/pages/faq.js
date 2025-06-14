@@ -45,7 +45,7 @@ const socials = [
 const questions = [
 	{
 		title: "What are $GEMP and XP?",
-		descr: "$GEMP is the in-game token of the Gempire project.<br/>XP (experience points) reflect a user's activity and determine their position on the leaderboard.",
+		descr: "$GEMP is the utility token of the Gempire ecosystem.<br/>XP (experience points) reflect a user's activity and determine their position on the leaderboard.",
 	},
 	{
 		title: "What is the leaderboard?",
@@ -94,7 +94,7 @@ const Faq = () => {
 										<span className="strong">Prelaunch </span>- your early access gateway into the world where builders rule.
 									</div>
 									<div className="descr">
-										<span className="strong">Complete quests. Earn XP. Stack GEMPS. </span>This is your chance to prepare, level up, and secure your spot before the full game begins.
+										<span className="strong">Complete quests. Earn XP. Stack GEMPS. </span>This is your chance to prepare, level up, and secure your spot before the full Gempire ecosystem opens.
 										<br />
 										<br />
 										The future of Gempire belongs<span className="strong"> to those who start early.</span>
