@@ -14,6 +14,7 @@ import lotteryBronze from "../../assets/img/ProfilePage/badges/lotteryBronze.png
 import lotterySilver from "../../assets/img/ProfilePage/badges/lotterySilver.png";
 import lotteryGold from "../../assets/img/ProfilePage/badges/lotteryGold.png";
 import lotteryPlatinum from "../../assets/img/ProfilePage/badges/lotteryPlatinum.png";
+import badgeIncrypted25 from "../../assets/img/ProfilePage/badges/incrypted25.png";
 import emojiSadImg from "../../assets/img/common/emojiSad.svg";
 
 import "../../assets/scss/ProfilePage/BadgesBlock.scss";
@@ -71,7 +72,7 @@ const badgeImages = [
 	},
 	{
 		code: "incrypted",
-		image: lotteryPlatinum,
+		image: badgeIncrypted25,
 		hint: "Participated in Incrypted 2025",
 	},
 ];
