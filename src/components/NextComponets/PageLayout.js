@@ -48,7 +48,8 @@ const PageLayout = ({ Component, ...props }) => {
 		}
 
 		if (!isLogIn && pathname !== "/login") {
-			await push(`/login${query ? query : ''}`, undefined, { shallow: true });
+			const queryString = query && Object.keys(query).length > 0 ? `?${new URLSearchParams(query).toString()}` : '';
+			await push(`/login${queryString}`, undefined, { shallow: true });
 		}
 
 		setIsLoading(false);
