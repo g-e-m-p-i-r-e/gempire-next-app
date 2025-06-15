@@ -48,7 +48,7 @@ const PageLayout = ({ Component, ...props }) => {
 		}
 
 		if (!isLogIn && pathname !== "/login") {
-			await push(`/login${query}`, undefined, { shallow: true });
+			await push(`/login${query ? query : ''}`, undefined, { shallow: true });
 		}
 
 		setIsLoading(false);
